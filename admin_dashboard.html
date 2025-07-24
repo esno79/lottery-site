@@ -1,15 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Dashboard | LuckyDraw</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://unpkg.com/@supabase/supabase-js"></script>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard | LuckyDraw</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<style>
     :root {
       --primary: #5B21B6;
       --secondary: #7C3AED;
@@ -28,70 +29,73 @@
   </style>
 </head>
 <body class="min-h-screen flex">
-
-  <!-- Sidebar -->
-  <aside class="w-64 bg-white border-r border-gray-200 shadow-lg flex flex-col">
-    <div class="text-xl font-bold text-center py-5 text-purple-700 border-b border-gray-100">
+<!-- Sidebar -->
+<aside class="w-64 bg-white border-r border-gray-200 shadow-lg flex flex-col">
+<div class="text-xl font-bold text-center py-5 text-purple-700 border-b border-gray-100">
       LuckyDraw Admin
     </div>
-    <nav class="flex-1 p-4 space-y-2">
-      <button onclick="showSection('overview')" class="w-full text-left px-4 py-2 rounded hover:bg-purple-100">Dashboard</button>
-      <button onclick="showSection('users')" class="w-full text-left px-4 py-2 rounded hover:bg-purple-100">Users</button>
-      <button onclick="showSection('tickets')" class="w-full text-left px-4 py-2 rounded hover:bg-purple-100">Tickets</button>
-      <button onclick="showSection('draws')" class="w-full text-left px-4 py-2 rounded hover:bg-purple-100">Draws</button>
-      <button onclick="showSection('analytics')" class="w-full text-left px-4 py-2 rounded hover:bg-purple-100">Analytics</button>
-      <button onclick="alert('Logged out')" class="w-full text-left mt-6 px-4 py-2 text-red-600 hover:bg-red-100">Logout</button>
-    </nav>
-  </aside>
+<nav class="flex-1 p-4 space-y-2">
+<button class="w-full text-left px-4 py-2 rounded hover:bg-purple-100" onclick="showSection('overview')">Dashboard</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-purple-100" onclick="showSection('users')">Users</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-purple-100" onclick="showSection('tickets')">Tickets</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-purple-100" onclick="showSection('draws')">Draws</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-purple-100" onclick="showSection('analytics')">Analytics</button>
+<button class="w-full text-left mt-6 px-4 py-2 text-red-600 hover:bg-red-100" onclick="alert('Logged out')">Logout</button>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8 space-y-8">
+<section id="overview">
+<h1 class="text-2xl font-semibold text-purple-700 mb-4">Dashboard Overview</h1>
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+<div class="bg-white shadow p-4 rounded text-center">
+<h2 class="text-sm text-gray-500">Total Users</h2>
+<p class="text-xl font-bold text-purple-700" id="countUsers">0</p>
+</div>
+<div class="bg-white shadow p-4 rounded text-center">
+<h2 class="text-sm text-gray-500">Draws</h2>
+<p class="text-xl font-bold text-purple-700" id="countDraws">0</p>
+</div>
+<div class="bg-white shadow p-4 rounded text-center">
+<h2 class="text-sm text-gray-500">Tickets</h2>
+<p class="text-xl font-bold text-purple-700" id="countTickets">0</p>
+</div>
+<div class="bg-white shadow p-4 rounded text-center">
+<h2 class="text-sm text-gray-500">Revenue</h2>
+<p class="text-xl font-bold text-purple-700">12.3 ETH</p>
+</div>
+</div>
+</section>
+<section class="hidden" id="users">
+<h2 class="text-xl font-semibold text-purple-700 mb-4">User Management</h2>
+<ul class="bg-white p-4 rounded shadow" id="userList"></ul>
+</section>
+<section class="hidden" id="tickets">
+<h2 class="text-xl font-semibold text-purple-700 mb-4">Tickets</h2>
+<ul class="bg-white p-4 rounded shadow" id="ticketList"></ul>
+</section>
+<section class="hidden" id="draws">
+<h2 class="text-xl font-semibold text-purple-700 mb-4">Draws</h2>
+<ul class="bg-white p-4 rounded shadow" id="drawList"></ul>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-8 space-y-8">
-    <section id="overview">
-      <h1 class="text-2xl font-semibold text-purple-700 mb-4">Dashboard Overview</h1>
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
-        <div class="bg-white shadow p-4 rounded text-center">
-          <h2 class="text-sm text-gray-500">Total Users</h2>
-          <p class="text-xl font-bold text-purple-700" id="countUsers">0</p>
-        </div>
-        <div class="bg-white shadow p-4 rounded text-center">
-          <h2 class="text-sm text-gray-500">Draws</h2>
-          <p class="text-xl font-bold text-purple-700" id="countDraws">0</p>
-        </div>
-        <div class="bg-white shadow p-4 rounded text-center">
-          <h2 class="text-sm text-gray-500">Tickets</h2>
-          <p class="text-xl font-bold text-purple-700" id="countTickets">0</p>
-        </div>
-        <div class="bg-white shadow p-4 rounded text-center">
-          <h2 class="text-sm text-gray-500">Revenue</h2>
-          <p class="text-xl font-bold text-purple-700">12.3 ETH</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="users" class="hidden">
-      <h2 class="text-xl font-semibold text-purple-700 mb-4">User Management</h2>
-      <ul id="userList" class="bg-white p-4 rounded shadow"></ul>
-    </section>
-
-    <section id="tickets" class="hidden">
-      <h2 class="text-xl font-semibold text-purple-700 mb-4">Tickets</h2>
-      <ul id="ticketList" class="bg-white p-4 rounded shadow"></ul>
-    </section>
-
-    <section id="draws" class="hidden">
-      <h2 class="text-xl font-semibold text-purple-700 mb-4">Draws</h2>
-      <ul id="drawList" class="bg-white p-4 rounded shadow"></ul>
-    </section>
-
-    <section id="analytics" class="hidden">
-      <h2 class="text-xl font-semibold text-purple-700 mb-4">Analytics</h2>
-      <div class="bg-white shadow p-6 rounded">
-        <canvas id="chartStats"></canvas>
-      </div>
-    </section>
-  </main>
-
-  <script>
+<h2 class="text-xl font-semibold text-purple-700 mb-4">Create New Draw</h2>
+<form class="bg-white shadow p-4 rounded space-y-4" id="drawForm">
+<input class="w-full border rounded p-2" id="title" placeholder="Title" required="" type="text"/>
+<input class="w-full border rounded p-2" id="description" placeholder="Description" required="" type="text"/>
+<input class="w-full border rounded p-2" id="draw_time" required="" type="datetime-local"/>
+<button class="bg-purple-700 text-white px-4 py-2 rounded" type="submit">Create Draw</button>
+</form>
+<h3 class="mt-6 text-lg font-semibold text-purple-700">Draw List</h3>
+<ul class="bg-white p-4 rounded shadow mt-2" id="drawList"></ul>
+</section>
+<section class="hidden" id="analytics">
+<h2 class="text-xl font-semibold text-purple-700 mb-4">Analytics</h2>
+<div class="bg-white shadow p-6 rounded">
+<canvas id="chartStats"></canvas>
+</div>
+</section>
+</main>
+<script>
     const supabase = supabase.createClient('https://YOUR_PROJECT.supabase.co', 'YOUR_PUBLIC_ANON_KEY');
 
     async function loadData() {
@@ -133,12 +137,41 @@
 
     loadData();
   </script>
-
 <script type="module">
   import { supabase } from './supabaseClient.js';
 
   console.log("🔗 Supabase connected:", supabase);
 </script>
+<script type="module">
+import { supabase } from './supabaseClient.js';
 
-</body>
+async function loadDraws() {
+  const { data: draws, error } = await supabase.from('draws').select('*');
+  if (error) return console.error(error);
+  document.getElementById('drawList').innerHTML = draws.map(d =>
+    `<li class="py-1 border-b">${d.title} - ${new Date(d.draw_time).toLocaleString()}</li>`
+  ).join('');
+  const count = draws.length;
+  const counterEl = document.getElementById('countDraws');
+  if (counterEl) counterEl.textContent = count;
+}
+
+const form = document.getElementById('drawForm');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const draw_time = document.getElementById('draw_time').value;
+
+    const { error } = await supabase.from('draws').insert([{ title, description, draw_time }]);
+    if (error) return alert("❌ Error: " + error.message);
+    alert("✅ Draw created!");
+    form.reset();
+    loadDraws();
+  });
+}
+
+loadDraws();
+</script></body>
 </html>
