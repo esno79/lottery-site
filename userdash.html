@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuckyDraw | User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-light: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .wallet-connected {
+            border-left: 4px solid var(--success);
+        }
+        
+        .wallet-disconnected {
+            border-left: 4px solid var(--danger);
+        }
+        
+        .ticket-status-pending {
+            background-color: rgba(253, 203, 110, 0.1);
+            color: #e17055;
+        }
+        
+        .ticket-status-active {
+            background-color: rgba(0, 184, 148, 0.1);
+            color: var(--success);
+        }
+        
+        .ticket-status-won {
+            background-color: rgba(108, 92, 231, 0.1);
+            color: var(--primary);
+        }
+        
+        .network-selector {
+            transition: all 0.3s ease;
+        }
+        
+        .network-selector:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .leaderboard-badge {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .leaderboard-badge.gold {
+            background-color: #fdcb6e;
+            color: #fff;
+        }
+        
+        .leaderboard-badge.silver {
+            background-color: #dfe6e9;
+            color: #636e72;
+        }
+        
+        .leaderboard-badge.bronze {
+            background-color: #e17055;
+            color: #fff;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-failed {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+    </style>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  const supabase = createClient('https://nkixhylasuhtgeiytebd.supabase.co', 'YOUR_ANON_KEY')
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    window.location.href = 'login.html?error=' + encodeURIComponent('Please login first')
+  } else {
+    document.getElementById('userEmail')?.textContent = 'Logged in as: ' + user.email
+  }
+</script>
+
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-purple-600 to-indigo-500 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-ticket-alt text-2xl"></i>
+                        <h1 class="text-2xl font-bold">LuckyDraw</h1>
+<p id="userEmail" class="text-sm text-gray-100"></p>
+                    </div>
+                    <div id="walletInfo" class="wallet-disconnected bg-white rounded-lg p-3 shadow flex items-center space-x-3">
+                        <div id="walletStatus" class="text-sm">
+                            <div class="font-semibold text-red-500">Wallet Not Connected</div>
+                            <div class="text-xs text-gray-500">Connect to view dashboard</div>
+                        </div>
+                        <button id="connectWalletBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                            Connect Wallet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Dashboard Tabs -->
+                <div class="flex overflow-x-auto border-b">
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50 active" data-tab="wallet">
+                        <i class="fas fa-wallet mr-2"></i> My Wallet
+                    </button>
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="tickets">
+                        <i class="fas fa-ticket-alt mr-2"></i> My Tickets
+                    </button>
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="referrals">
+                        <i class="fas fa-user-friends mr-2"></i> Referrals
+                    </button>
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="transactions">
+                        <i class="fas fa-exchange-alt mr-2"></i> Transactions
+                    </button>
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="draws">
+                        <i class="fas fa-calendar-alt mr-2"></i> Draws
+                    </button>
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="leaderboard">
+                        <i class="fas fa-trophy mr-2"></i> Leaderboard
+                    </button>
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="settings">
+                        <i class="fas fa-cog mr-2"></i> Settings
+                    </button>
+                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="support">
+                        <i class="fas fa-question-circle mr-2"></i> Support
+                    </button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="p-6">
+                    <!-- Wallet Tab -->
+                    <div id="wallet" class="tab-content active">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Wallet Info Card -->
+                            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-wallet mr-2 text-purple-600"></i> Wallet Information
+                                </h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="text-sm text-gray-500">Wallet Address</label>
+                                        <div id="walletAddress" class="font-mono text-sm bg-gray-50 p-2 rounded truncate">Not connected</div>
+                                    </div>
+                                    <div>
+                                        <label class="text-sm text-gray-500">Network</label>
+                                        <div id="currentNetwork" class="font-medium">Not connected</div>
+                                    </div>
+                                    <div>
+                                        <label class="text-sm text-gray-500">Balance</label>
+                                        <div id="walletBalance" class="font-medium">0.00</div>
+                                    </div>
+                                    <button id="disconnectWalletBtn" class="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg text-sm font-medium transition hidden">
+                                        Disconnect Wallet
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Network Selector Card -->
+                            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-network-wired mr-2 text-purple-600"></i> Switch Network
+                                </h3>
+                                <div class="space-y-4">
+                                    <select id="networkSelector" class="network-selector w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="0x1">Ethereum Mainnet</option>
+                                        <option value="0x38">Binance Smart Chain</option>
+                                        <option value="0x89">Polygon</option>
+                                        <option value="0xa86a">Avalanche</option>
+                                    </select>
+                                    <button id="switchNetworkBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition hidden">
+                                        Switch Network
+                                    </button>
+                                    <p class="text-xs text-gray-500">Make sure your wallet supports the selected network</p>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions Card -->
+                            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-bolt mr-2 text-purple-600"></i> Quick Actions
+                                </h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+                                        <i class="fas fa-plus mr-2"></i> Buy Tickets
+                                    </button>
+                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+                                        <i class="fas fa-share-alt mr-2"></i> Refer Friends
+                                    </button>
+                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+                                        <i class="fas fa-history mr-2"></i> Transaction History
+                                    </button>
+                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+                                        <i class="fas fa-trophy mr-2"></i> View Leaderboard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tickets Tab -->
+                    <div id="tickets" class="tab-content">
+                        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                            <h2 class="text-xl font-semibold">Your Lottery Tickets</h2>
+                            <div class="flex space-x-2 mt-3 sm:mt-0">
+                                <select id="ticketFilter" class="p-2 border border-gray-200 rounded-lg text-sm">
+                                    <option value="all">All Tickets</option>
+                                    <option value="active">Active</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="won">Won</option>
+                                    <option value="lost">Lost</option>
+                                </select>
+                                <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition">
+                                    <i class="fas fa-download mr-1"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purchase Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ticketsTableBody" class="bg-white divide-y divide-gray-200">
+                                    <!-- Tickets will be loaded here dynamically -->
+                                    <tr>
+                                        <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">No tickets found. Connect your wallet to view your tickets.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="text-sm text-gray-500">
+                                Showing <span id="ticketStart">0</span> to <span id="ticketEnd">0</span> of <span id="ticketTotal">0</span> tickets
+                            </div>
+                            <div class="flex space-x-2">
+                                <button id="prevTicketPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+                                    Previous
+                                </button>
+                                <button id="nextTicketPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Referrals Tab -->
+                    <div id="referrals" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-user-friends mr-2 text-purple-600"></i> Your Referral Program
+                                    </h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Invite friends to join LuckyDraw and earn 10% commission on their ticket purchases! Share your unique referral link below.
+                                    </p>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Your Referral Link</label>
+                                        <div class="flex">
+                                            <input id="referralLink" type="text" class="flex-1 p-2 border border-gray-300 rounded-l-lg focus:ring-purple-500 focus:border-purple-500" readonly value="Connect wallet to generate link">
+                                            <button id="copyReferralBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 rounded-r-lg">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                        <div id="copiedMessage" class="text-xs text-green-600 mt-1 hidden">Link copied to clipboard!</div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600" id="totalReferrals">0</div>
+                                            <div class="text-sm text-gray-500">Total Referrals</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600" id="activeReferrals">0</div>
+                                            <div class="text-sm text-gray-500">Active Users</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600" id="totalEarned">0 ETH</div>
+                                            <div class="text-sm text-gray-500">Total Earned</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600" id="pendingEarnings">0 ETH</div>
+                                            <div class="text-sm text-gray-500">Pending</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-history mr-2 text-purple-600"></i> Referral History
+                                    </h3>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets Bought</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commission</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="referralHistoryBody" class="bg-white divide-y divide-gray-200">
+                                                <tr>
+                                                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No referral history yet</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-coins mr-2 text-purple-600"></i> Withdraw Earnings
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Available Balance</label>
+                                            <div class="text-xl font-bold">0.25 ETH</div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Amount to Withdraw</label>
+                                            <input type="number" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="0.00" min="0" step="0.01">
+                                        </div>
+                                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+                                            Withdraw to Wallet
+                                        </button>
+                                        <p class="text-xs text-gray-500">Withdrawals are processed within 24 hours. Minimum withdrawal: 0.05 ETH</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-share-alt mr-2 text-purple-600"></i> Share Your Link
+                                    </h3>
+                                    <p class="text-gray-600 mb-4 text-sm">
+                                        Share your referral link on social media to earn more commissions!
+                                    </p>
+                                    <div class="grid grid-cols-4 gap-2">
+                                        <button class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </button>
+                                        <button class="bg-blue-400 hover:bg-blue-500 text-white p-2 rounded">
+                                            <i class="fab fa-twitter"></i>
+                                        </button>
+                                        <button class="bg-pink-600 hover:bg-pink-700 text-white p-2 rounded">
+                                            <i class="fab fa-instagram"></i>
+                                        </button>
+                                        <button class="bg-green-500 hover:bg-green-600 text-white p-2 rounded">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </button>
+                                        <button class="bg-red-600 hover:bg-red-700 text-white p-2 rounded">
+                                            <i class="fab fa-youtube"></i>
+                                        </button>
+                                        <button class="bg-gray-800 hover:bg-gray-900 text-white p-2 rounded">
+                                            <i class="fab fa-github"></i>
+                                        </button>
+                                        <button class="bg-blue-700 hover:bg-blue-800 text-white p-2 rounded">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </button>
+                                        <button class="bg-gray-600 hover:bg-gray-700 text-white p-2 rounded">
+                                            <i class="fas fa-envelope"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transactions Tab -->
+                    <div id="transactions" class="tab-content">
+                        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                            <h2 class="text-xl font-semibold">Transaction History</h2>
+                            <div class="flex space-x-2 mt-3 sm:mt-0">
+                                <select id="transactionFilter" class="p-2 border border-gray-200 rounded-lg text-sm">
+                                    <option value="all">All Transactions</option>
+                                    <option value="deposit">Deposits</option>
+                                    <option value="withdrawal">Withdrawals</option>
+                                    <option value="ticket">Ticket Purchases</option>
+                                    <option value="commission">Commissions</option>
+                                </select>
+                                <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition">
+                                    <i class="fas fa-download mr-1"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Network</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Hash</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionsTableBody" class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No transactions found. Connect your wallet to view your transaction history.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="text-sm text-gray-500">
+                                Showing <span id="transactionStart">0</span> to <span id="transactionEnd">0</span> of <span id="transactionTotal">0</span> transactions
+                            </div>
+                            <div class="flex space-x-2">
+                                <button id="prevTransactionPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+                                    Previous
+                                </button>
+                                <button id="nextTransactionPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Draws Tab -->
+                    <div id="draws" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-calendar-alt mr-2 text-purple-600"></i> Next Draw
+                                    </h3>
+                                    <div class="flex flex-col md:flex-row items-center justify-between">
+                                        <div class="mb-4 md:mb-0">
+                                            <div class="text-sm text-gray-500">Draw #124</div>
+                                            <div class="text-2xl font-bold">Saturday, June 10, 2023</div>
+                                            <div class="text-gray-600">8:00 PM UTC</div>
+                                        </div>
+                                        <div class="bg-purple-100 p-4 rounded-lg text-center">
+                                            <div class="text-sm text-purple-800 mb-1">Time Remaining</div>
+                                            <div id="countdownTimer" class="text-2xl font-bold text-purple-600">00:00:00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-trophy mr-2 text-purple-600"></i> Current Jackpot
+                                    </h3>
+                                    <div class="flex items-end space-x-4">
+                                        <div class="text-4xl font-bold text-purple-600">5.42 ETH</div>
+                                        <div class="text-green-600 mb-1">
+                                            <i class="fas fa-arrow-up mr-1"></i> +0.24 ETH (24h)
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="flex justify-between text-sm text-gray-500 mb-1">
+                                            <span>Your Tickets in This Draw</span>
+                                            <span>3</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-purple-600 h-2.5 rounded-full" style="width: 15%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-history mr-2 text-purple-600"></i> Previous Draws
+                                    </h3>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw #</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jackpot</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Winner</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Your Tickets</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">123</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">Jun 3, 2023</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">5.18 ETH</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x1a2...3b4c</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">2</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">122</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">May 27, 2023</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">4.92 ETH</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x5d6...7e8f</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">5</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">121</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">May 20, 2023</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">4.75 ETH</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x9a0...1b2c</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">3</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-chart-line mr-2 text-purple-600"></i> Jackpot History
+                                    </h3>
+                                    <div class="h-64">
+                                        <!-- Placeholder for chart -->
+                                        <div class="flex items-center justify-center h-full bg-gray-50 rounded-lg">
+                                            <p class="text-gray-500">Jackpot growth chart will be displayed here</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-ticket-alt mr-2 text-purple-600"></i> Your Draw Tickets
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Draw #124</div>
+                                                <div class="text-sm text-gray-500">Jun 10, 2023</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-medium">3 tickets</div>
+                                                <div class="text-sm text-gray-500">0.03 ETH</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Draw #123</div>
+                                                <div class="text-sm text-gray-500">Jun 3, 2023</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-medium">2 tickets</div>
+                                                <div class="text-sm text-gray-500">0.02 ETH</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Draw #122</div>
+                                                <div class="text-sm text-gray-500">May 27, 2023</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-medium">5 tickets</div>
+                                                <div class="text-sm text-gray-500">0.05 ETH</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard Tab -->
+                    <div id="leaderboard" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h3 class="text-lg font-semibold flex items-center">
+                                            <i class="fas fa-trophy mr-2 text-purple-600"></i> Top Players
+                                        </h3>
+                                        <select id="leaderboardFilter" class="p-2 border border-gray-200 rounded-lg text-sm">
+                                            <option value="all">All Time</option>
+                                            <option value="month">This Month</option>
+                                            <option value="week">This Week</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wins</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referrals</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="leaderboard-badge gold">1</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium">0x8f2...4d5e</div>
+                                                        <div class="text-xs text-gray-500">Top Contributor</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">142</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">3</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">28</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">14.2 ETH</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="leaderboard-badge silver">2</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium">0x3a9...0b1c</div>
+                                                        <div class="text-xs text-gray-500">VIP Member</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">118</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">2</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">19</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">11.8 ETH</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="leaderboard-badge bronze">3</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium">0x7e6...5f4d</div>
+                                                        <div class="text-xs text-gray-500">Referral King</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">96</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">1</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">42</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">9.6 ETH</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="leaderboard-badge">4</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium">0x2c8...7d9e</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">87</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">0</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">15</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">8.7 ETH</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="leaderboard-badge">5</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium">0x1b3...9a0f</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">76</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">1</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">12</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">7.6 ETH</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-award mr-2 text-purple-600"></i> Your Stats
+                                    </h3>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600">24</div>
+                                            <div class="text-sm text-gray-500">Your Rank</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600">18</div>
+                                            <div class="text-sm text-gray-500">Tickets Bought</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600">5</div>
+                                            <div class="text-sm text-gray-500">Referrals</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-purple-600">1.8 ETH</div>
+                                            <div class="text-sm text-gray-500">Total Spent</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-gem mr-2 text-purple-600"></i> VIP Rewards
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">10% bonus on all ticket purchases</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">Higher referral commission (15%)</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">Exclusive VIP draws</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">Priority customer support</p>
+                                            </div>
+                                        </div>
+                                        <div class="pt-4">
+                                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+                                                Upgrade to VIP
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-calendar-check mr-2 text-purple-600"></i> Next Milestone
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <div class="flex justify-between text-sm text-gray-500 mb-1">
+                                                <span>50 Tickets (VIP Status)</span>
+                                                <span>18/50</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 36%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-sm text-gray-500 mb-1">
+                                                <span>10 Referrals (Bonus 2%)</span>
+                                                <span>5/10</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 50%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-sm text-gray-500 mb-1">
+                                                <span>5 ETH Spent (Gold Tier)</span>
+                                                <span>1.8/5 ETH</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 36%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div id="settings" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-user-cog mr-2 text-purple-600"></i> Account Settings
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                            <input type="email" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="your@email.com">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                                            <input type="text" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="username">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                            <input type="password" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="••••••••">
+                                        </div>
+                                        <button class="mt-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+                                            Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-bell mr-2 text-purple-600"></i> Notification Preferences
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Draw Results</label>
+                                                <p class="text-xs text-gray-500">Notify me when draw results are announced</p>
+                                            </div>
+                                            <label class="inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Referral Activity</label>
+                                                <p class="text-xs text-gray-500">Notify me when my referrals purchase tickets</p>
+                                            </div>
+                                            <label class="inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Promotions</label>
+                                                <p class="text-xs text-gray-500">Notify me about special promotions and bonuses</p>
+                                            </div>
+                                            <label class="inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Wallet Activity</label>
+                                                <p class="text-xs text-gray-500">Notify me about deposits and withdrawals</p>
+                                            </div>
+                                            <label class="inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-palette mr-2 text-purple-600"></i> Theme Settings
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Color Theme</label>
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <button class="h-10 rounded-lg bg-purple-600 border-2 border-purple-600"></button>
+                                                <button class="h-10 rounded-lg bg-blue-600 border-2 border-gray-200"></button>
+                                                <button class="h-10 rounded-lg bg-green-600 border-2 border-gray-200"></button>
+                                                <button class="h-10 rounded-lg bg-red-600 border-2 border-gray-200"></button>
+                                                <button class="h-10 rounded-lg bg-indigo-600 border-2 border-gray-200"></button>
+                                                <button class="h-10 rounded-lg bg-pink-600 border-2 border-gray-200"></button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Dark Mode</label>
+                                            <label class="inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                                <span class="ms-3 text-sm font-medium text-gray-700">Enable Dark Mode</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-globe mr-2 text-purple-600"></i> Language & Region
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Language</label>
+                                            <select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+                                                <option>English</option>
+                                                <option>Spanish</option>
+                                                <option>French</option>
+                                                <option>German</option>
+                                                <option>Chinese</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Time Zone</label>
+                                            <select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+                                                <option>(UTC) Coordinated Universal Time</option>
+                                                <option>(UTC-05:00) Eastern Time</option>
+                                                <option>(UTC-08:00) Pacific Time</option>
+                                                <option>(UTC+01:00) Central European Time</option>
+                                                <option>(UTC+08:00) China Standard Time</option>
+                                            </select>
+                                        </div>
+                                        <button class="mt-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+                                            Save Preferences
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Support Tab -->
+                    <div id="support" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-question-circle mr-2 text-purple-600"></i> Frequently Asked Questions
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div class="border-b border-gray-200 pb-4">
+                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+                                                <span>How do I buy lottery tickets?</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="mt-2 text-sm text-gray-600">
+                                                <p>To purchase lottery tickets, connect your wallet, select the ticket type you want, and confirm the transaction in your wallet. Your tickets will be automatically registered for the next draw.</p>
+                                            </div>
+                                        </div>
+                                        <div class="border-b border-gray-200 pb-4">
+                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+                                                <span>When are the draws held?</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="mt-2 text-sm text-gray-600">
+                                                <p>Draws are held every Saturday at 8:00 PM UTC. You can view the countdown to the next draw in the Draws section of your dashboard.</p>
+                                            </div>
+                                        </div>
+                                        <div class="border-b border-gray-200 pb-4">
+                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+                                                <span>How do I claim my winnings?</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="mt-2 text-sm text-gray-600">
+                                                <p>Winnings are automatically deposited to your connected wallet address within 24 hours after the draw. No additional action is required.</p>
+                                            </div>
+                                        </div>
+                                        <div class="border-b border-gray-200 pb-4">
+                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+                                                <span>How does the referral program work?</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="mt-2 text-sm text-gray-600">
+                                                <p>You earn 10% commission on all ticket purchases made by users who sign up using your referral link. You can withdraw your earnings once you reach the minimum withdrawal amount of 0.05 ETH.</p>
+                                            </div>
+                                        </div>
+                                        <div class="border-b border-gray-200 pb-4">
+                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+                                                <span>Which networks are supported?</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="mt-2 text-sm text-gray-600">
+                                                <p>We currently support Ethereum Mainnet, Binance Smart Chain, Polygon, and Avalanche. You can switch networks in your wallet settings.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-envelope mr-2 text-purple-600"></i> Contact Support
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                            <select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+                                                <option>General Inquiry</option>
+                                                <option>Account Issues</option>
+                                                <option>Transaction Problems</option>
+                                                <option>Technical Support</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                            <textarea rows="4" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="Describe your issue in detail..."></textarea>
+                                        </div>
+                                        <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+                                            Send Message
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-file-alt mr-2 text-purple-600"></i> Documentation
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium">User Guide</div>
+                                                <div class="text-sm text-gray-500">Learn how to use LuckyDraw</div>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium">Security</div>
+                                                <div class="text-sm text-gray-500">How we protect your funds</div>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                                <i class="fas fa-percentage"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium">Odds & Payouts</div>
+                                                <div class="text-sm text-gray-500">Understand your chances to win</div>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                                <i class="fas fa-gavel"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium">Terms & Conditions</div>
+                                                <div class="text-sm text-gray-500">Legal agreement</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                        <i class="fas fa-headset mr-2 text-purple-600"></i> Live Support
+                                    </h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Our support team is available 24/7 to assist you with any questions or issues.
+                                    </p>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                                <i class="fas fa-comment-dots"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium">Live Chat</div>
+                                                <div class="text-sm text-gray-500">Instant messaging support</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                                <i class="fas fa-phone-alt"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium">Phone Support</div>
+                                                <div class="text-sm text-gray-500">+1 (555) 123-4567</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                                                <i class="fab fa-telegram"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium">Telegram</div>
+                                                <div class="text-sm text-gray-500">@LuckyDrawSupport</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-100 border-t border-gray-200 mt-8">
+            <div class="container mx-auto px-4 py-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                        <i class="fas fa-ticket-alt text-xl text-purple-600"></i>
+                        <span class="text-lg font-bold">LuckyDraw</span>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-600 hover:text-purple-600">Terms</a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600">Privacy</a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600">FAQ</a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600">Contact</a>
+                    </div>
+                </div>
+                <div class="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+                    <p>© 2023 LuckyDraw. All rights reserved. Powered by blockchain technology.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Global variables
+        let userAccount = null;
+        let currentNetwork = null;
+        let web3;
+        
+        // DOM elements
+        const connectWalletBtn = document.getElementById('connectWalletBtn');
+        const disconnectWalletBtn = document.getElementById('disconnectWalletBtn');
+        const walletInfo = document.getElementById('walletInfo');
+        const walletStatus = document.getElementById('walletStatus');
+        const walletAddress = document.getElementById('walletAddress');
+        const currentNetworkDisplay = document.getElementById('currentNetwork');
+        const walletBalance = document.getElementById('walletBalance');
+        const networkSelector = document.getElementById('networkSelector');
+        const switchNetworkBtn = document.getElementById('switchNetworkBtn');
+        const referralLink = document.getElementById('referralLink');
+        const copyReferralBtn = document.getElementById('copyReferralBtn');
+        const copiedMessage = document.getElementById('copiedMessage');
+        
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Update active tab button
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.classList.remove('border-purple-600');
+                    btn.classList.remove('text-purple-600');
+                });
+                button.classList.add('active');
+                button.classList.add('border-purple-600');
+                button.classList.add('text-purple-600');
+                
+                // Show active tab content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Copy referral link
+        copyReferralBtn.addEventListener('click', () => {
+            referralLink.select();
+            document.execCommand('copy');
+            
+            copiedMessage.classList.remove('hidden');
+            setTimeout(() => {
+                copiedMessage.classList.add('hidden');
+            }, 2000);
+        });
+        
+        // Connect MetaMask wallet
+        connectWalletBtn.addEventListener('click', async () => {
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    throw new Error('MetaMask is not installed!');
+                }
+                
+                // Initialize Web3
+                web3 = new Web3(window.ethereum);
+                
+                // Request account access
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAccount = accounts[0];
+                
+                // Get current network
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                currentNetwork = chainId;
+                updateNetworkInfo(chainId);
+                
+                // Update UI
+                updateWalletInfo(userAccount);
+                
+                // Set up event listeners
+                window.ethereum.on('accountsChanged', handleAccountsChanged);
+                window.ethereum.on('chainChanged', handleChainChanged);
+                
+                // Load user data
+                loadUserData();
+                
+            } catch (error) {
+                console.error('Error connecting wallet:', error);
+                walletStatus.innerHTML = `<div class="font-semibold text-red-500">Connection Error</div><div class="text-xs text-gray-500">${error.message}</div>`;
+            }
+        });
+        
+        // Disconnect wallet
+        disconnectWalletBtn.addEventListener('click', () => {
+            userAccount = null;
+            currentNetwork = null;
+            walletInfo.className = 'wallet-disconnected bg-white rounded-lg p-3 shadow flex items-center space-x-3';
+            walletStatus.innerHTML = `<div class="font-semibold text-red-500">Wallet Not Connected</div><div class="text-xs text-gray-500">Connect to view dashboard</div>`;
+            walletAddress.textContent = 'Not connected';
+            currentNetworkDisplay.textContent = 'Not connected';
+            walletBalance.textContent = '0.00';
+            connectWalletBtn.classList.remove('hidden');
+            disconnectWalletBtn.classList.add('hidden');
+            switchNetworkBtn.classList.add('hidden');
+            
+            // Clear user data displays
+            clearUserData();
+        });
+        
+        // Switch network
+        switchNetworkBtn.addEventListener('click', async () => {
+            try {
+                const chainId = networkSelector.value;
+                await switchNetwork(chainId);
+            } catch (error) {
+                console.error('Error switching network:', error);
+            }
+        });
+        
+        // Network selector change
+        networkSelector.addEventListener('change', () => {
+            if (networkSelector.value !== currentNetwork) {
+                switchNetworkBtn.classList.remove('hidden');
+            } else {
+                switchNetworkBtn.classList.add('hidden');
+            }
+        });
+        
+        // Handle account changes
+        function handleAccountsChanged(accounts) {
+            if (accounts.length === 0) {
+                // Wallet disconnected
+                disconnectWalletBtn.click();
+            } else if (accounts[0] !== userAccount) {
+                // Account changed
+                userAccount = accounts[0];
+                updateWalletInfo(userAccount);
+                loadUserData();
+            }
+        }
+        
+        // Handle chain changes
+        function handleChainChanged(chainId) {
+            currentNetwork = chainId;
+            updateNetworkInfo(chainId);
+            switchNetworkBtn.classList.add('hidden');
+            networkSelector.value = chainId;
+            loadUserData();
+        }
+        
+        // Update wallet info display
+        function updateWalletInfo(account) {
+            walletInfo.className = 'wallet-connected bg-white rounded-lg p-3 shadow flex items-center space-x-3';
+            walletStatus.innerHTML = `<div class="font-semibold text-green-500">Wallet Connected</div><div class="text-xs text-gray-500">${getNetworkName(currentNetwork)}</div>`;
+            walletAddress.textContent = `${account.substring(0, 6)}...${account.substring(38)}`;
+            connectWalletBtn.classList.add('hidden');
+            disconnectWalletBtn.classList.remove('hidden');
+            
+            // Generate referral link
+            generateReferralLink(account);
+            
+            // Load wallet balance
+            loadWalletBalance(account);
+        }
+        
+        // Update network info
+        function updateNetworkInfo(chainId) {
+            currentNetwork = chainId;
+            currentNetworkDisplay.textContent = getNetworkName(chainId);
+            networkSelector.value = chainId;
+        }
+        
+        // Get network name from chain ID
+        function getNetworkName(chainId) {
+            const networks = {
+                '0x1': 'Ethereum Mainnet',
+                '0x38': 'Binance Smart Chain',
+                '0x89': 'Polygon',
+                '0xa86a': 'Avalanche'
+            };
+            return networks[chainId] || `Unknown Network (${chainId})`;
+        }
+        
+        // Get network symbol from chain ID
+        function getNetworkSymbol(chainId) {
+            const symbols = {
+                '0x1': 'ETH',
+                '0x38': 'BNB',
+                '0x89': 'MATIC',
+                '0xa86a': 'AVAX'
+            };
+            return symbols[chainId] || 'ETH';
+        }
+        
+        // Switch network
+        async function switchNetwork(chainId) {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId }],
+                });
+                return true;
+            } catch (error) {
+                if (error.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [getNetworkParams(chainId)],
+                        });
+                        return true;
+                    } catch (addError) {
+                        console.error('Error adding network:', addError);
+                        return false;
+                    }
+                }
+                console.error('Error switching network:', error);
+                return false;
+            }
+        }
+        
+        // Get network parameters for adding new network
+        function getNetworkParams(chainId) {
+            const networks = {
+                '0x1': {
+                    chainName: 'Ethereum Mainnet',
+                    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+                    rpcUrls: ['https://mainnet.infura.io/v3/'],
+                    blockExplorerUrls: ['https://etherscan.io']
+                },
+                '0x38': {
+                    chainName: 'Binance Smart Chain',
+                    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+                    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                    blockExplorerUrls: ['https://bscscan.com']
+                },
+                '0x89': {
+                    chainName: 'Polygon Mainnet',
+                    nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+                    rpcUrls: ['https://polygon-rpc.com/'],
+                    blockExplorerUrls: ['https://polygonscan.com']
+                },
+                '0xa86a': {
+                    chainName: 'Avalanche C-Chain',
+                    nativeCurrency: { name: 'AVAX', symbol: 'AVAX', decimals: 18 },
+                    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+                    blockExplorerUrls: ['https://snowtrace.io']
+                }
+            };
+            return { chainId, ...networks[chainId] };
+        }
+        
+        // Load wallet balance
+        async function loadWalletBalance(account) {
+            if (!web3 || !account) return;
+            
+            try {
+                const balance = await web3.eth.getBalance(account);
+                const formattedBalance = web3.utils.fromWei(balance, 'ether');
+                walletBalance.textContent = parseFloat(formattedBalance).toFixed(4) + ' ' + getNetworkSymbol(currentNetwork);
+            } catch (error) {
+                console.error('Error loading balance:', error);
+                walletBalance.textContent = 'Error loading balance';
+            }
+        }
+        
+        // Generate referral link
+        function generateReferralLink(account) {
+            if (!account) return;
+            
+            const referralLinkValue = `${window.location.origin}${window.location.pathname}?ref=${account}`;
+            referralLink.value = referralLinkValue;
+            
+            // Show referral section in all tabs
+            document.querySelectorAll('#referralSection').forEach(section => {
+                section.style.display = 'block';
+            });
+        }
+        
+        // Load user data (tickets, transactions, etc.)
+        function loadUserData() {
+            if (!userAccount) return;
+            
+            // In a real app, you would fetch this data from your backend or smart contract
+            // For demo purposes, we'll simulate loading data
+            
+            // Simulate loading tickets
+            setTimeout(() => {
+                const ticketsTableBody = document.getElementById('ticketsTableBody');
+                ticketsTableBody.innerHTML = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">T-${Math.random().toString(36).substring(2, 8).toUpperCase()}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">VIP Ticket</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Jun 10, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Jun 5, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">0.1 ${getNetworkSymbol(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <button class="text-purple-600 hover:text-purple-900">View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">T-${Math.random().toString(36).substring(2, 8).toUpperCase()}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Premium Ticket</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Jun 3, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">May 30, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">0.05 ${getNetworkSymbol(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Lost</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <button class="text-purple-600 hover:text-purple-900">View</button>
+                        </td>
+                    </tr>
+                `;
+                
+                // Update ticket counts
+                document.getElementById('ticketStart').textContent = '1';
+                document.getElementById('ticketEnd').textContent = '2';
+                document.getElementById('ticketTotal').textContent = '2';
+                
+                // Enable pagination buttons
+                document.getElementById('prevTicketPage').disabled = true;
+                document.getElementById('nextTicketPage').disabled = false;
+            }, 500);
+            
+            // Simulate loading transactions
+            setTimeout(() => {
+                const transactionsTableBody = document.getElementById('transactionsTableBody');
+                transactionsTableBody.innerHTML = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Jun 5, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Ticket Purchase</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">0.1 ${getNetworkSymbol(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">${getNetworkName(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">
+                            <a href="#" class="text-purple-600 hover:text-purple-900">0x${Math.random().toString(16).substring(2, 10)}...${Math.random().toString(16).substring(2, 10)}</a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="status-badge status-success">Confirmed</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">May 30, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Ticket Purchase</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">0.05 ${getNetworkSymbol(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">${getNetworkName(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">
+                            <a href="#" class="text-purple-600 hover:text-purple-900">0x${Math.random().toString(16).substring(2, 10)}...${Math.random().toString(16).substring(2, 10)}</a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="status-badge status-success">Confirmed</span>
+                        </td>
+                    </tr>
+                `;
+                
+                // Update transaction counts
+                document.getElementById('transactionStart').textContent = '1';
+                document.getElementById('transactionEnd').textContent = '2';
+                document.getElementById('transactionTotal').textContent = '2';
+                
+                // Enable pagination buttons
+                document.getElementById('prevTransactionPage').disabled = true;
+                document.getElementById('nextTransactionPage').disabled = false;
+            }, 800);
+            
+            // Simulate loading referral data
+            setTimeout(() => {
+                document.getElementById('totalReferrals').textContent = '5';
+                document.getElementById('activeReferrals').textContent = '3';
+                document.getElementById('totalEarned').textContent = `0.25 ${getNetworkSymbol(currentNetwork)}`;
+                document.getElementById('pendingEarnings').textContent = `0.05 ${getNetworkSymbol(currentNetwork)}`;
+                
+                // Populate referral history
+                const referralHistoryBody = document.getElementById('referralHistoryBody');
+                referralHistoryBody.innerHTML = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">Jun 2, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x${Math.random().toString(16).substring(2, 10)}...${Math.random().toString(16).substring(2, 10)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">2</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">0.01 ${getNetworkSymbol(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="status-badge status-success">Paid</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">May 28, 2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x${Math.random().toString(16).substring(2, 10)}...${Math.random().toString(16).substring(2, 10)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">1</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">0.005 ${getNetworkSymbol(currentNetwork)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="status-badge status-pending">Pending</span>
+                        </td>
+                    </tr>
+                `;
+            }, 1000);
+        }
+        
+        // Clear user data displays
+        function clearUserData() {
+            document.getElementById('ticketsTableBody').innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">No tickets found. Connect your wallet to view your tickets.</td>
+                </tr>
+            `;
+            
+            document.getElementById('transactionsTableBody').innerHTML = `
+                <tr>
+                    <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No transactions found. Connect your wallet to view your transaction history.</td>
+                </tr>
+            `;
+            
+            document.getElementById('referralHistoryBody').innerHTML = `
+                <tr>
+                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No referral history yet</td>
+                </tr>
+            `;
+            
+            document.getElementById('totalReferrals').textContent = '0';
+            document.getElementById('activeReferrals').textContent = '0';
+            document.getElementById('totalEarned').textContent = `0 ${getNetworkSymbol(currentNetwork)}`;
+            document.getElementById('pendingEarnings').textContent = `0 ${getNetworkSymbol(currentNetwork)}`;
+            
+            // Hide referral section
+            document.querySelectorAll('#referralSection').forEach(section => {
+                section.style.display = 'none';
+            });
+        }
+        
+        // Countdown timer for next draw
+        function updateCountdown() {
+            // Set next draw to Saturday at 8 PM UTC
+            const now = new Date();
+            const nextSaturday = new Date();
+            
+            // Find next Saturday
+            nextSaturday.setDate(now.getDate() + (6 - now.getDay() + 7) % 7);
+            nextSaturday.setHours(20, 0, 0, 0); // 8 PM UTC
+            
+            // If today is Saturday and before 8 PM
+            if (now.getDay() === 6 && now.getHours() < 20) {
+                nextSaturday.setDate(now.getDate());
+            }
+            
+            const diff = nextSaturday - now;
+            
+            if (diff <= 0) {
+                // If draw time has passed, set for next week
+                nextSaturday.setDate(nextSaturday.getDate() + 7);
+                const newDiff = nextSaturday - now;
+                updateTimerDisplay(newDiff);
+                return;
+            }
+            
+            updateTimerDisplay(diff);
+        }
+
+        function updateTimerDisplay(diff) {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdownTimer').textContent = 
+                `${days}d ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Initialize countdown timer
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+
+<script type="module">
+  import { supabase } from './supabaseClient.js';
+
+  console.log("🔗 Supabase connected:", supabase);
+</script>
+
+</body>
+</html>
