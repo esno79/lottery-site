@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuckyDraw | User Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LuckyDraw | User Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+<style>
         :root {
             --primary: #6c5ce7;
             --primary-light: #a29bfe;
@@ -111,7 +112,6 @@
             color: #b91c1c;
         }
     </style>
-
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
   const supabase = createClient('https://nkixhylasuhtgeiytebd.supabase.co', 'YOUR_ANON_KEY')
@@ -123,1057 +123,1020 @@
     document.getElementById('userEmail')?.textContent = 'Logged in as: ' + user.email
   }
 </script>
-
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
-    <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="bg-gradient-to-r from-purple-600 to-indigo-500 text-white shadow-lg">
-            <div class="container mx-auto px-4 py-6">
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-ticket-alt text-2xl"></i>
-                        <h1 class="text-2xl font-bold">LuckyDraw</h1>
-<p id="userEmail" class="text-sm text-gray-100"></p>
-                    </div>
-                    <div id="walletInfo" class="wallet-disconnected bg-white rounded-lg p-3 shadow flex items-center space-x-3">
-                        <div id="walletStatus" class="text-sm">
-                            <div class="font-semibold text-red-500">Wallet Not Connected</div>
-                            <div class="text-xs text-gray-500">Connect to view dashboard</div>
-                        </div>
-                        <button id="connectWalletBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+<div class="min-h-screen flex flex-col">
+<!-- Header -->
+<header class="bg-gradient-to-r from-purple-600 to-indigo-500 text-white shadow-lg">
+<div class="container mx-auto px-4 py-6">
+<div class="flex justify-between items-center">
+<div class="flex items-center space-x-2">
+<i class="fas fa-ticket-alt text-2xl"></i>
+<h1 class="text-2xl font-bold">LuckyDraw</h1>
+<p class="text-sm text-gray-100" id="userEmail"></p>
+</div>
+<div class="wallet-disconnected bg-white rounded-lg p-3 shadow flex items-center space-x-3" id="walletInfo">
+<div class="text-sm" id="walletStatus">
+<div class="font-semibold text-red-500">Wallet Not Connected</div>
+<div class="text-xs text-gray-500">Connect to view dashboard</div>
+</div>
+<button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition" id="connectWalletBtn">
                             Connect Wallet
                         </button>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="flex-grow container mx-auto px-4 py-8">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <!-- Dashboard Tabs -->
-                <div class="flex overflow-x-auto border-b">
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50 active" data-tab="wallet">
-                        <i class="fas fa-wallet mr-2"></i> My Wallet
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 py-8">
+<div class="bg-white rounded-xl shadow-lg overflow-hidden">
+<!-- Dashboard Tabs -->
+<div class="flex overflow-x-auto border-b">
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50 active" data-tab="wallet">
+<i class="fas fa-wallet mr-2"></i> My Wallet
                     </button>
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="tickets">
-                        <i class="fas fa-ticket-alt mr-2"></i> My Tickets
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="tickets">
+<i class="fas fa-ticket-alt mr-2"></i> My Tickets
                     </button>
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="referrals">
-                        <i class="fas fa-user-friends mr-2"></i> Referrals
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="referrals">
+<i class="fas fa-user-friends mr-2"></i> Referrals
                     </button>
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="transactions">
-                        <i class="fas fa-exchange-alt mr-2"></i> Transactions
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="transactions">
+<i class="fas fa-exchange-alt mr-2"></i> Transactions
                     </button>
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="draws">
-                        <i class="fas fa-calendar-alt mr-2"></i> Draws
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="draws">
+<i class="fas fa-calendar-alt mr-2"></i> Draws
                     </button>
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="leaderboard">
-                        <i class="fas fa-trophy mr-2"></i> Leaderboard
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="leaderboard">
+<i class="fas fa-trophy mr-2"></i> Leaderboard
                     </button>
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="settings">
-                        <i class="fas fa-cog mr-2"></i> Settings
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="settings">
+<i class="fas fa-cog mr-2"></i> Settings
                     </button>
-                    <button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="support">
-                        <i class="fas fa-question-circle mr-2"></i> Support
+<button class="tab-btn px-6 py-4 font-medium text-sm border-b-2 border-transparent hover:text-purple-600 hover:bg-gray-50" data-tab="support">
+<i class="fas fa-question-circle mr-2"></i> Support
                     </button>
-                </div>
-
-                <!-- Tab Contents -->
-                <div class="p-6">
-                    <!-- Wallet Tab -->
-                    <div id="wallet" class="tab-content active">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Wallet Info Card -->
-                            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                    <i class="fas fa-wallet mr-2 text-purple-600"></i> Wallet Information
+</div>
+<!-- Tab Contents -->
+<div class="p-6">
+<!-- Wallet Tab -->
+<div class="tab-content active" id="wallet">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Wallet Info Card -->
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-wallet mr-2 text-purple-600"></i> Wallet Information
                                 </h3>
-                                <div class="space-y-3">
-                                    <div>
-                                        <label class="text-sm text-gray-500">Wallet Address</label>
-                                        <div id="walletAddress" class="font-mono text-sm bg-gray-50 p-2 rounded truncate">Not connected</div>
-                                    </div>
-                                    <div>
-                                        <label class="text-sm text-gray-500">Network</label>
-                                        <div id="currentNetwork" class="font-medium">Not connected</div>
-                                    </div>
-                                    <div>
-                                        <label class="text-sm text-gray-500">Balance</label>
-                                        <div id="walletBalance" class="font-medium">0.00</div>
-                                    </div>
-                                    <button id="disconnectWalletBtn" class="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg text-sm font-medium transition hidden">
+<div class="space-y-3">
+<div>
+<label class="text-sm text-gray-500">Wallet Address</label>
+<div class="font-mono text-sm bg-gray-50 p-2 rounded truncate" id="walletAddress">Not connected</div>
+</div>
+<div>
+<label class="text-sm text-gray-500">Network</label>
+<div class="font-medium" id="currentNetwork">Not connected</div>
+</div>
+<div>
+<label class="text-sm text-gray-500">Balance</label>
+<div class="font-medium" id="walletBalance">0.00</div>
+</div>
+<button class="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg text-sm font-medium transition hidden" id="disconnectWalletBtn">
                                         Disconnect Wallet
                                     </button>
-                                </div>
-                            </div>
-
-                            <!-- Network Selector Card -->
-                            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                    <i class="fas fa-network-wired mr-2 text-purple-600"></i> Switch Network
+</div>
+</div>
+<!-- Network Selector Card -->
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-network-wired mr-2 text-purple-600"></i> Switch Network
                                 </h3>
-                                <div class="space-y-4">
-                                    <select id="networkSelector" class="network-selector w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                        <option value="0x1">Ethereum Mainnet</option>
-                                        <option value="0x38">Binance Smart Chain</option>
-                                        <option value="0x89">Polygon</option>
-                                        <option value="0xa86a">Avalanche</option>
-                                    </select>
-                                    <button id="switchNetworkBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition hidden">
+<div class="space-y-4">
+<select class="network-selector w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" id="networkSelector">
+<option value="0x1">Ethereum Mainnet</option>
+<option value="0x38">Binance Smart Chain</option>
+<option value="0x89">Polygon</option>
+<option value="0xa86a">Avalanche</option>
+</select>
+<button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition hidden" id="switchNetworkBtn">
                                         Switch Network
                                     </button>
-                                    <p class="text-xs text-gray-500">Make sure your wallet supports the selected network</p>
-                                </div>
-                            </div>
-
-                            <!-- Quick Actions Card -->
-                            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                    <i class="fas fa-bolt mr-2 text-purple-600"></i> Quick Actions
+<p class="text-xs text-gray-500">Make sure your wallet supports the selected network</p>
+</div>
+</div>
+<!-- Quick Actions Card -->
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-bolt mr-2 text-purple-600"></i> Quick Actions
                                 </h3>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
-                                        <i class="fas fa-plus mr-2"></i> Buy Tickets
+<div class="grid grid-cols-2 gap-3">
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+<i class="fas fa-plus mr-2"></i> Buy Tickets
                                     </button>
-                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
-                                        <i class="fas fa-share-alt mr-2"></i> Refer Friends
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+<i class="fas fa-share-alt mr-2"></i> Refer Friends
                                     </button>
-                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
-                                        <i class="fas fa-history mr-2"></i> Transaction History
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+<i class="fas fa-history mr-2"></i> Transaction History
                                     </button>
-                                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
-                                        <i class="fas fa-trophy mr-2"></i> View Leaderboard
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-lg text-sm font-medium transition flex items-center justify-center">
+<i class="fas fa-trophy mr-2"></i> View Leaderboard
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tickets Tab -->
-                    <div id="tickets" class="tab-content">
-                        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                            <h2 class="text-xl font-semibold">Your Lottery Tickets</h2>
-                            <div class="flex space-x-2 mt-3 sm:mt-0">
-                                <select id="ticketFilter" class="p-2 border border-gray-200 rounded-lg text-sm">
-                                    <option value="all">All Tickets</option>
-                                    <option value="active">Active</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="won">Won</option>
-                                    <option value="lost">Lost</option>
-                                </select>
-                                <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition">
-                                    <i class="fas fa-download mr-1"></i> Export
+</div>
+</div>
+</div>
+</div>
+<!-- Tickets Tab -->
+<div class="tab-content" id="tickets">
+<div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+<h2 class="text-xl font-semibold">Your Lottery Tickets</h2>
+<div class="flex space-x-2 mt-3 sm:mt-0">
+<select class="p-2 border border-gray-200 rounded-lg text-sm" id="ticketFilter">
+<option value="all">All Tickets</option>
+<option value="active">Active</option>
+<option value="pending">Pending</option>
+<option value="won">Won</option>
+<option value="lost">Lost</option>
+</select>
+<button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition">
+<i class="fas fa-download mr-1"></i> Export
                                 </button>
-                            </div>
-                        </div>
-                        
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket ID</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purchase Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="ticketsTableBody" class="bg-white divide-y divide-gray-200">
-                                    <!-- Tickets will be loaded here dynamically -->
-                                    <tr>
-                                        <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">No tickets found. Connect your wallet to view your tickets.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="mt-4 flex justify-between items-center">
-                            <div class="text-sm text-gray-500">
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket ID</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw Date</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purchase Date</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="ticketsTableBody">
+<!-- Tickets will be loaded here dynamically -->
+<tr>
+<td class="px-6 py-4 text-center text-sm text-gray-500" colspan="7">No tickets found. Connect your wallet to view your tickets.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="text-sm text-gray-500">
                                 Showing <span id="ticketStart">0</span> to <span id="ticketEnd">0</span> of <span id="ticketTotal">0</span> tickets
                             </div>
-                            <div class="flex space-x-2">
-                                <button id="prevTicketPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+<div class="flex space-x-2">
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled="" id="prevTicketPage">
                                     Previous
                                 </button>
-                                <button id="nextTicketPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled="" id="nextTicketPage">
                                     Next
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Referrals Tab -->
-                    <div id="referrals" class="tab-content">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="lg:col-span-2">
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-user-friends mr-2 text-purple-600"></i> Your Referral Program
+</div>
+</div>
+</div>
+<!-- Referrals Tab -->
+<div class="tab-content" id="referrals">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2">
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-user-friends mr-2 text-purple-600"></i> Your Referral Program
                                     </h3>
-                                    <p class="text-gray-600 mb-4">
+<p class="text-gray-600 mb-4">
                                         Invite friends to join LuckyDraw and earn 10% commission on their ticket purchases! Share your unique referral link below.
                                     </p>
-                                    
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Your Referral Link</label>
-                                        <div class="flex">
-                                            <input id="referralLink" type="text" class="flex-1 p-2 border border-gray-300 rounded-l-lg focus:ring-purple-500 focus:border-purple-500" readonly value="Connect wallet to generate link">
-                                            <button id="copyReferralBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 rounded-r-lg">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                        </div>
-                                        <div id="copiedMessage" class="text-xs text-green-600 mt-1 hidden">Link copied to clipboard!</div>
-                                    </div>
-                                    
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600" id="totalReferrals">0</div>
-                                            <div class="text-sm text-gray-500">Total Referrals</div>
-                                        </div>
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600" id="activeReferrals">0</div>
-                                            <div class="text-sm text-gray-500">Active Users</div>
-                                        </div>
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600" id="totalEarned">0 ETH</div>
-                                            <div class="text-sm text-gray-500">Total Earned</div>
-                                        </div>
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600" id="pendingEarnings">0 ETH</div>
-                                            <div class="text-sm text-gray-500">Pending</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-history mr-2 text-purple-600"></i> Referral History
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">Your Referral Link</label>
+<div class="flex">
+<input class="flex-1 p-2 border border-gray-300 rounded-l-lg focus:ring-purple-500 focus:border-purple-500" id="referralLink" readonly="" type="text" value="Connect wallet to generate link"/>
+<button class="bg-purple-600 hover:bg-purple-700 text-white px-4 rounded-r-lg" id="copyReferralBtn">
+<i class="fas fa-copy"></i>
+</button>
+</div>
+<div class="text-xs text-green-600 mt-1 hidden" id="copiedMessage">Link copied to clipboard!</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600" id="totalReferrals">0</div>
+<div class="text-sm text-gray-500">Total Referrals</div>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600" id="activeReferrals">0</div>
+<div class="text-sm text-gray-500">Active Users</div>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600" id="totalEarned">0 ETH</div>
+<div class="text-sm text-gray-500">Total Earned</div>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600" id="pendingEarnings">0 ETH</div>
+<div class="text-sm text-gray-500">Pending</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-history mr-2 text-purple-600"></i> Referral History
                                     </h3>
-                                    <div class="overflow-x-auto">
-                                        <table class="min-w-full divide-y divide-gray-200">
-                                            <thead class="bg-gray-50">
-                                                <tr>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets Bought</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commission</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="referralHistoryBody" class="bg-white divide-y divide-gray-200">
-                                                <tr>
-                                                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No referral history yet</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-coins mr-2 text-purple-600"></i> Withdraw Earnings
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets Bought</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commission</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="referralHistoryBody">
+<tr>
+<td class="px-6 py-4 text-center text-sm text-gray-500" colspan="5">No referral history yet</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-coins mr-2 text-purple-600"></i> Withdraw Earnings
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Available Balance</label>
-                                            <div class="text-xl font-bold">0.25 ETH</div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Amount to Withdraw</label>
-                                            <input type="number" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="0.00" min="0" step="0.01">
-                                        </div>
-                                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Available Balance</label>
+<div class="text-xl font-bold">0.25 ETH</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Amount to Withdraw</label>
+<input class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" min="0" placeholder="0.00" step="0.01" type="number"/>
+</div>
+<button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
                                             Withdraw to Wallet
                                         </button>
-                                        <p class="text-xs text-gray-500">Withdrawals are processed within 24 hours. Minimum withdrawal: 0.05 ETH</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-share-alt mr-2 text-purple-600"></i> Share Your Link
+<p class="text-xs text-gray-500">Withdrawals are processed within 24 hours. Minimum withdrawal: 0.05 ETH</p>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-share-alt mr-2 text-purple-600"></i> Share Your Link
                                     </h3>
-                                    <p class="text-gray-600 mb-4 text-sm">
+<p class="text-gray-600 mb-4 text-sm">
                                         Share your referral link on social media to earn more commissions!
                                     </p>
-                                    <div class="grid grid-cols-4 gap-2">
-                                        <button class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </button>
-                                        <button class="bg-blue-400 hover:bg-blue-500 text-white p-2 rounded">
-                                            <i class="fab fa-twitter"></i>
-                                        </button>
-                                        <button class="bg-pink-600 hover:bg-pink-700 text-white p-2 rounded">
-                                            <i class="fab fa-instagram"></i>
-                                        </button>
-                                        <button class="bg-green-500 hover:bg-green-600 text-white p-2 rounded">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </button>
-                                        <button class="bg-red-600 hover:bg-red-700 text-white p-2 rounded">
-                                            <i class="fab fa-youtube"></i>
-                                        </button>
-                                        <button class="bg-gray-800 hover:bg-gray-900 text-white p-2 rounded">
-                                            <i class="fab fa-github"></i>
-                                        </button>
-                                        <button class="bg-blue-700 hover:bg-blue-800 text-white p-2 rounded">
-                                            <i class="fab fa-linkedin-in"></i>
-                                        </button>
-                                        <button class="bg-gray-600 hover:bg-gray-700 text-white p-2 rounded">
-                                            <i class="fas fa-envelope"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Transactions Tab -->
-                    <div id="transactions" class="tab-content">
-                        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                            <h2 class="text-xl font-semibold">Transaction History</h2>
-                            <div class="flex space-x-2 mt-3 sm:mt-0">
-                                <select id="transactionFilter" class="p-2 border border-gray-200 rounded-lg text-sm">
-                                    <option value="all">All Transactions</option>
-                                    <option value="deposit">Deposits</option>
-                                    <option value="withdrawal">Withdrawals</option>
-                                    <option value="ticket">Ticket Purchases</option>
-                                    <option value="commission">Commissions</option>
-                                </select>
-                                <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition">
-                                    <i class="fas fa-download mr-1"></i> Export
+<div class="grid grid-cols-4 gap-2">
+<button class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
+<i class="fab fa-facebook-f"></i>
+</button>
+<button class="bg-blue-400 hover:bg-blue-500 text-white p-2 rounded">
+<i class="fab fa-twitter"></i>
+</button>
+<button class="bg-pink-600 hover:bg-pink-700 text-white p-2 rounded">
+<i class="fab fa-instagram"></i>
+</button>
+<button class="bg-green-500 hover:bg-green-600 text-white p-2 rounded">
+<i class="fab fa-whatsapp"></i>
+</button>
+<button class="bg-red-600 hover:bg-red-700 text-white p-2 rounded">
+<i class="fab fa-youtube"></i>
+</button>
+<button class="bg-gray-800 hover:bg-gray-900 text-white p-2 rounded">
+<i class="fab fa-github"></i>
+</button>
+<button class="bg-blue-700 hover:bg-blue-800 text-white p-2 rounded">
+<i class="fab fa-linkedin-in"></i>
+</button>
+<button class="bg-gray-600 hover:bg-gray-700 text-white p-2 rounded">
+<i class="fas fa-envelope"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Transactions Tab -->
+<div class="tab-content" id="transactions">
+<div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+<h2 class="text-xl font-semibold">Transaction History</h2>
+<div class="flex space-x-2 mt-3 sm:mt-0">
+<select class="p-2 border border-gray-200 rounded-lg text-sm" id="transactionFilter">
+<option value="all">All Transactions</option>
+<option value="deposit">Deposits</option>
+<option value="withdrawal">Withdrawals</option>
+<option value="ticket">Ticket Purchases</option>
+<option value="commission">Commissions</option>
+</select>
+<button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition">
+<i class="fas fa-download mr-1"></i> Export
                                 </button>
-                            </div>
-                        </div>
-                        
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Network</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Hash</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transactionsTableBody" class="bg-white divide-y divide-gray-200">
-                                    <tr>
-                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No transactions found. Connect your wallet to view your transaction history.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="mt-4 flex justify-between items-center">
-                            <div class="text-sm text-gray-500">
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Network</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Hash</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="transactionsTableBody">
+<tr>
+<td class="px-6 py-4 text-center text-sm text-gray-500" colspan="6">No transactions found. Connect your wallet to view your transaction history.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="text-sm text-gray-500">
                                 Showing <span id="transactionStart">0</span> to <span id="transactionEnd">0</span> of <span id="transactionTotal">0</span> transactions
                             </div>
-                            <div class="flex space-x-2">
-                                <button id="prevTransactionPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+<div class="flex space-x-2">
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled="" id="prevTransactionPage">
                                     Previous
                                 </button>
-                                <button id="nextTransactionPage" class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled>
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded text-sm font-medium transition disabled:opacity-50" disabled="" id="nextTransactionPage">
                                     Next
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Draws Tab -->
-                    <div id="draws" class="tab-content">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="lg:col-span-2">
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-calendar-alt mr-2 text-purple-600"></i> Next Draw
+</div>
+</div>
+</div>
+<!-- Draws Tab -->
+<div class="tab-content" id="draws">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2">
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-calendar-alt mr-2 text-purple-600"></i> Next Draw
                                     </h3>
-                                    <div class="flex flex-col md:flex-row items-center justify-between">
-                                        <div class="mb-4 md:mb-0">
-                                            <div class="text-sm text-gray-500">Draw #124</div>
-                                            <div class="text-2xl font-bold">Saturday, June 10, 2023</div>
-                                            <div class="text-gray-600">8:00 PM UTC</div>
-                                        </div>
-                                        <div class="bg-purple-100 p-4 rounded-lg text-center">
-                                            <div class="text-sm text-purple-800 mb-1">Time Remaining</div>
-                                            <div id="countdownTimer" class="text-2xl font-bold text-purple-600">00:00:00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-trophy mr-2 text-purple-600"></i> Current Jackpot
+<div class="flex flex-col md:flex-row items-center justify-between">
+<div class="mb-4 md:mb-0">
+<div class="text-sm text-gray-500">Draw #124</div>
+<div class="text-2xl font-bold">Saturday, June 10, 2023</div>
+<div class="text-gray-600">8:00 PM UTC</div>
+</div>
+<div class="bg-purple-100 p-4 rounded-lg text-center">
+<div class="text-sm text-purple-800 mb-1">Time Remaining</div>
+<div class="text-2xl font-bold text-purple-600" id="countdownTimer">00:00:00</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-trophy mr-2 text-purple-600"></i> Current Jackpot
                                     </h3>
-                                    <div class="flex items-end space-x-4">
-                                        <div class="text-4xl font-bold text-purple-600">5.42 ETH</div>
-                                        <div class="text-green-600 mb-1">
-                                            <i class="fas fa-arrow-up mr-1"></i> +0.24 ETH (24h)
+<div class="flex items-end space-x-4">
+<div class="text-4xl font-bold text-purple-600">5.42 ETH</div>
+<div class="text-green-600 mb-1">
+<i class="fas fa-arrow-up mr-1"></i> +0.24 ETH (24h)
                                         </div>
-                                    </div>
-                                    <div class="mt-4">
-                                        <div class="flex justify-between text-sm text-gray-500 mb-1">
-                                            <span>Your Tickets in This Draw</span>
-                                            <span>3</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-purple-600 h-2.5 rounded-full" style="width: 15%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-history mr-2 text-purple-600"></i> Previous Draws
+</div>
+<div class="mt-4">
+<div class="flex justify-between text-sm text-gray-500 mb-1">
+<span>Your Tickets in This Draw</span>
+<span>3</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2.5">
+<div class="bg-purple-600 h-2.5 rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-history mr-2 text-purple-600"></i> Previous Draws
                                     </h3>
-                                    <div class="overflow-x-auto">
-                                        <table class="min-w-full divide-y divide-gray-200">
-                                            <thead class="bg-gray-50">
-                                                <tr>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw #</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jackpot</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Winner</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Your Tickets</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="bg-white divide-y divide-gray-200">
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">123</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">Jun 3, 2023</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">5.18 ETH</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x1a2...3b4c</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">2</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">122</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">May 27, 2023</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">4.92 ETH</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x5d6...7e8f</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">5</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">121</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">May 20, 2023</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">4.75 ETH</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x9a0...1b2c</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">3</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-chart-line mr-2 text-purple-600"></i> Jackpot History
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw #</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jackpot</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Winner</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Your Tickets</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200">
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">123</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">Jun 3, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">5.18 ETH</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x1a2...3b4c</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">2</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">122</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">May 27, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">4.92 ETH</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x5d6...7e8f</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">5</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">121</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">May 20, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">4.75 ETH</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-mono">0x9a0...1b2c</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">3</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Not Won</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-chart-line mr-2 text-purple-600"></i> Jackpot History
                                     </h3>
-                                    <div class="h-64">
-                                        <!-- Placeholder for chart -->
-                                        <div class="flex items-center justify-center h-full bg-gray-50 rounded-lg">
-                                            <p class="text-gray-500">Jackpot growth chart will be displayed here</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-ticket-alt mr-2 text-purple-600"></i> Your Draw Tickets
+<div class="h-64">
+<!-- Placeholder for chart -->
+<div class="flex items-center justify-center h-full bg-gray-50 rounded-lg">
+<p class="text-gray-500">Jackpot growth chart will be displayed here</p>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-ticket-alt mr-2 text-purple-600"></i> Your Draw Tickets
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                            <div>
-                                                <div class="font-medium">Draw #124</div>
-                                                <div class="text-sm text-gray-500">Jun 10, 2023</div>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="font-medium">3 tickets</div>
-                                                <div class="text-sm text-gray-500">0.03 ETH</div>
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                            <div>
-                                                <div class="font-medium">Draw #123</div>
-                                                <div class="text-sm text-gray-500">Jun 3, 2023</div>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="font-medium">2 tickets</div>
-                                                <div class="text-sm text-gray-500">0.02 ETH</div>
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                            <div>
-                                                <div class="font-medium">Draw #122</div>
-                                                <div class="text-sm text-gray-500">May 27, 2023</div>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="font-medium">5 tickets</div>
-                                                <div class="text-sm text-gray-500">0.05 ETH</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Leaderboard Tab -->
-                    <div id="leaderboard" class="tab-content">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="lg:col-span-2">
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <div class="flex justify-between items-center mb-4">
-                                        <h3 class="text-lg font-semibold flex items-center">
-                                            <i class="fas fa-trophy mr-2 text-purple-600"></i> Top Players
+<div class="space-y-4">
+<div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="font-medium">Draw #124</div>
+<div class="text-sm text-gray-500">Jun 10, 2023</div>
+</div>
+<div class="text-right">
+<div class="font-medium">3 tickets</div>
+<div class="text-sm text-gray-500">0.03 ETH</div>
+</div>
+</div>
+<div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="font-medium">Draw #123</div>
+<div class="text-sm text-gray-500">Jun 3, 2023</div>
+</div>
+<div class="text-right">
+<div class="font-medium">2 tickets</div>
+<div class="text-sm text-gray-500">0.02 ETH</div>
+</div>
+</div>
+<div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+<div>
+<div class="font-medium">Draw #122</div>
+<div class="text-sm text-gray-500">May 27, 2023</div>
+</div>
+<div class="text-right">
+<div class="font-medium">5 tickets</div>
+<div class="text-sm text-gray-500">0.05 ETH</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Leaderboard Tab -->
+<div class="tab-content" id="leaderboard">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2">
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-semibold flex items-center">
+<i class="fas fa-trophy mr-2 text-purple-600"></i> Top Players
                                         </h3>
-                                        <select id="leaderboardFilter" class="p-2 border border-gray-200 rounded-lg text-sm">
-                                            <option value="all">All Time</option>
-                                            <option value="month">This Month</option>
-                                            <option value="week">This Week</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="overflow-x-auto">
-                                        <table class="min-w-full divide-y divide-gray-200">
-                                            <thead class="bg-gray-50">
-                                                <tr>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wins</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referrals</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spent</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="bg-white divide-y divide-gray-200">
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="leaderboard-badge gold">1</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="font-medium">0x8f2...4d5e</div>
-                                                        <div class="text-xs text-gray-500">Top Contributor</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">142</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">3</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">28</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">14.2 ETH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="leaderboard-badge silver">2</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="font-medium">0x3a9...0b1c</div>
-                                                        <div class="text-xs text-gray-500">VIP Member</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">118</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">2</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">19</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">11.8 ETH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="leaderboard-badge bronze">3</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="font-medium">0x7e6...5f4d</div>
-                                                        <div class="text-xs text-gray-500">Referral King</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">96</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">1</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">42</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">9.6 ETH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="leaderboard-badge">4</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="font-medium">0x2c8...7d9e</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">87</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">0</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">15</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">8.7 ETH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="leaderboard-badge">5</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="font-medium">0x1b3...9a0f</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">76</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">1</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">12</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">7.6 ETH</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-award mr-2 text-purple-600"></i> Your Stats
+<select class="p-2 border border-gray-200 rounded-lg text-sm" id="leaderboardFilter">
+<option value="all">All Time</option>
+<option value="month">This Month</option>
+<option value="week">This Week</option>
+</select>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wins</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referrals</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spent</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200">
+<tr>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="leaderboard-badge gold">1</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">0x8f2...4d5e</div>
+<div class="text-xs text-gray-500">Top Contributor</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">142</td>
+<td class="px-6 py-4 whitespace-nowrap">3</td>
+<td class="px-6 py-4 whitespace-nowrap">28</td>
+<td class="px-6 py-4 whitespace-nowrap">14.2 ETH</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="leaderboard-badge silver">2</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">0x3a9...0b1c</div>
+<div class="text-xs text-gray-500">VIP Member</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">118</td>
+<td class="px-6 py-4 whitespace-nowrap">2</td>
+<td class="px-6 py-4 whitespace-nowrap">19</td>
+<td class="px-6 py-4 whitespace-nowrap">11.8 ETH</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="leaderboard-badge bronze">3</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">0x7e6...5f4d</div>
+<div class="text-xs text-gray-500">Referral King</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">96</td>
+<td class="px-6 py-4 whitespace-nowrap">1</td>
+<td class="px-6 py-4 whitespace-nowrap">42</td>
+<td class="px-6 py-4 whitespace-nowrap">9.6 ETH</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="leaderboard-badge">4</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">0x2c8...7d9e</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">87</td>
+<td class="px-6 py-4 whitespace-nowrap">0</td>
+<td class="px-6 py-4 whitespace-nowrap">15</td>
+<td class="px-6 py-4 whitespace-nowrap">8.7 ETH</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="leaderboard-badge">5</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">0x1b3...9a0f</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">76</td>
+<td class="px-6 py-4 whitespace-nowrap">1</td>
+<td class="px-6 py-4 whitespace-nowrap">12</td>
+<td class="px-6 py-4 whitespace-nowrap">7.6 ETH</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-award mr-2 text-purple-600"></i> Your Stats
                                     </h3>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600">24</div>
-                                            <div class="text-sm text-gray-500">Your Rank</div>
-                                        </div>
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600">18</div>
-                                            <div class="text-sm text-gray-500">Tickets Bought</div>
-                                        </div>
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600">5</div>
-                                            <div class="text-sm text-gray-500">Referrals</div>
-                                        </div>
-                                        <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                            <div class="text-2xl font-bold text-purple-600">1.8 ETH</div>
-                                            <div class="text-sm text-gray-500">Total Spent</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-gem mr-2 text-purple-600"></i> VIP Rewards
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600">24</div>
+<div class="text-sm text-gray-500">Your Rank</div>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600">18</div>
+<div class="text-sm text-gray-500">Tickets Bought</div>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600">5</div>
+<div class="text-sm text-gray-500">Referrals</div>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg text-center">
+<div class="text-2xl font-bold text-purple-600">1.8 ETH</div>
+<div class="text-sm text-gray-500">Total Spent</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-gem mr-2 text-purple-600"></i> VIP Rewards
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div class="flex items-start">
-                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
-                                                <i class="fas fa-check-circle"></i>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm text-gray-700">10% bonus on all ticket purchases</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-start">
-                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
-                                                <i class="fas fa-check-circle"></i>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm text-gray-700">Higher referral commission (15%)</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-start">
-                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
-                                                <i class="fas fa-check-circle"></i>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm text-gray-700">Exclusive VIP draws</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-start">
-                                            <div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
-                                                <i class="fas fa-check-circle"></i>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm text-gray-700">Priority customer support</p>
-                                            </div>
-                                        </div>
-                                        <div class="pt-4">
-                                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+<div class="space-y-4">
+<div class="flex items-start">
+<div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+<i class="fas fa-check-circle"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm text-gray-700">10% bonus on all ticket purchases</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+<i class="fas fa-check-circle"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm text-gray-700">Higher referral commission (15%)</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+<i class="fas fa-check-circle"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm text-gray-700">Exclusive VIP draws</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex-shrink-0 h-5 w-5 text-purple-600 mt-1">
+<i class="fas fa-check-circle"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm text-gray-700">Priority customer support</p>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
                                                 Upgrade to VIP
                                             </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-calendar-check mr-2 text-purple-600"></i> Next Milestone
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-calendar-check mr-2 text-purple-600"></i> Next Milestone
                                     </h3>
-                                    <div class="space-y-3">
-                                        <div>
-                                            <div class="flex justify-between text-sm text-gray-500 mb-1">
-                                                <span>50 Tickets (VIP Status)</span>
-                                                <span>18/50</span>
-                                            </div>
-                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 36%"></div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="flex justify-between text-sm text-gray-500 mb-1">
-                                                <span>10 Referrals (Bonus 2%)</span>
-                                                <span>5/10</span>
-                                            </div>
-                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 50%"></div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="flex justify-between text-sm text-gray-500 mb-1">
-                                                <span>5 ETH Spent (Gold Tier)</span>
-                                                <span>1.8/5 ETH</span>
-                                            </div>
-                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 36%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Settings Tab -->
-                    <div id="settings" class="tab-content">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="lg:col-span-2">
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-user-cog mr-2 text-purple-600"></i> Account Settings
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-sm text-gray-500 mb-1">
+<span>50 Tickets (VIP Status)</span>
+<span>18/50</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2.5">
+<div class="bg-purple-600 h-2.5 rounded-full" style="width: 36%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm text-gray-500 mb-1">
+<span>10 Referrals (Bonus 2%)</span>
+<span>5/10</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2.5">
+<div class="bg-purple-600 h-2.5 rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm text-gray-500 mb-1">
+<span>5 ETH Spent (Gold Tier)</span>
+<span>1.8/5 ETH</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2.5">
+<div class="bg-purple-600 h-2.5 rounded-full" style="width: 36%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Settings Tab -->
+<div class="tab-content" id="settings">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2">
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-user-cog mr-2 text-purple-600"></i> Account Settings
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                            <input type="email" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="your@email.com">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                                            <input type="text" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="username">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                                            <input type="password" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="••••••••">
-                                        </div>
-                                        <button class="mt-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+<input class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="your@email.com" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+<input class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="username" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+<input class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="••••••••" type="password"/>
+</div>
+<button class="mt-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
                                             Save Changes
                                         </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-bell mr-2 text-purple-600"></i> Notification Preferences
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-bell mr-2 text-purple-600"></i> Notification Preferences
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700">Draw Results</label>
-                                                <p class="text-xs text-gray-500">Notify me when draw results are announced</p>
-                                            </div>
-                                            <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" class="sr-only peer" checked>
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                                            </label>
-                                        </div>
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700">Referral Activity</label>
-                                                <p class="text-xs text-gray-500">Notify me when my referrals purchase tickets</p>
-                                            </div>
-                                            <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" class="sr-only peer" checked>
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                                            </label>
-                                        </div>
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700">Promotions</label>
-                                                <p class="text-xs text-gray-500">Notify me about special promotions and bonuses</p>
-                                            </div>
-                                            <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" class="sr-only peer">
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                                            </label>
-                                        </div>
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700">Wallet Activity</label>
-                                                <p class="text-xs text-gray-500">Notify me about deposits and withdrawals</p>
-                                            </div>
-                                            <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" class="sr-only peer" checked>
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-palette mr-2 text-purple-600"></i> Theme Settings
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<label class="block text-sm font-medium text-gray-700">Draw Results</label>
+<p class="text-xs text-gray-500">Notify me when draw results are announced</p>
+</div>
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<label class="block text-sm font-medium text-gray-700">Referral Activity</label>
+<p class="text-xs text-gray-500">Notify me when my referrals purchase tickets</p>
+</div>
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<label class="block text-sm font-medium text-gray-700">Promotions</label>
+<p class="text-xs text-gray-500">Notify me about special promotions and bonuses</p>
+</div>
+<label class="inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<label class="block text-sm font-medium text-gray-700">Wallet Activity</label>
+<p class="text-xs text-gray-500">Notify me about deposits and withdrawals</p>
+</div>
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-palette mr-2 text-purple-600"></i> Theme Settings
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">Color Theme</label>
-                                            <div class="grid grid-cols-3 gap-2">
-                                                <button class="h-10 rounded-lg bg-purple-600 border-2 border-purple-600"></button>
-                                                <button class="h-10 rounded-lg bg-blue-600 border-2 border-gray-200"></button>
-                                                <button class="h-10 rounded-lg bg-green-600 border-2 border-gray-200"></button>
-                                                <button class="h-10 rounded-lg bg-red-600 border-2 border-gray-200"></button>
-                                                <button class="h-10 rounded-lg bg-indigo-600 border-2 border-gray-200"></button>
-                                                <button class="h-10 rounded-lg bg-pink-600 border-2 border-gray-200"></button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">Dark Mode</label>
-                                            <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" class="sr-only peer">
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                                                <span class="ms-3 text-sm font-medium text-gray-700">Enable Dark Mode</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-globe mr-2 text-purple-600"></i> Language & Region
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Color Theme</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="h-10 rounded-lg bg-purple-600 border-2 border-purple-600"></button>
+<button class="h-10 rounded-lg bg-blue-600 border-2 border-gray-200"></button>
+<button class="h-10 rounded-lg bg-green-600 border-2 border-gray-200"></button>
+<button class="h-10 rounded-lg bg-red-600 border-2 border-gray-200"></button>
+<button class="h-10 rounded-lg bg-indigo-600 border-2 border-gray-200"></button>
+<button class="h-10 rounded-lg bg-pink-600 border-2 border-gray-200"></button>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Dark Mode</label>
+<label class="inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+<span class="ms-3 text-sm font-medium text-gray-700">Enable Dark Mode</span>
+</label>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-globe mr-2 text-purple-600"></i> Language &amp; Region
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Language</label>
-                                            <select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
-                                                <option>English</option>
-                                                <option>Spanish</option>
-                                                <option>French</option>
-                                                <option>German</option>
-                                                <option>Chinese</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Time Zone</label>
-                                            <select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
-                                                <option>(UTC) Coordinated Universal Time</option>
-                                                <option>(UTC-05:00) Eastern Time</option>
-                                                <option>(UTC-08:00) Pacific Time</option>
-                                                <option>(UTC+01:00) Central European Time</option>
-                                                <option>(UTC+08:00) China Standard Time</option>
-                                            </select>
-                                        </div>
-                                        <button class="mt-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Language</label>
+<select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+<option>English</option>
+<option>Spanish</option>
+<option>French</option>
+<option>German</option>
+<option>Chinese</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Time Zone</label>
+<select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+<option>(UTC) Coordinated Universal Time</option>
+<option>(UTC-05:00) Eastern Time</option>
+<option>(UTC-08:00) Pacific Time</option>
+<option>(UTC+01:00) Central European Time</option>
+<option>(UTC+08:00) China Standard Time</option>
+</select>
+</div>
+<button class="mt-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
                                             Save Preferences
                                         </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Support Tab -->
-                    <div id="support" class="tab-content">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="lg:col-span-2">
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-question-circle mr-2 text-purple-600"></i> Frequently Asked Questions
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Support Tab -->
+<div class="tab-content" id="support">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2">
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-question-circle mr-2 text-purple-600"></i> Frequently Asked Questions
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div class="border-b border-gray-200 pb-4">
-                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
-                                                <span>How do I buy lottery tickets?</span>
-                                                <i class="fas fa-chevron-down"></i>
-                                            </button>
-                                            <div class="mt-2 text-sm text-gray-600">
-                                                <p>To purchase lottery tickets, connect your wallet, select the ticket type you want, and confirm the transaction in your wallet. Your tickets will be automatically registered for the next draw.</p>
-                                            </div>
-                                        </div>
-                                        <div class="border-b border-gray-200 pb-4">
-                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
-                                                <span>When are the draws held?</span>
-                                                <i class="fas fa-chevron-down"></i>
-                                            </button>
-                                            <div class="mt-2 text-sm text-gray-600">
-                                                <p>Draws are held every Saturday at 8:00 PM UTC. You can view the countdown to the next draw in the Draws section of your dashboard.</p>
-                                            </div>
-                                        </div>
-                                        <div class="border-b border-gray-200 pb-4">
-                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
-                                                <span>How do I claim my winnings?</span>
-                                                <i class="fas fa-chevron-down"></i>
-                                            </button>
-                                            <div class="mt-2 text-sm text-gray-600">
-                                                <p>Winnings are automatically deposited to your connected wallet address within 24 hours after the draw. No additional action is required.</p>
-                                            </div>
-                                        </div>
-                                        <div class="border-b border-gray-200 pb-4">
-                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
-                                                <span>How does the referral program work?</span>
-                                                <i class="fas fa-chevron-down"></i>
-                                            </button>
-                                            <div class="mt-2 text-sm text-gray-600">
-                                                <p>You earn 10% commission on all ticket purchases made by users who sign up using your referral link. You can withdraw your earnings once you reach the minimum withdrawal amount of 0.05 ETH.</p>
-                                            </div>
-                                        </div>
-                                        <div class="border-b border-gray-200 pb-4">
-                                            <button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
-                                                <span>Which networks are supported?</span>
-                                                <i class="fas fa-chevron-down"></i>
-                                            </button>
-                                            <div class="mt-2 text-sm text-gray-600">
-                                                <p>We currently support Ethereum Mainnet, Binance Smart Chain, Polygon, and Avalanche. You can switch networks in your wallet settings.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-envelope mr-2 text-purple-600"></i> Contact Support
+<div class="space-y-4">
+<div class="border-b border-gray-200 pb-4">
+<button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+<span>How do I buy lottery tickets?</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="mt-2 text-sm text-gray-600">
+<p>To purchase lottery tickets, connect your wallet, select the ticket type you want, and confirm the transaction in your wallet. Your tickets will be automatically registered for the next draw.</p>
+</div>
+</div>
+<div class="border-b border-gray-200 pb-4">
+<button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+<span>When are the draws held?</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="mt-2 text-sm text-gray-600">
+<p>Draws are held every Saturday at 8:00 PM UTC. You can view the countdown to the next draw in the Draws section of your dashboard.</p>
+</div>
+</div>
+<div class="border-b border-gray-200 pb-4">
+<button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+<span>How do I claim my winnings?</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="mt-2 text-sm text-gray-600">
+<p>Winnings are automatically deposited to your connected wallet address within 24 hours after the draw. No additional action is required.</p>
+</div>
+</div>
+<div class="border-b border-gray-200 pb-4">
+<button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+<span>How does the referral program work?</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="mt-2 text-sm text-gray-600">
+<p>You earn 10% commission on all ticket purchases made by users who sign up using your referral link. You can withdraw your earnings once you reach the minimum withdrawal amount of 0.05 ETH.</p>
+</div>
+</div>
+<div class="border-b border-gray-200 pb-4">
+<button class="flex justify-between items-center w-full text-left font-medium text-purple-600 hover:text-purple-800">
+<span>Which networks are supported?</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="mt-2 text-sm text-gray-600">
+<p>We currently support Ethereum Mainnet, Binance Smart Chain, Polygon, and Avalanche. You can switch networks in your wallet settings.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-envelope mr-2 text-purple-600"></i> Contact Support
                                     </h3>
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                                            <select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
-                                                <option>General Inquiry</option>
-                                                <option>Account Issues</option>
-                                                <option>Transaction Problems</option>
-                                                <option>Technical Support</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                                            <textarea rows="4" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="Describe your issue in detail..."></textarea>
-                                        </div>
-                                        <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+<select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+<option>General Inquiry</option>
+<option>Account Issues</option>
+<option>Transaction Problems</option>
+<option>Technical Support</option>
+<option>Other</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+<textarea class="w-full p-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500" placeholder="Describe your issue in detail..." rows="4"></textarea>
+</div>
+<button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition">
                                             Send Message
                                         </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-file-alt mr-2 text-purple-600"></i> Documentation
+</div>
+</div>
+</div>
+<div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100 mb-6">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-file-alt mr-2 text-purple-600"></i> Documentation
                                     </h3>
-                                    <div class="space-y-3">
-                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                                                <i class="fas fa-book"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium">User Guide</div>
-                                                <div class="text-sm text-gray-500">Learn how to use LuckyDraw</div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                                                <i class="fas fa-shield-alt"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium">Security</div>
-                                                <div class="text-sm text-gray-500">How we protect your funds</div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                                                <i class="fas fa-percentage"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium">Odds & Payouts</div>
-                                                <div class="text-sm text-gray-500">Understand your chances to win</div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                                                <i class="fas fa-gavel"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium">Terms & Conditions</div>
-                                                <div class="text-sm text-gray-500">Legal agreement</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="fas fa-headset mr-2 text-purple-600"></i> Live Support
+<div class="space-y-3">
+<a class="flex items-center p-3 rounded-lg hover:bg-gray-50" href="#">
+<div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+<i class="fas fa-book"></i>
+</div>
+<div class="ml-4">
+<div class="font-medium">User Guide</div>
+<div class="text-sm text-gray-500">Learn how to use LuckyDraw</div>
+</div>
+</a>
+<a class="flex items-center p-3 rounded-lg hover:bg-gray-50" href="#">
+<div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+<i class="fas fa-shield-alt"></i>
+</div>
+<div class="ml-4">
+<div class="font-medium">Security</div>
+<div class="text-sm text-gray-500">How we protect your funds</div>
+</div>
+</a>
+<a class="flex items-center p-3 rounded-lg hover:bg-gray-50" href="#">
+<div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+<i class="fas fa-percentage"></i>
+</div>
+<div class="ml-4">
+<div class="font-medium">Odds &amp; Payouts</div>
+<div class="text-sm text-gray-500">Understand your chances to win</div>
+</div>
+</a>
+<a class="flex items-center p-3 rounded-lg hover:bg-gray-50" href="#">
+<div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+<i class="fas fa-gavel"></i>
+</div>
+<div class="ml-4">
+<div class="font-medium">Terms &amp; Conditions</div>
+<div class="text-sm text-gray-500">Legal agreement</div>
+</div>
+</a>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+<h3 class="text-lg font-semibold mb-4 flex items-center">
+<i class="fas fa-headset mr-2 text-purple-600"></i> Live Support
                                     </h3>
-                                    <p class="text-gray-600 mb-4">
+<p class="text-gray-600 mb-4">
                                         Our support team is available 24/7 to assist you with any questions or issues.
                                     </p>
-                                    <div class="space-y-3">
-                                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                                                <i class="fas fa-comment-dots"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium">Live Chat</div>
-                                                <div class="text-sm text-gray-500">Instant messaging support</div>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                                                <i class="fas fa-phone-alt"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium">Phone Support</div>
-                                                <div class="text-sm text-gray-500">+1 (555) 123-4567</div>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                                                <i class="fab fa-telegram"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium">Telegram</div>
-                                                <div class="text-sm text-gray-500">@LuckyDrawSupport</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-gray-100 border-t border-gray-200 mt-8">
-            <div class="container mx-auto px-4 py-8">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="flex items-center space-x-2 mb-4 md:mb-0">
-                        <i class="fas fa-ticket-alt text-xl text-purple-600"></i>
-                        <span class="text-lg font-bold">LuckyDraw</span>
-                    </div>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-600 hover:text-purple-600">Terms</a>
-                        <a href="#" class="text-gray-600 hover:text-purple-600">Privacy</a>
-                        <a href="#" class="text-gray-600 hover:text-purple-600">FAQ</a>
-                        <a href="#" class="text-gray-600 hover:text-purple-600">Contact</a>
-                    </div>
-                </div>
-                <div class="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
-                    <p>© 2023 LuckyDraw. All rights reserved. Powered by blockchain technology.</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <script>
+<div class="space-y-3">
+<div class="flex items-center p-3 bg-gray-50 rounded-lg">
+<div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+<i class="fas fa-comment-dots"></i>
+</div>
+<div class="ml-4">
+<div class="font-medium">Live Chat</div>
+<div class="text-sm text-gray-500">Instant messaging support</div>
+</div>
+</div>
+<div class="flex items-center p-3 bg-gray-50 rounded-lg">
+<div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+<i class="fas fa-phone-alt"></i>
+</div>
+<div class="ml-4">
+<div class="font-medium">Phone Support</div>
+<div class="text-sm text-gray-500">+1 (555) 123-4567</div>
+</div>
+</div>
+<div class="flex items-center p-3 bg-gray-50 rounded-lg">
+<div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+<i class="fab fa-telegram"></i>
+</div>
+<div class="ml-4">
+<div class="font-medium">Telegram</div>
+<div class="text-sm text-gray-500">@LuckyDrawSupport</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-100 border-t border-gray-200 mt-8">
+<div class="container mx-auto px-4 py-8">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<div class="flex items-center space-x-2 mb-4 md:mb-0">
+<i class="fas fa-ticket-alt text-xl text-purple-600"></i>
+<span class="text-lg font-bold">LuckyDraw</span>
+</div>
+<div class="flex space-x-6">
+<a class="text-gray-600 hover:text-purple-600" href="#">Terms</a>
+<a class="text-gray-600 hover:text-purple-600" href="#">Privacy</a>
+<a class="text-gray-600 hover:text-purple-600" href="#">FAQ</a>
+<a class="text-gray-600 hover:text-purple-600" href="#">Contact</a>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+<p>© 2023 LuckyDraw. All rights reserved. Powered by blockchain technology.</p>
+</div>
+</div>
+</footer>
+</div>
+<script>
         // Global variables
         let userAccount = null;
         let currentNetwork = null;
@@ -1645,13 +1608,7 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
     </script>
-
 <script type="module">
-  import { supabase } from './supabaseClient.js';
-
-  console.log("🔗 Supabase connected:", supabase);
-
-
 
 const drawSelect = document.getElementById('drawSelect');
 const buyForm = document.getElementById('buy-ticket-form');
@@ -1659,7 +1616,7 @@ const buyForm = document.getElementById('buy-ticket-form');
 async function loadDrawOptions() {
   const { data, error } = await supabase.from('draws').select('*').eq('status', 'active');
   if (data) {
-    drawSelect.innerHTML = '<option value="">انتخاب قرعه‌کشی</option>';
+    drawSelect.innerHTML = '<option value="">Select a Draw</option>';
     data.forEach(draw => {
       const opt = document.createElement('option');
       opt.value = draw.id;
@@ -1676,42 +1633,73 @@ buyForm.addEventListener('submit', async (e) => {
   const amount = parseInt(document.getElementById('ticketAmount').value);
 
   if (!window.ethereum) {
-    alert("لطفاً MetaMask را نصب کنید.");
+    alert("Please install MetaMask.");
     return;
   }
 
   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-  const user_address = accounts[0];
+  const metamask_address = accounts[0];
+
+  const { data: sessionData } = await supabase.auth.getSession();
+  const supabase_email = sessionData.session.user.email;
+
+  // Optional validation: compare user_address in Supabase metadata if stored
+  // We'll allow transaction but could be used to flag suspicious users
 
   const { error } = await supabase.from('transactions').insert([{
-    user_address,
+    user_address: metamask_address,
     amount,
+    draw_id,
     tx_hash: '',
     status: 'pending',
     type: 'ticket'
   }]);
 
   if (error) {
-    alert("❌ خطا در ثبت خرید: " + error.message);
+    alert("❌ خطا در ثبت Buy: " + error.message);
   } else {
-    alert("✅ خرید شما ثبت شد!");
+    alert("✅ Buy شما ثبت شد!");
     buyForm.reset();
     loadUserTickets();
   }
 });
 
+// نمایش بلیت‌ها با قرعه‌کشی
+async function loadUserTickets() {
+  if (!window.ethereum) return;
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const address = accounts[0];
+
+  const { data: transactions, error } = await supabase
+    .from('transactions')
+    .select('*, draws(title)')
+    .eq('user_address', address)
+    .eq('type', 'ticket');
+
+  const ticketList = document.getElementById('ticketList');
+  ticketList.innerHTML = '';
+
+  if (transactions && transactions.length > 0) {
+    transactions.forEach(tx => {
+      const li = document.createElement('li');
+      li.textContent = `🎫 ${tx.amount} بلیت for "${tx.draws?.title || 'Unknown Draw'}" — Status: ${tx.status}`;
+      ticketList.appendChild(li);
+    });
+  } else {
+    ticketList.innerHTML = '<li>No tickets found.</li>';
+  }
+}
+
 </script>
-
 </body>
-</html
-<form id="buy-ticket-form" class="space-y-4 bg-white shadow p-6 rounded-xl">
-  <h2 class="text-xl font-bold text-purple-700">🎟 خرید بلیت</h2>
-  <select id="drawSelect" class="form-select w-full p-2 rounded border">
-    <option value="">انتخاب قرعه‌کشی</option>
-  </select>
-  <input type="number" id="ticketAmount" class="form-input w-full p-2 rounded border" placeholder="تعداد بلیت (مثلاً 1 یا 2)" min="1" value="1" required>
-  <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">خرید</button>
-</form>
+</html>
+<h2 class="text-xl font-bold text-purple-700">🎟 Buy Ticket</h2>
+<select class="form-select w-full p-2 rounded border" id="drawSelect">
+<option value="">Select a Draw</option>
+</select>
+<input class="form-input w-full p-2 rounded border" id="ticketAmount" min="1" placeholder="تعداد بلیت (مثلاً 1 یا 2)" required="" type="number" value="1"/>
+<button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition" type="submit">Buy</button>
 
 
->
+
+&gt;
