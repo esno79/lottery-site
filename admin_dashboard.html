@@ -367,7 +367,55 @@
           </table>
         </div>
       </div>
-    </section>
+    <!-- Ticket Filters HTML -->
+
+<select id="ticketStatusFilter" class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
+  <option value="">All Statuses</option>
+  <option value="pending">Pending</option>
+  <option value="success">Success</option>
+  <option value="failed">Failed</option>
+</select>
+
+<input type="date" id="ticketStartDate" class="form-input px-4 py-2 rounded-lg border-gray-300" placeholder="Start Date">
+<input type="date" id="ticketEndDate" class="form-input px-4 py-2 rounded-lg border-gray-300" placeholder="End Date">
+
+
+<!-- Ticket Filters JS -->
+<script>
+
+// Ticket status filter
+document.getElementById('ticketStatusFilter').addEventListener('change', filterTickets);
+// Ticket date range filter
+document.getElementById('ticketStartDate').addEventListener('change', filterTickets);
+document.getElementById('ticketEndDate').addEventListener('change', filterTickets);
+
+function filterTickets() {
+  const status = document.getElementById('ticketStatusFilter').value;
+  const start = document.getElementById('ticketStartDate').value;
+  const end = document.getElementById('ticketEndDate').value;
+
+  let filtered = [...allTickets];
+
+  if (status) {
+    filtered = filtered.filter(t => t.status === status);
+  }
+
+  if (start) {
+    const startDate = new Date(start);
+    filtered = filtered.filter(t => new Date(t.created_at) >= startDate);
+  }
+
+  if (end) {
+    const endDate = new Date(end);
+    endDate.setHours(23, 59, 59); // include full day
+    filtered = filtered.filter(t => new Date(t.created_at) <= endDate);
+  }
+
+  renderTicketList(filtered);
+}
+
+</script>
+</section>
 
     <!-- Draws Section -->
     <section id="draws" class="hidden animate-fade-in">
@@ -1208,5 +1256,60 @@
       });
     }
   </script>
+
+<script>
+// حذف قرعه‌کشی
+document.querySelector('#draw-list').addEventListener('click', async (e) => {
+  if (e.target.classList.contains('delete-btn')) {
+    const drawId = e.target.dataset.id;
+    if (confirm('آیا از حذف این قرعه‌کشی مطمئن هستید؟')) {
+      const { error } = await supabase.from('draws').delete().eq('id', drawId);
+      if (error) {
+        alert('❌ خطا در حذف: ' + error.message);
+      } else {
+        alert('✅ با موفقیت حذف شد');
+        await loadData();
+      }
+    }
+  }
+
+  // ویرایش قرعه‌کشی
+  if (e.target.classList.contains('edit-btn')) {
+    const drawId = e.target.dataset.id;
+    const draw = allDraws.find(d => d.id === drawId);
+
+    document.getElementById('modal-draw-id').value = draw.id;
+    document.getElementById('modal-title').value = draw.title;
+    document.getElementById('modal-description').value = draw.description;
+    document.getElementById('modal-draw-date').value = draw.draw_date.split('T')[0];
+    document.getElementById('modal-status').value = draw.status;
+
+    document.getElementById('editModal').classList.remove('hidden');
+  }
+});
+
+// ثبت تغییرات ویرایش
+document.getElementById('edit-draw-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('modal-draw-id').value;
+  const title = document.getElementById('modal-title').value;
+  const description = document.getElementById('modal-description').value;
+  const draw_date = document.getElementById('modal-draw-date').value;
+  const status = document.getElementById('modal-status').value;
+
+  const { error } = await supabase.from('draws').update({
+    title, description, draw_date, status
+  }).eq('id', id);
+
+  if (error) {
+    alert('❌ خطا در بروزرسانی: ' + error.message);
+  } else {
+    alert('✅ با موفقیت بروزرسانی شد');
+    document.getElementById('editModal').classList.add('hidden');
+    await loadData();
+  }
+});
+</script>
+
 </body>
 </html>
