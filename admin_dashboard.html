@@ -582,7 +582,13 @@ function filterTickets() {
         <canvas id="chartActivity" height="300"></canvas>
       </div>
     </section>
-  </main>
+  
+<section id="winners" class="hidden mt-8">
+  <h2 class="text-xl font-bold mb-4">🏆 Draw Winners</h2>
+  <ul id="winnerList" class="space-y-2"></ul>
+</section>
+
+</main>
 
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg hidden z-50 transform transition-all duration-300"></div>
@@ -1309,6 +1315,65 @@ document.getElementById('edit-draw-form').addEventListener('submit', async (e) =
     await loadData();
   }
 });
+</script>
+
+
+<script type="module">
+// اجرای قرعه‌کشی
+document.querySelector('#draw-list').addEventListener('click', async (e) => {
+  if (e.target.classList.contains('run-draw-btn')) {
+    const drawId = e.target.dataset.id;
+
+    const { data: participants, error } = await supabase
+      .from('transactions')
+      .select('user_address')
+      .eq('draw_id', drawId)
+      .eq('status', 'pending');
+
+    if (!participants || participants.length === 0) {
+      alert("No participants found.");
+      return;
+    }
+
+    const winnerIndex = Math.floor(Math.random() * participants.length);
+    const winner = participants[winnerIndex].user_address;
+
+    const { error: insertError } = await supabase.from('winners').insert([{
+      draw_id: drawId,
+      user_address: winner
+    }]);
+
+    if (insertError) {
+      alert("❌ Error saving winner: " + insertError.message);
+    } else {
+      alert(`🎉 Winner selected: ${winner}`);
+      await loadWinners();
+    }
+  }
+});
+
+// بارگذاری لیست برنده‌ها
+async function loadWinners() {
+  const { data, error } = await supabase
+    .from('winners')
+    .select('*, draws(title)')
+    .order('win_time', { ascending: false });
+
+  const list = document.getElementById('winnerList');
+  list.innerHTML = '';
+
+  if (data && data.length > 0) {
+    data.forEach(w => {
+      const li = document.createElement('li');
+      li.textContent = `🏆 ${w.user_address} — Draw: ${w.draws.title}`;
+      list.appendChild(li);
+    });
+  } else {
+    list.innerHTML = '<li>No winners yet.</li>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadWinners);
 </script>
 
 </body>
