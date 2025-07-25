@@ -219,7 +219,7 @@
             transform: scale(1.1);
         }
 
-        /* New Glass Card Modal Styles */
+        /* New Modern Glass Card Modal Styles */
         .glass-modal {
             display: none;
             position: fixed;
@@ -231,54 +231,149 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
             width: 90%;
-            max-width: 600px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 700px;
+            padding: 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             position: relative;
-            animation: modalFadeIn 0.3s ease;
+            animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
         }
 
-        .glass-card-content {
-            max-height: 70vh;
-            overflow-y: auto;
-            padding: 1rem;
+        .glass-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .glass-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
         }
 
         .close-glass-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            color: var(--dark);
-            opacity: 0.7;
+            color: white;
+            opacity: 0.8;
             transition: opacity 0.3s ease;
+            line-height: 1;
         }
 
         .close-glass-modal:hover {
             opacity: 1;
         }
 
-        .language-selector {
+        .glass-card-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .language-selector-container {
+            position: relative;
             margin-bottom: 1.5rem;
+            width: 200px;
+        }
+
+        .language-selector {
             width: 100%;
-            padding: 0.7rem;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
             font-family: 'Poppins', sans-serif;
             font-size: 0.95rem;
             background-color: white;
             cursor: pointer;
+            appearance: none;
+            transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c5ce7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1rem;
+            padding-right: 2rem;
         }
 
+        .language-selector:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        .language-selector option {
+            padding: 0.5rem;
+        }
+
+        .ticket-content {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .ticket-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ticket-content h3 span {
+            font-size: 1.5rem;
+        }
+
+        .ticket-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .ticket-content ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            padding: 0;
+        }
+
+        .ticket-content ul li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+        }
+
+        .ticket-content ul li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .ticket-content .tip {
+            background: rgba(108, 92, 231, 0.1);
+            border-left: 3px solid var(--primary);
+            padding: 0.8rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .rtl-text {
+            direction: rtl;
+            text-align: right;
+        }
+        
         .bold {
             font-weight: bold;
         }
@@ -608,17 +703,20 @@
 
             .glass-card {
                 width: 95%;
+            }
+            
+            .glass-card-body {
                 padding: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            .glass-card {
+            .glass-card-body {
                 padding: 1rem;
             }
             
-            .glass-card-content {
-                padding: 0.5rem;
+            .language-selector-container {
+                width: 100%;
             }
         }
 </style>
@@ -699,23 +797,24 @@
 </div>
 </div>
 
-<!-- Referral Program -->
+<!-- Super VIP Ticket -->
 <div class="ticket-card">
 <div class="ticket-header">
-<h3>Referral Program</h3>
-<div class="info-icon" data-ticket="referral">?</div>
+<h3>Super VIP Ticket</h3>
+<div class="info-icon" data-ticket="supervip">?</div>
 </div>
 <div class="ticket-body">
-<div class="ticket-price">Earn 10% Commission</div>
+<div class="ticket-price">0.25 ETH</div>
 <ul class="ticket-features">
-<li>Invite friends to join</li>
-<li>Earn 10% from their ticket purchases</li>
-<li>Referral link generated after wallet connection</li>
-<li>Commissions paid instantly</li>
+<li>Entry to weekly draw</li>
+<li>1 in 50 chance to win</li>
+<li>Exclusive jackpots</li>
+<li>Instant results</li>
+<li>10 bonus entries</li>
+<li>Priority VIP support</li>
+<li>Highest referral commission</li>
 </ul>
-<button class="btn" onclick="document.getElementById('referralSection').scrollIntoView({ behavior: 'smooth' });">
-            Get My Referral Link
-        </button>
+<button class="btn buy-btn" data-price="0.25">Buy Ticket</button>
 </div>
 </div>
 </div>
@@ -731,10 +830,15 @@
 </div>
 </div>
 
-<!-- Glass Card Modal -->
+<!-- Modern Glass Card Modal -->
 <div class="glass-modal" id="glassModal">
 <div class="glass-card">
+<div class="glass-card-header">
+<h3 class="glass-card-title" id="modalTicketTitle">Ticket Details</h3>
 <span class="close-glass-modal">×</span>
+</div>
+<div class="glass-card-body">
+<div class="language-selector-container">
 <select class="language-selector" id="languageSelector">
 <option value="english">English</option>
 <option value="french">Français</option>
@@ -744,8 +848,10 @@
 <option value="arabic">العربية</option>
 <option value="persian">فارسی</option>
 </select>
-<div class="glass-card-content" id="glassCardContent">
+</div>
+<div class="ticket-content" id="glassCardContent">
 <!-- Content will be dynamically inserted here -->
+</div>
 </div>
 </div>
 </div>
@@ -802,274 +908,310 @@
         const glassModal = document.getElementById('glassModal');
         const glassCardContent = document.getElementById('glassCardContent');
         const languageSelector = document.getElementById('languageSelector');
+        const modalTicketTitle = document.getElementById('modalTicketTitle');
         
         // Ticket content in different languages
         const ticketContents = {
             classic: {
                 english: `
-                    <p><strong>Classic Ticket (0.01 ETH)</strong></p>
-                    <p>The Classic Ticket is the perfect entry point to experience LuckyDraw. For just 0.01 ETH, you get a chance in the weekly draw with a simple and affordable structure.</p>
+                    <h3><span>🎟️</span> Classic Ticket – 0.01 ETH</h3>
+                    <p>The Classic Ticket is the perfect entry point to experience LuckyDraw. For just 0.01 ETH, you get a chance in the weekly draw with a simple and affordable structure. This plan with its low cost and simple structure is suitable for users who want to enter the lottery with peace of mind and without financial pressure.</p>
                     <ul>
                         <li>✅ Lowest-cost entry to the lottery</li>
                         <li>✅ Best option for first-time users</li>
-                        <li>✅ No special requirements</li>
+                        <li>✅ No special requirements or conditions</li>
                     </ul>
+                    <div class="tip">💡 For those looking for more chances, more advanced options are also available.</div>
                 `,
                 french: `
-                    <p><strong>Ticket Classique (0.01 ETH)</strong></p>
-                    <p>Le ticket classique est l'option idéale pour découvrir LuckyDraw. Pour seulement 0.01 ETH, vous participez à la loterie hebdomadaire.</p>
+                    <h3><span>🎟️</span> Ticket Classique – 0.01 ETH</h3>
+                    <p>Le ticket classique est l'option idéale pour découvrir LuckyDraw. Pour seulement 0.01 ETH, vous participez à la loterie hebdomadaire. Ce plan avec son faible coût et sa structure simple convient aux utilisateurs qui souhaitent participer à la loterie en toute tranquillité et sans pression financière.</p>
                     <ul>
                         <li>✅ Entrée la moins chère</li>
                         <li>✅ Parfait pour les débutants</li>
                         <li>✅ Aucune exigence particulière</li>
                     </ul>
+                    <div class="tip">💡 Pour ceux qui cherchent plus de chances, des options plus avancées sont également disponibles.</div>
                 `,
                 german: `
-                    <p><strong>Classic Ticket (0.01 ETH)</strong></p>
-                    <p>Das Classic Ticket ist der perfekte Einstieg in LuckyDraw. Für nur 0.01 ETH erhalten Sie eine Chance in der wöchentlichen Verlosung mit einer einfachen und erschwinglichen Struktur.</p>
+                    <h3><span>🎟️</span> Classic Ticket – 0.01 ETH</h3>
+                    <p>Das Classic Ticket ist der perfekte Einstieg in LuckyDraw. Für nur 0.01 ETH erhalten Sie eine Chance in der wöchentlichen Verlosung mit einer einfachen und erschwinglichen Struktur. Dieser Plan mit seinen niedrigen Kosten und einfachen Struktur ist für Benutzer geeignet, die mit Ruhe und ohne finanziellen Druck an der Lotterie teilnehmen möchten.</p>
                     <ul>
                         <li>✅ Günstigster Einstieg in die Lotterie</li>
                         <li>✅ Beste Option für Erstnutzer</li>
                         <li>✅ Keine besonderen Anforderungen</li>
                     </ul>
+                    <div class="tip">💡 Für diejenigen, die nach mehr Chancen suchen, stehen auch fortgeschrittenere Optionen zur Verfügung.</div>
                 `,
                 spanish: `
-                    <p><strong>Boleto Clásico (0.01 ETH)</strong></p>
-                    <p>El boleto clásico es el punto de entrada perfecto para experimentar LuckyDraw. Por solo 0.01 ETH, obtienes una oportunidad en el sorteo semanal con una estructura simple y asequible.</p>
+                    <h3><span>🎟️</span> Boleto Clásico – 0.01 ETH</h3>
+                    <p>El boleto clásico es el punto de entrada perfecto para experimentar LuckyDraw. Por solo 0.01 ETH, obtienes una oportunidad en el sorteo semanal con una estructura simple y asequible. Este plan con su bajo costo y estructura simple es adecuado para usuarios que desean ingresar a la lotería con tranquilidad y sin presión financiera.</p>
                     <ul>
                         <li>✅ Entrada más económica a la lotería</li>
                         <li>✅ Mejor opción para usuarios primerizos</li>
                         <li>✅ Sin requisitos especiales</li>
                     </ul>
+                    <div class="tip">💡 Para aquellos que buscan más posibilidades, también hay opciones más avanzadas disponibles.</div>
                 `,
                 russian: `
-                    <p><strong>Классический билет (0.01 ETH)</strong></p>
-                    <p>Классический билет - это идеальная отправная точка для знакомства с LuckyDraw. Всего за 0.01 ETH вы получаете шанс в еженедельном розыгрыше с простой и доступной структурой.</p>
+                    <h3><span>🎟️</span> Классический билет – 0.01 ETH</h3>
+                    <p>Классический билет - это идеальная отправная точка для знакомства с LuckyDraw. Всего за 0.01 ETH вы получаете шанс в еженедельном розыгрыше с простой и доступной структурой. Этот план с его низкой стоимостью и простой структурой подходит для пользователей, которые хотят принять участие в лотерее спокойно и без финансового давления.</p>
                     <ul>
                         <li>✅ Самый дешевый вход в лотерею</li>
                         <li>✅ Лучший вариант для новичков</li>
                         <li>✅ Без особых требований</li>
                     </ul>
+                    <div class="tip">💡 Для тех, кто ищет больше шансов, также доступны более продвинутые варианты.</div>
                 `,
                 arabic: `
-                    <p><strong>تذكرة كلاسيكية (0.01 ETH)</strong></p>
-                    <p>التذكرة الكلاسيكية هي نقطة البداية المثالية لتجربة LuckyDraw. مقابل 0.01 ETH فقط، تحصل على فرصة في السحب الأسبوعي مع هيكل بسيط وبأسعار معقولة.</p>
-                    <ul>
+                    <h3><span>🎟️</span> تذكرة كلاسيكية – 0.01 ETH</h3>
+                    <p class="rtl-text">التذكرة الكلاسيكية هي نقطة البداية المثالية لتجربة LuckyDraw. مقابل 0.01 ETH فقط، تحصل على فرصة في السحب الأسبوعي مع هيكل بسيط وبأسعار معقولة. هذه الخطة بتكلفتها المنخفضة وهيكلها البسيط مناسبة للمستخدمين الذين يرغبون في دخول اليانصيب براحة البال وبدون ضغوط مالية.</p>
+                    <ul class="rtl-text">
                         <li>✅ أدنى تكلفة لدخول اليانصيب</li>
                         <li>✅ أفضل خيار للمستخدمين لأول مرة</li>
                         <li>✅ لا توجد متطلبات خاصة</li>
                     </ul>
+                    <div class="tip rtl-text">💡 بالنسبة لأولئك الذين يبحثون عن فرص أكثر، تتوفر أيضًا خيارات أكثر تقدمًا.</div>
                 `,
                 persian: `
-                    <p><strong>بلیط کلاسیک (0.01 ETH)</strong></p>
-                    <p>بلیط کلاسیک بهترین گزینه برای آشنایی با دنیای LuckyDraw است. با فقط 0.01 ETH، وارد قرعه‌کشی هفتگی می‌شوید و شانس خود را برای برد امتحان می‌کنید.</p>
-                    <ul>
+                    <h3><span>🎟️</span> بلیط کلاسیک – 0.01 ETH</h3>
+                    <p class="rtl-text">بلیط کلاسیک بهترین گزینه برای آشنایی با دنیای LuckyDraw است. با فقط ۰٫۰۱ ETH، وارد قرعه‌کشی هفتگی می‌شوید و شانس خود را برای برد امتحان می‌کنید. این پلن با هزینه پایین و ساختار ساده‌اش، مناسب کاربرانی‌ست که می‌خواهند با آرامش و بدون فشار مالی وارد قرعه‌کشی شوند.</p>
+                    <ul class="rtl-text">
                         <li>✅ کم‌هزینه‌ترین روش ورود به قرعه‌کشی</li>
                         <li>✅ بهترین گزینه برای تجربه اول</li>
                         <li>✅ بدون نیاز به ثبت‌نام خاص یا شرایط ویژه</li>
                     </ul>
+                    <div class="tip rtl-text">💡 برای کسانی که به‌دنبال شانس بیشتر هستند، گزینه‌های پیشرفته‌تر هم در دسترس است.</div>
                 `
             },
             premium: {
                 english: `
-                    <p><strong>Premium Ticket (0.05 ETH)</strong></p>
-                    <p>The Premium Ticket offers better odds and higher rewards. For 0.05 ETH, you get improved chances to win in the weekly draw.</p>
+                    <h3><span>💎</span> Premium Ticket – 0.05 ETH</h3>
+                    <p>For 0.05 ETH, the Premium Ticket gives you a better chance of winning in the weekly draws. This plan is designed to create a perfect balance between cost and return. If you're looking for a more professional experience than the Classic plan, Premium is definitely an excellent choice.</p>
                     <ul>
-                        <li>✅ Better odds than Classic</li>
-                        <li>✅ Higher potential rewards</li>
-                        <li>✅ Balanced cost-benefit ratio</li>
+                        <li>✅ Better chance to win than Classic Ticket</li>
+                        <li>✅ More valuable jackpots</li>
+                        <li>✅ Professional experience with balanced budget</li>
                     </ul>
+                    <div class="tip">💡 For those who want to receive additional rewards, the VIP or Super VIP plans are also available.</div>
                 `,
                 french: `
-                    <p><strong>Ticket Premium (0.05 ETH)</strong></p>
-                    <p>Le ticket premium offre de meilleures chances et des récompenses plus élevées. Pour 0.05 ETH, vous augmentez vos chances de gagner.</p>
+                    <h3><span>💎</span> Ticket Premium – 0.05 ETH</h3>
+                    <p>Pour 0.05 ETH, le ticket Premium vous donne une meilleure chance de gagner aux tirages hebdomadaires. Ce plan est conçu pour créer un équilibre parfait entre coût et retour. Si vous recherchez une expérience plus professionnelle que le plan Classique, Premium est définitivement un excellent choix.</p>
                     <ul>
-                        <li>✅ Meilleures chances que le Classique</li>
-                        <li>✅ Récompenses potentielles plus élevées</li>
-                        <li>✅ Rapport coût-bénéfice équilibré</li>
+                        <li>✅ Meilleure chance de gagner que le ticket Classique</li>
+                        <li>✅ Jackpots plus précieux</li>
+                        <li>✅ Expérience professionnelle avec budget équilibré</li>
                     </ul>
+                    <div class="tip">💡 Pour ceux qui souhaitent recevoir des récompenses supplémentaires, les plans VIP ou Super VIP sont également disponibles.</div>
                 `,
                 german: `
-                    <p><strong>Premium Ticket (0.05 ETH)</strong></p>
-                    <p>Das Premium Ticket bietet bessere Gewinnchancen und höhere Belohnungen. Für 0.05 ETH erhalten Sie verbesserte Gewinnchancen in der wöchentlichen Verlosung.</p>
+                    <h3><span>💎</span> Premium Ticket – 0.05 ETH</h3>
+                    <p>Für 0.05 ETH gibt Ihnen das Premium Ticket eine bessere Gewinnchance bei den wöchentlichen Ziehungen. Dieser Plan ist so konzipiert, dass er ein perfektes Gleichgewicht zwischen Kosten und Rendite schafft. Wenn Sie nach einer professionelleren Erfahrung als dem Classic-Plan suchen, ist Premium definitiv eine ausgezeichnete Wahl.</p>
                     <ul>
-                        <li>✅ Bessere Chancen als Classic</li>
-                        <li>✅ Höhere potenzielle Gewinne</li>
-                        <li>✅ Ausgewogenes Kosten-Nutzen-Verhältnis</li>
+                        <li>✅ Bessere Gewinnchance als das Classic Ticket</li>
+                        <li>✅ Wertvollere Jackpots</li>
+                        <li>✅ Professionelle Erfahrung mit ausgewogenem Budget</li>
                     </ul>
+                    <div class="tip">💡 Für diejenigen, die zusätzliche Belohnungen erhalten möchten, stehen auch die VIP- oder Super VIP-Pläne zur Verfügung.</div>
                 `,
                 spanish: `
-                    <p><strong>Boleto Premium (0.05 ETH)</strong></p>
-                    <p>El boleto premium ofrece mejores probabilidades y mayores recompensas. Por 0.05 ETH, obtienes mejores posibilidades de ganar en el sorteo semanal.</p>
+                    <h3><span>💎</span> Boleto Premium – 0.05 ETH</h3>
+                    <p>Por 0.05 ETH, el boleto Premium te brinda una mejor oportunidad de ganar en los sorteos semanales. Este plan está diseñado para crear un equilibrio perfecto entre costo y retorno. Si buscas una experiencia más profesional que el plan Clásico, Premium es definitivamente una excelente opción.</p>
                     <ul>
-                        <li>✅ Mejores probabilidades que el Clásico</li>
-                        <li>✅ Recompensas potenciales más altas</li>
-                        <li>✅ Relación costo-beneficio equilibrada</li>
+                        <li>✅ Mejor oportunidad de ganar que el Boleto Clásico</li>
+                        <li>✅ Jackpots más valiosos</li>
+                        <li>✅ Experiencia profesional con presupuesto equilibrado</li>
                     </ul>
+                    <div class="tip">💡 Para aquellos que desean recibir recompensas adicionales, también están disponibles los planes VIP o Super VIP.</div>
                 `,
                 russian: `
-                    <p><strong>Премиум билет (0.05 ETH)</strong></p>
-                    <p>Премиум билет предлагает лучшие шансы и более высокие вознаграждения. За 0.05 ETH вы получаете улучшенные шансы на победу в еженедельном розыгрыше.</p>
+                    <h3><span>💎</span> Премиум билет – 0.05 ETH</h3>
+                    <p>За 0.05 ETH премиум-билет дает вам больше шансов на победу в еженедельных розыгрышах. Этот план разработан для создания идеального баланса между стоимостью и отдачей. Если вы ищете более профессиональный опыт, чем классический план, Premium — определенно отличный выбор.</p>
                     <ul>
-                        <li>✅ Лучшие шансы, чем у Классического</li>
-                        <li>✅ Более высокие потенциальные выигрыши</li>
-                        <li>✅ Сбалансированное соотношение цены и качества</li>
+                        <li>✅ Лучшие шансы на победу, чем у классического билета</li>
+                        <li>✅ Более ценные джекпоты</li>
+                        <li>✅ Профессиональный опыт при сбалансированном бюджете</li>
                     </ul>
+                    <div class="tip">💡 Для тех, кто хочет получать дополнительные вознаграждения, также доступны тарифные планы VIP или Super VIP.</div>
                 `,
                 arabic: `
-                    <p><strong>تذكرة متميزة (0.05 ETH)</strong></p>
-                    <p>تقدم التذكرة المتميزة احتمالات أفضل ومكافآت أعلى. مقابل 0.05 ETH، تحصل على فرص محسنة للفوز في السحب الأسبوعي.</p>
-                    <ul>
-                        <li>✅ احتمالات أفضل من الكلاسيكية</li>
-                        <li>✅ مكافآت محتملة أعلى</li>
-                        <li>✅ توازن جيد بين التكلفة والفوائد</li>
+                    <h3><span>💎</span> تذكرة متميزة – 0.05 ETH</h3>
+                    <p class="rtl-text">مقابل 0.05 ETH، تمنحك التذكرة المتميزة فرصة أفضل للفوز في السحوبات الأسبوعية. تم تصميم هذه الخطة لخلق توازن مثالي بين التكلفة والعائد. إذا كنت تبحث عن تجربة أكثر احترافية من الخطة الكلاسيكية، فإن المتميزة هي بالتأكيد خيار ممتاز.</p>
+                    <ul class="rtl-text">
+                        <li>✅ فرصة أفضل للفوز من التذكرة الكلاسيكية</li>
+                        <li>✅ جوائز أكبر قيمة</li>
+                        <li>✅ تجربة احترافية بميزانية متوازنة</li>
                     </ul>
+                    <div class="tip rtl-text">💡 بالنسبة لأولئك الذين يرغبون في الحصول على مكافآت إضافية، تتوفر أيضًا خطط VIP أو Super VIP.</div>
                 `,
                 persian: `
-                    <p><strong>بلیط پرمیوم (0.05 ETH)</strong></p>
-                    <p>بلیط پرمیوم شانس بیشتری برای برنده‌شدن در قرعه‌کشی‌های هفتگی می‌دهد. این پلن به‌گونه‌ای طراحی شده که تعادل کاملی بین هزینه و بازده ایجاد کند.</p>
-                    <ul>
+                    <h3><span>💎</span> بلیط پرمیوم – 0.05 ETH</h3>
+                    <p class="rtl-text">با پرداخت ۰٫۰۵ ETH، بلیت پرمیوم به شما شانس بیشتری برای برنده‌شدن در قرعه‌کشی‌های هفتگی می‌دهد. این پلن به‌گونه‌ای طراحی شده که تعادل کاملی بین هزینه و بازده ایجاد کند. اگر به دنبال تجربه‌ای حرفه‌ای‌تر نسبت به پلن کلاسیک هستید، بدون شک Premium انتخاب عالی شماست.</p>
+                    <ul class="rtl-text">
                         <li>✅ شانس برد بیشتر نسبت به بلیت کلاسیک</li>
                         <li>✅ جکپات‌های ارزشمندتر</li>
                         <li>✅ تجربه حرفه‌ای با بودجه متعادل</li>
                     </ul>
+                    <div class="tip rtl-text">💡 برای کسانی که می‌خواهند پاداش‌های جانبی هم دریافت کنند، پلن VIP یا Super VIP هم در دسترس است.</div>
                 `
             },
             vip: {
                 english: `
-                    <p><strong>VIP Ticket (0.1 ETH)</strong></p>
-                    <p>The VIP Ticket is designed for serious players. For 0.1 ETH, you get the best odds, premium rewards, and referral earning capabilities.</p>
+                    <h3><span>👑</span> VIP Ticket – 0.1 ETH</h3>
+                    <p>The VIP Ticket is designed for those looking for a higher level of play. With 0.1 ETH, you benefit from much better chances, access to special jackpots, and the ability to earn income by referring friends. This plan also upgrades your position in the lottery queue and creates a different experience.</p>
                     <ul>
-                        <li>✅ Highest odds among standard tickets</li>
-                        <li>✅ Access to premium rewards</li>
-                        <li>✅ Referral program activation</li>
+                        <li>✅ Much higher chance of winning</li>
+                        <li>✅ Bigger prizes with special benefits</li>
+                        <li>✅ Activation of Referral feature (earning income by inviting friends)</li>
                         <li>✅ Priority in draws</li>
                     </ul>
+                    <div class="tip">💡 If you're looking for maximum return and benefits, the Super VIP plan is your ideal option.</div>
                 `,
                 french: `
-                    <p><strong>Ticket VIP (0.1 ETH)</strong></p>
-                    <p>Le ticket VIP est conçu pour les joueurs sérieux. Pour 0.1 ETH, vous obtenez les meilleures chances, des récompenses premium et la possibilité de gagner des commissions par parrainage.</p>
+                    <h3><span>👑</span> Ticket VIP – 0.1 ETH</h3>
+                    <p>Le ticket VIP est conçu pour ceux qui recherchent un niveau de jeu supérieur. Avec 0.1 ETH, vous bénéficiez de bien meilleures chances, d'un accès à des jackpots spéciaux et de la possibilité de gagner un revenu en parrainant des amis. Ce plan améliore également votre position dans la file d'attente de la loterie et crée une expérience différente.</p>
                     <ul>
-                        <li>✅ Meilleures chances parmi les tickets standard</li>
-                        <li>✅ Accès à des récompenses premium</li>
-                        <li>✅ Activation du programme de parrainage</li>
+                        <li>✅ Chance de gagner beaucoup plus élevée</li>
+                        <li>✅ Prix plus importants avec avantages spéciaux</li>
+                        <li>✅ Activation de la fonctionnalité de parrainage (gagner un revenu en invitant des amis)</li>
                         <li>✅ Priorité dans les tirages</li>
                     </ul>
+                    <div class="tip">💡 Si vous recherchez un rendement et des avantages maximum, le plan Super VIP est votre option idéale.</div>
                 `,
                 german: `
-                    <p><strong>VIP Ticket (0.1 ETH)</strong></p>
-                    <p>Das VIP Ticket ist für ernsthafte Spieler konzipiert. Für 0.1 ETH erhalten Sie die besten Gewinnchancen, Premium-Belohnungen und die Möglichkeit, Empfehlungsprovisionen zu verdienen.</p>
+                    <h3><span>👑</span> VIP Ticket – 0.1 ETH</h3>
+                    <p>Das VIP-Ticket ist für diejenigen konzipiert, die nach einem höheren Spielniveau suchen. Mit 0.1 ETH profitieren Sie von viel besseren Gewinnchancen, Zugang zu speziellen Jackpots und der Möglichkeit, durch die Empfehlung von Freunden Einkommen zu erzielen. Dieser Plan verbessert auch Ihre Position in der Lotteriewarteschlange und schafft ein besonderes Erlebnis.</p>
                     <ul>
-                        <li>✅ Beste Gewinnchancen unter den Standard-Tickets</li>
-                        <li>✅ Zugang zu Premium-Belohnungen</li>
-                        <li>✅ Aktivierung des Empfehlungsprogramms</li>
+                        <li>✅ Viel höhere Gewinnchance</li>
+                        <li>✅ Größere Preise mit besonderen Vorteilen</li>
+                        <li>✅ Aktivierung der Empfehlungsfunktion (Einkommen durch Einladung von Freunden)</li>
                         <li>✅ Priorität bei den Ziehungen</li>
                     </ul>
+                    <div class="tip">💡 Wenn Sie nach maximaler Rendite und Vorteilen suchen, ist der Super VIP-Plan Ihre ideale Option.</div>
                 `,
                 spanish: `
-                    <p><strong>Boleto VIP (0.1 ETH)</strong></p>
-                    <p>El boleto VIP está diseñado para jugadores serios. Por 0.1 ETH, obtienes las mejores probabilidades, recompensas premium y capacidad para ganar comisiones por referidos.</p>
+                    <h3><span>👑</span> Boleto VIP – 0.1 ETH</h3>
+                    <p>El boleto VIP está diseñado para aquellos que buscan un nivel de juego superior. Con 0.1 ETH, te beneficias de muchas más posibilidades, acceso a premios especiales y la capacidad de generar ingresos al recomendar amigos. Este plan también mejora tu posición en la cola de la lotería y crea una experiencia diferente.</p>
                     <ul>
-                        <li>✅ Las mejores probabilidades entre los boletos estándar</li>
-                        <li>✅ Acceso a recompensas premium</li>
-                        <li>✅ Activación del programa de referidos</li>
+                        <li>✅ Mucha más probabilidad de ganar</li>
+                        <li>✅ Premios más grandes con beneficios especiales</li>
+                        <li>✅ Activación de la función de Referidos (ganar ingresos invitando amigos)</li>
                         <li>✅ Prioridad en los sorteos</li>
                     </ul>
+                    <div class="tip">💡 Si buscas el máximo retorno y beneficios, el plan Super VIP es tu opción ideal.</div>
                 `,
                 russian: `
-                    <p><strong>VIP билет (0.1 ETH)</strong></p>
-                    <p>VIP билет предназначен для серьезных игроков. За 0.1 ETH вы получаете лучшие шансы, премиальные вознаграждения и возможность зарабатывать на рефералах.</p>
+                    <h3><span>👑</span> VIP билет – 0.1 ETH</h3>
+                    <p>VIP-билет предназначен для тех, кто ищет более высокий уровень игры. За 0.1 ETH вы получаете гораздо больше шансов, доступ к специальным джекпотам и возможность зарабатывать доход, приглашая друзей. Этот план также улучшает вашу позицию в лотерейной очереди и создает другой опыт.</p>
                     <ul>
-                        <li>✅ Лучшие шансы среди стандартных билетов</li>
-                        <li>✅ Доступ к премиальным вознаграждениям</li>
-                        <li>✅ Активация реферальной программы</li>
+                        <li>✅ Намного больше шансов на победу</li>
+                        <li>✅ Более крупные призы с особыми преимуществами</li>
+                        <li>✅ Активация функции рефералов (заработок за приглашение друзей)</li>
                         <li>✅ Приоритет в розыгрышах</li>
                     </ul>
+                    <div class="tip">💡 Если вы ищете максимальную отдачу и преимущества, план Super VIP — ваш идеальный вариант.</div>
                 `,
                 arabic: `
-                    <p><strong>تذكرة VIP (0.1 ETH)</strong></p>
-                    <p>تم تصميم تذكرة VIP للاعبين الجادين. مقابل 0.1 ETH، تحصل على أفضل الاحتمالات ومكافآت متميزة وقدرة على كسب العمولات من الإحالات.</p>
-                    <ul>
-                        <li>✅ أعلى الاحتمالات بين التذاكر القياسية</li>
-                        <li>✅ الوصول إلى مكافآت متميزة</li>
-                        <li>✅ تفعيل برنامج الإحالة</li>
+                    <h3><span>👑</span> تذكرة VIP – 0.1 ETH</h3>
+                    <p class="rtl-text">تم تصميم تذكرة VIP لأولئك الذين يبحثون عن مستوى أعلى من اللعب. مع 0.1 ETH، تستفيد من فرص أفضل بكثير، والوصول إلى جوائز خاصة، والقدرة على كسب الدخل من خلال إحالة الأصدقاء. تقوم هذه الخطة أيضًا بترقية موقعك في قائمة انتظار اليانصيب وتخلق تجربة مختلفة.</p>
+                    <ul class="rtl-text">
+                        <li>✅ فرصة أكبر بكثير للفوز</li>
+                        <li>✅ جوائز أكبر مع مزايا خاصة</li>
+                        <li>✅ تفعيل ميزة الإحالة (كسب الدخل عن طريق دعوة الأصدقاء)</li>
                         <li>✅ الأولوية في السحوبات</li>
                     </ul>
+                    <div class="tip rtl-text">💡 إذا كنت تبحث عن أقصى عائد وفوائد، فإن خطة Super VIP هي خيارك المثالي.</div>
                 `,
                 persian: `
-                    <p><strong>بلیط VIP (0.1 ETH)</strong></p>
-                    <p>بلیط VIP برای کسانی طراحی شده که به‌دنبال سطح بالاتری از بازی هستند. با 0.1 ETH، شما از شانس‌های بسیار بیشتر، جوایز ویژه و امکان کسب درآمد از طریق معرفی دوستان بهره‌مند می‌شوید.</p>
-                    <ul>
+                    <h3><span>👑</span> بلیط VIP – 0.1 ETH</h3>
+                    <p class="rtl-text">بلیط VIP برای کسانی طراحی شده که به‌دنبال سطح بالاتری از بازی هستند. با ۰٫۱ ETH، شما از شانس‌های بسیار بیشتر، دسترسی به جکپات‌های ویژه، و امکان کسب درآمد از طریق معرفی دوستان بهره‌مند می‌شوید. این پلن همچنین جایگاه شما را در صف قرعه‌کشی ارتقا می‌دهد و تجربه‌ای متفاوت را رقم می‌زند.</p>
+                    <ul class="rtl-text">
                         <li>✅ شانس برد بسیار بالاتر</li>
                         <li>✅ جوایز بزرگ‌تر با مزایای ویژه</li>
-                        <li>✅ فعال‌سازی قابلیت کسب درآمد از معرفی دوستان</li>
+                        <li>✅ فعال‌سازی قابلیت Referral (کسب درآمد از دعوت دوستان)</li>
                         <li>✅ اولویت در قرعه‌کشی‌ها</li>
                     </ul>
+                    <div class="tip rtl-text">💡 اگر به‌دنبال بیشترین بازده و مزایا هستید، پلن Super VIP گزینه ایده‌آل شماست.</div>
                 `
             },
-            referral: {
+            supervip: {
                 english: `
-                    <p><strong>Referral Program</strong></p>
-                    <p>Earn 10% commission from every ticket purchase made by friends you invite to LuckyDraw.</p>
+                    <h3><span>🦾</span> Super VIP Ticket – 0.25 ETH</h3>
+                    <p>The Super VIP Ticket provides a unique and professional experience for special users. With 0.25 ETH, you not only get the highest chance of winning, but also access to bigger prizes, exclusive jackpots, and the maximum referral reward percentage. This plan offers the most luxurious level of play.</p>
                     <ul>
-                        <li>✅ Generate your unique referral link</li>
-                        <li>✅ Earn passive income</li>
-                        <li>✅ Commissions paid instantly</li>
+                        <li>✅ Highest chance of winning in the lottery</li>
+                        <li>✅ Access to the biggest jackpots</li>
+                        <li>✅ Maximum income from referring friends</li>
+                        <li>✅ Access to special and limited draws</li>
                     </ul>
+                    <div class="tip">💡 Designed for professional and purposeful users to have a different experience of online lottery.</div>
                 `,
                 french: `
-                    <p><strong>Programme de Parrainage</strong></p>
-                    <p>Gagnez 10% de commission sur chaque achat de billet effectué par vos amis que vous invitez sur LuckyDraw.</p>
+                    <h3><span>🦾</span> Ticket Super VIP – 0.25 ETH</h3>
+                    <p>Le ticket Super VIP offre une expérience unique et professionnelle pour les utilisateurs spéciaux. Avec 0.25 ETH, vous obtenez non seulement la plus grande chance de gagner, mais également un accès à des prix plus importants, des jackpots exclusifs et le pourcentage maximum de récompense de parrainage. Ce plan offre le niveau de jeu le plus luxueux.</p>
                     <ul>
-                        <li>✅ Générez votre lien de parrainage unique</li>
-                        <li>✅ Gagnez un revenu passif</li>
-                        <li>✅ Commissions payées instantanément</li>
+                        <li>✅ Plus grande chance de gagner à la loterie</li>
+                        <li>✅ Accès aux plus gros jackpots</li>
+                        <li>✅ Revenu maximum provenant du parrainage d'amis</li>
+                        <li>✅ Accès à des tirages spéciaux et limités</li>
                     </ul>
+                    <div class="tip">💡 Conçu pour les utilisateurs professionnels et déterminés afin de vivre une expérience différente de la loterie en ligne.</div>
                 `,
                 german: `
-                    <p><strong>Empfehlungsprogramm</strong></p>
-                    <p>Verdienen Sie 10% Provision von jedem Ticketkauf, den Freunde tätigen, die Sie zu LuckyDraw einladen.</p>
+                    <h3><span>🦾</span> Super VIP Ticket – 0.25 ETH</h3>
+                    <p>Das Super VIP-Ticket bietet ein einzigartiges und professionelles Erlebnis für besondere Benutzer. Mit 0.25 ETH erhalten Sie nicht nur die höchste Gewinnchance, sondern auch Zugang zu größeren Preisen, exklusiven Jackpots und dem maximalen Empfehlungsbelohnungsprozentsatz. Dieser Plan bietet das luxuriöseste Spielniveau.</p>
                     <ul>
-                        <li>✅ Generieren Sie Ihren persönlichen Empfehlungslink</li>
-                        <li>✅ Verdienen Sie passives Einkommen</li>
-                        <li>✅ Provisionen werden sofort ausgezahlt</li>
+                        <li>✅ Höchste Gewinnchance in der Lotterie</li>
+                        <li>✅ Zugang zu den größten Jackpots</li>
+                        <li>✅ Maximale Einnahmen durch die Empfehlung von Freunden</li>
+                        <li>✅ Zugang zu besonderen und limitierten Ziehungen</li>
                     </ul>
+                    <div class="tip">💡 Entwickelt für professionelle und zielstrebige Benutzer, um ein besonderes Online-Lotterieerlebnis zu haben.</div>
                 `,
                 spanish: `
-                    <p><strong>Programa de Referidos</strong></p>
-                    <p>Gana un 10% de comisión por cada compra de boletos realizada por amigos que invites a LuckyDraw.</p>
+                    <h3><span>🦾</span> Boleto Super VIP – 0.25 ETH</h3>
+                    <p>El boleto Super VIP ofrece una experiencia única y profesional para usuarios especiales. Con 0.25 ETH, no solo obtienes la mayor probabilidad de ganar, sino también acceso a premios más grandes, premios exclusivos y el porcentaje máximo de recompensa por referidos. Este plan ofrece el nivel de juego más lujoso.</p>
                     <ul>
-                        <li>✅ Genera tu enlace de referido único</li>
-                        <li>✅ Gana ingresos pasivos</li>
-                        <li>✅ Comisiones pagadas al instante</li>
+                        <li>✅ Mayor probabilidad de ganar en la lotería</li>
+                        <li>✅ Acceso a los premios más grandes</li>
+                        <li>✅ Ingresos máximos por recomendar amigos</li>
+                        <li>✅ Acceso a sorteos especiales y limitados</li>
                     </ul>
+                    <div class="tip">💡 Diseñado para usuarios profesionales y con propósito para tener una experiencia diferente de lotería en línea.</div>
                 `,
                 russian: `
-                    <p><strong>Реферальная программа</strong></p>
-                    <p>Зарабатывайте 10% комиссии с каждой покупки билетов, совершенной друзьями, которых вы пригласили в LuckyDraw.</p>
+                    <h3><span>🦾</span> Супер VIP билет – 0.25 ETH</h3>
+                    <p>Билет Super VIP предоставляет уникальный и профессиональный опыт для особых пользователей. За 0.25 ETH вы получаете не только наивысшие шансы на победу, но и доступ к более крупным призам, эксклюзивным джекпотам и максимальному проценту вознаграждения за приглашение друзей. Этот план предлагает самый роскошный уровень игры.</p>
                     <ul>
-                        <li>✅ Создайте свою уникальную реферальную ссылку</li>
-                        <li>✅ Зарабатывайте пассивный доход</li>
-                        <li>✅ Комиссии выплачиваются мгновенно</li>
+                        <li>✅ Наивысшие шансы на победу в лотерее</li>
+                        <li>✅ Доступ к самым большим джекпотам</li>
+                        <li>✅ Максимальный доход от приглашения друзей</li>
+                        <li>✅ Доступ к специальным и ограниченным розыгрышам</li>
                     </ul>
+                    <div class="tip">💡 Разработан для профессиональных и целеустремленных пользователей, чтобы получить другой опыт онлайн-лотереи.</div>
                 `,
                 arabic: `
-                    <p><strong>برنامج الإحالة</strong></p>
-                    <p>اربح عمولة 10٪ من كل شراء تذكرة يقوم به الأصدقاء الذين تدعوهم إلى LuckyDraw.</p>
-                    <ul>
-                        <li>✅ أنشئ رابط الإحالة الفريد الخاص بك</li>
-                        <li>✅ اربح دخلًا سلبيًا</li>
-                        <li>✅ يتم دفع العمولات على الفور</li>
+                    <h3><span>🦾</span> تذكرة سوبر VIP – 0.25 ETH</h3>
+                    <p class="rtl-text">توفر تذكرة Super VIP تجربة فريدة ومهنية للمستخدمين الخاصين. مع 0.25 ETH، لا تحصل فقط على أعلى فرصة للفوز، ولكن أيضًا الوصول إلى جوائز أكبر، وجوائز حصرية، وأقصى نسبة مكافأة إحالة. تقدم هذه الخطة أرقى مستوى من اللعب.</p>
+                    <ul class="rtl-text">
+                        <li>✅ أعلى فرصة للفوز في اليانصيب</li>
+                        <li>✅ الوصول إلى أكبر الجوائز</li>
+                        <li>✅ أقصى قدر من الدخل من إحالة الأصدقاء</li>
+                        <li>✅ الوصول إلى سحوبات خاصة ومحدودة</li>
                     </ul>
+                    <div class="tip rtl-text">💡 مصمم للمستخدمين المحترفين والهادفين للحصول على تجربة مختلفة لليانصيب عبر الإنترنت.</div>
                 `,
                 persian: `
-                    <p><strong>برنامه معرفی دوستان</strong></p>
-                    <p>با معرفی دوستان به LuckyDraw، 10٪ از خرید بلیط‌های آن‌ها را به عنوان پورسانت دریافت کنید.</p>
-                    <ul>
-                        <li>✅ لینک معرفی منحصربه‌فرد خود را دریافت کنید</li>
-                        <li>✅ درآمد غیرفعال کسب کنید</li>
-                        <li>✅ پرداخت‌های سریع و آنی</li>
+                    <h3><span>🦾</span> بلیط سوپر VIP – 0.25 ETH</h3>
+                    <p class="rtl-text">بلیت Super VIP یک تجربه منحصربه‌فرد و حرفه‌ای برای کاربران خاص فراهم می‌کند. با ۰٫۲۵ ETH، نه‌تنها بالاترین شانس برنده‌شدن را دریافت می‌کنید، بلکه به جوایز بزرگ‌تر، جکپات‌های اختصاصی، و حداکثر درصد پاداش ارجاع دسترسی خواهید داشت. این پلن، لوکس‌ترین سطح بازی را ارائه می‌دهد.</p>
+                    <ul class="rtl-text">
+                        <li>✅ بیشترین شانس برنده‌شدن در قرعه‌کشی</li>
+                        <li>✅ دسترسی به بزرگ‌ترین جکپات‌ها</li>
+                        <li>✅ بیشترین میزان درآمد از معرفی دوستان</li>
+                        <li>✅ دسترسی به قرعه‌کشی‌های ویژه و محدود</li>
                     </ul>
+                    <div class="tip rtl-text">💡 برای کاربران حرفه‌ای و هدفمند طراحی شده تا تجربه‌ای متفاوت از قرعه‌کشی آنلاین داشته باشند.</div>
                 `
             }
         };
@@ -1079,6 +1221,16 @@
             icon.addEventListener('click', function() {
                 currentTicketType = this.getAttribute('data-ticket');
                 glassModal.style.display = 'flex';
+                
+                // Set modal title based on ticket type
+                const ticketTitles = {
+                    classic: "Classic Ticket Details",
+                    premium: "Premium Ticket Details",
+                    vip: "VIP Ticket Details",
+                    supervip: "Super VIP Ticket Details"
+                };
+                modalTicketTitle.textContent = ticketTitles[currentTicketType];
+                
                 updateTicketContent();
             });
         });
@@ -1086,6 +1238,13 @@
         // Close glass modal
         document.querySelector('.close-glass-modal').addEventListener('click', function() {
             glassModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        glassModal.addEventListener('click', function(e) {
+            if (e.target === glassModal) {
+                glassModal.style.display = 'none';
+            }
         });
 
         // Update ticket content when language changes
