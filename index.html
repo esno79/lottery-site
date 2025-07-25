@@ -2,23 +2,19 @@
 <html lang="en">
 <head>
 <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#7c3aed" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-  <!-- SEO Meta -->
-  <meta name="description" content="Join LuckyDraw and buy lottery tickets to win big prizes online!" />
-  <meta name="keywords" content="lottery, tickets, crypto draw, LuckyDraw, win" />
-  <meta name="author" content="LuckyDraw Team" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuckyDraw - Premium Lottery Tickets</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-    <style>
+<link href="/manifest.json" rel="manifest"/>
+<meta content="#7c3aed" name="theme-color"/>
+<!-- Favicon -->
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<!-- SEO Meta -->
+<meta content="Join LuckyDraw and buy lottery tickets to win big prizes online!" name="description"/>
+<meta content="lottery, tickets, crypto draw, LuckyDraw, win" name="keywords"/>
+<meta content="LuckyDraw Team" name="author"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>LuckyDraw - Premium Lottery Tickets</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
         :root {
             --primary: #6c5ce7;
             --secondary: #a29bfe;
@@ -82,90 +78,76 @@
             margin-top: 0.3rem;
         }
         
-        /* استایل جدید برای دکمه‌های ورود/ثبت‌نام در گوشه راست */
-               
-.auth-buttons {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
 
-.auth-btn {
-    padding: 0.6rem 1.5rem;
-    border-radius: 30px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    text-decoration: none;
-    font-size: 0.95rem;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
+        .auth-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-.login-btn {
-    background: transparent;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(5px);
-    transition: all 0.4s ease;
-}
+        .login-btn {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            transition: all 0.4s ease;
+        }
 
-.login-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-}
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
 
-.signup-btn {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: white;
-    border: none;
-    position: relative;
-    z-index: 1;
-}
+        .signup-btn {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            border: none;
+            position: relative;
+            z-index: 1;
+        }
 
-.signup-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 30px;
-}
+        .signup-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 30px;
+        }
 
-.signup-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
-}
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+        }
 
-.signup-btn:hover::before {
-    opacity: 1;
-}
+        .signup-btn:hover::before {
+            opacity: 1;
+        }
 
-.auth-btn:active {
-    transform: translateY(1px) scale(0.98);
-}
+        .auth-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
 
-@media (max-width: 768px) {
-    .auth-buttons {
-        gap: 0.8rem;
-    }
-    
-    .auth-btn {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.85rem;
-    }
-}
-        
-        /* استایل جدید برای تایمر شمارش معکوس */
         .countdown-container {
             background: white;
             border-radius: 15px;
@@ -189,7 +171,7 @@
         
         .ticket-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -200,6 +182,7 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
         
         .ticket-card:hover {
@@ -212,6 +195,92 @@
             color: white;
             padding: 1rem;
             text-align: center;
+            position: relative;
+        }
+        
+        .info-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            cursor: help;
+            transition: all 0.3s ease;
+        }
+
+        .info-icon:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* New Glass Card Modal Styles */
+        .glass-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .glass-card-content {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .close-glass-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-glass-modal:hover {
+            opacity: 1;
+        }
+
+        .language-selector {
+            margin-bottom: 1.5rem;
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .bold {
+            font-weight: bold;
         }
         
         .ticket-body {
@@ -267,7 +336,6 @@
             box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
         }
         
-        /* استایل جدید برای انتخاب شبکه */
         .network-selector {
             margin: 1rem 0;
             width: 100%;
@@ -386,7 +454,6 @@
             background: var(--primary);
         }
         
-        /* استایل جدید برای بخش ارجاع */
         .referral-section {
             background: white;
             border-radius: 15px;
@@ -502,6 +569,12 @@
             text-decoration: underline;
         }
         
+        @media (max-width: 1024px) {
+            .ticket-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .ticket-grid {
                 grid-template-columns: 1fr;
@@ -532,142 +605,190 @@
                 padding: 0.7rem;
                 width: 100%;
             }
+
+            .glass-card {
+                width: 95%;
+                padding: 1.5rem;
+            }
         }
-    </style>
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 1rem;
+            }
+            
+            .glass-card-content {
+                padding: 0.5rem;
+            }
+        }
+</style>
 </head>
 <body>
-    <header>
-        <div class="container header-container">
-            <div class="logo-tagline">
-                <div class="logo">LuckyDraw</div>
-                <div class="tagline">Your chance to win big with blockchain lottery</div>
-            </div>
-            
-            <!-- دکمه‌های ورود و ثبت‌نام در گوشه راست -->
-            <div class="auth-buttons">
-                <a href="/login" class="auth-btn login-btn">Log In</a>
-                <a href="/register.html" class="auth-btn signup-btn">Sign Up</a>
-            </div>
-        </div>
-    </header>
-    
-    <div class="container">
-        <!-- تایمر شمارش معکوس -->
-        <div class="countdown-container">
-            <div class="countdown-title">Next Draw In:</div>
-            <div class="countdown-timer" id="countdownTimer">00:00:00</div>
-        </div>
+<header>
+<div class="container header-container">
+<div class="logo-tagline">
+<div class="logo">LuckyDraw</div>
+<div class="tagline">Your chance to win big with blockchain lottery</div>
+</div>
+<div class="auth-buttons">
+<a class="auth-btn login-btn" href="/login">Log In</a>
+<a class="auth-btn signup-btn" href="/register.html">Sign Up</a>
+</div>
+</div>
+</header>
+<div class="container">
+<div class="countdown-container">
+<div class="countdown-title">Next Draw In:</div>
+<div class="countdown-timer" id="countdownTimer">00:00:00</div>
+</div>
+<div class="ticket-grid">
+<!-- Classic Ticket -->
+<div class="ticket-card">
+<div class="ticket-header">
+<h3>Classic Ticket</h3>
+<div class="info-icon" data-ticket="classic">?</div>
+</div>
+<div class="ticket-body">
+<div class="ticket-price">0.01 ETH</div>
+<ul class="ticket-features">
+<li>Entry to weekly draw</li>
+<li>1 in 500 chance to win</li>
+<li>Jackpot: Dynamic – grows with more Classic tickets sold</li>
+<li>Instant results</li>
+</ul>
+<button class="btn buy-btn" data-price="0.01">Buy Ticket</button>
+</div>
+</div>
 
-        <div class="ticket-grid">
-            <div class="ticket-card">
-                <div class="ticket-header">
-                    <h3>Classic Ticket</h3>
-                </div>
-                <div class="ticket-body">
-                    <div class="ticket-price">0.01 ETH</div>
-                    <ul class="ticket-features">
-                        <li>Entry to weekly draw</li>
-                        <li>1 in 500 chance to win</li>
-                        <li>Jackpot: 5 ETH</li>
-                        <li>Instant results</li>
-                    </ul>
-                    <button class="btn buy-btn" data-price="0.01">Buy Ticket</button>
-                </div>
-            </div>
-            
-            <div class="ticket-card">
-                <div class="ticket-header">
-                    <h3>Premium Ticket</h3>
-                </div>
-                <div class="ticket-body">
-                    <div class="ticket-price">0.05 ETH</div>
-                    <ul class="ticket-features">
-                        <li>Entry to weekly draw</li>
-                        <li>1 in 200 chance to win</li>
-                        <li>Jackpot: 5 ETH</li>
-                        <li>Instant results</li>
-                        <li>Bonus entries</li>
-                    </ul>
-                    <button class="btn buy-btn" data-price="0.05">Buy Ticket</button>
-                </div>
-            </div>
-            
-            <div class="ticket-card">
-                <div class="ticket-header">
-                    <h3>VIP Ticket</h3>
-                </div>
-                <div class="ticket-body">
-                    <div class="ticket-price">0.1 ETH</div>
-                    <ul class="ticket-features">
-                        <li>Entry to weekly draw</li>
-                        <li>1 in 100 chance to win</li>
-                        <li>Jackpot: 5 ETH</li>
-                        <li>Instant results</li>
-                        <li>5 bonus entries</li>
-                        <li>VIP support</li>
-                    </ul>
-                    <button class="btn buy-btn" data-price="0.1">Buy Ticket</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- بخش ارجاع -->
-        <div class="referral-section" id="referralSection" style="display: none;">
-            <h3 class="referral-title">Invite Friends & Earn</h3>
-            <p class="referral-description">
-                Share your referral link and earn 10% commission from your friends' ticket purchases!
-            </p>
-            <div class="referral-input-group">
-                <input type="text" id="referralLink" class="referral-input" readonly>
-                <button class="copy-btn" id="copyReferralBtn">Copy</button>
-            </div>
-            <div class="copied-message" id="copiedMessage">Link copied to clipboard!</div>
-        </div>
-    </div>
-    
-    <div class="modal" id="paymentModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 class="modal-title">Complete Your Purchase</h2>
-            <div class="payment-details">
-                <div class="payment-amount" id="paymentAmount">Amount: 0.01 ETH</div>
-                
-                <!-- انتخاب شبکه -->
-                <select class="network-selector" id="networkSelector">
-                    <option value="0x1">Ethereum Mainnet</option>
-                    <option value="0x38">Binance Smart Chain</option>
-                    <option value="0x89">Polygon</option>
-                </select>
-                
-                <p>You'll be redirected to MetaMask to complete your payment</p>
-            </div>
-            <div class="wallet-status" id="walletStatus">
+<!-- Premium Ticket -->
+<div class="ticket-card">
+<div class="ticket-header">
+<h3>Premium Ticket</h3>
+<div class="info-icon" data-ticket="premium">?</div>
+</div>
+<div class="ticket-body">
+<div class="ticket-price">0.05 ETH</div>
+<ul class="ticket-features">
+<li>Entry to weekly draw</li>
+<li>1 in 200 chance to win</li>
+<li>Jackpot: Dynamic – higher base per ticket</li>
+<li>Instant results</li>
+<li>Bonus entries</li>
+</ul>
+<button class="btn buy-btn" data-price="0.05">Buy Ticket</button>
+</div>
+</div>
+
+<!-- VIP Ticket -->
+<div class="ticket-card">
+<div class="ticket-header">
+<h3>VIP Ticket</h3>
+<div class="info-icon" data-ticket="vip">?</div>
+</div>
+<div class="ticket-body">
+<div class="ticket-price">0.1 ETH</div>
+<ul class="ticket-features">
+<li>Entry to weekly draw</li>
+<li>1 in 100 chance to win</li>
+<li>Jackpot: Dynamic – maximum contribution</li>
+<li>Instant results</li>
+<li>5 bonus entries</li>
+<li>VIP support</li>
+</ul>
+<button class="btn buy-btn" data-price="0.1">Buy Ticket</button>
+</div>
+</div>
+
+<!-- Referral Program -->
+<div class="ticket-card">
+<div class="ticket-header">
+<h3>Referral Program</h3>
+<div class="info-icon" data-ticket="referral">?</div>
+</div>
+<div class="ticket-body">
+<div class="ticket-price">Earn 10% Commission</div>
+<ul class="ticket-features">
+<li>Invite friends to join</li>
+<li>Earn 10% from their ticket purchases</li>
+<li>Referral link generated after wallet connection</li>
+<li>Commissions paid instantly</li>
+</ul>
+<button class="btn" onclick="document.getElementById('referralSection').scrollIntoView({ behavior: 'smooth' });">
+            Get My Referral Link
+        </button>
+</div>
+</div>
+</div>
+
+<div class="referral-section" id="referralSection">
+<div class="referral-title">Your Referral Link</div>
+<div class="referral-description">Share this link with friends and earn 10% from their ticket purchases</div>
+<div class="referral-input-group">
+<input type="text" class="referral-input" id="referralLink" readonly value="Connect your wallet to generate referral link"/>
+<button class="copy-btn" id="copyReferralBtn">Copy</button>
+</div>
+<div class="copied-message" id="copiedMessage">Copied to clipboard!</div>
+</div>
+</div>
+
+<!-- Glass Card Modal -->
+<div class="glass-modal" id="glassModal">
+<div class="glass-card">
+<span class="close-glass-modal">×</span>
+<select class="language-selector" id="languageSelector">
+<option value="english">English</option>
+<option value="french">Français</option>
+<option value="german">Deutsch</option>
+<option value="spanish">Español</option>
+<option value="russian">Русский</option>
+<option value="arabic">العربية</option>
+<option value="persian">فارسی</option>
+</select>
+<div class="glass-card-content" id="glassCardContent">
+<!-- Content will be dynamically inserted here -->
+</div>
+</div>
+</div>
+
+<div class="modal" id="paymentModal">
+<div class="modal-content">
+<span class="close-modal">×</span>
+<h2 class="modal-title">Complete Your Purchase</h2>
+<div class="payment-details">
+<div class="payment-amount" id="paymentAmount">Amount: 0.01 ETH</div>
+<select class="network-selector" id="networkSelector">
+<option value="0x1">Ethereum Mainnet</option>
+<option value="0x38">Binance Smart Chain</option>
+<option value="0x89">Polygon</option>
+</select>
+<p>You'll be redirected to MetaMask to complete your payment</p>
+</div>
+<div class="wallet-status" id="walletStatus">
                 Wallet not connected
             </div>
-            <button class="btn" id="connectWallet">Connect MetaMask</button>
-            <button class="btn" id="confirmPayment" style="display: none; margin-top: 1rem;">Confirm Payment</button>
-            <div id="paymentStatus" style="margin-top: 1rem;"></div>
-        </div>
-    </div>
-    
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <p>© 2023 LuckyDraw. All rights reserved.</p>
-                <p>Powered by Ethereum blockchain technology</p>
-                <div class="footer-links">
-                    <a href="#">Terms of Service</a> | 
+<button class="btn" id="connectWallet">Connect MetaMask</button>
+<button class="btn" id="confirmPayment" style="display: none; margin-top: 1rem;">Confirm Payment</button>
+<div id="paymentStatus" style="margin-top: 1rem;"></div>
+</div>
+</div>
+<footer>
+<div class="container">
+<div class="footer-content">
+<p>© 2023 LuckyDraw. All rights reserved.</p>
+<p>Powered by Ethereum blockchain technology</p>
+<div class="footer-links">
+<a href="#">Terms of Service</a> | 
                     <a href="#">Privacy Policy</a> | 
                     <a href="#">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-    
-    <script>
+</div>
+</div>
+</div>
+</footer>
+<script>
         // Global variables
         let currentPrice = 0;
         let userAccount = null;
+        let currentTicketType = '';
         
         // DOM elements
         const paymentModal = document.getElementById('paymentModal');
@@ -678,7 +799,303 @@
         const paymentStatus = document.getElementById('paymentStatus');
         const ticketsList = document.getElementById('ticketsList');
         const networkSelector = document.getElementById('networkSelector');
+        const glassModal = document.getElementById('glassModal');
+        const glassCardContent = document.getElementById('glassCardContent');
+        const languageSelector = document.getElementById('languageSelector');
         
+        // Ticket content in different languages
+        const ticketContents = {
+            classic: {
+                english: `
+                    <p><strong>Classic Ticket (0.01 ETH)</strong></p>
+                    <p>The Classic Ticket is the perfect entry point to experience LuckyDraw. For just 0.01 ETH, you get a chance in the weekly draw with a simple and affordable structure.</p>
+                    <ul>
+                        <li>✅ Lowest-cost entry to the lottery</li>
+                        <li>✅ Best option for first-time users</li>
+                        <li>✅ No special requirements</li>
+                    </ul>
+                `,
+                french: `
+                    <p><strong>Ticket Classique (0.01 ETH)</strong></p>
+                    <p>Le ticket classique est l'option idéale pour découvrir LuckyDraw. Pour seulement 0.01 ETH, vous participez à la loterie hebdomadaire.</p>
+                    <ul>
+                        <li>✅ Entrée la moins chère</li>
+                        <li>✅ Parfait pour les débutants</li>
+                        <li>✅ Aucune exigence particulière</li>
+                    </ul>
+                `,
+                german: `
+                    <p><strong>Classic Ticket (0.01 ETH)</strong></p>
+                    <p>Das Classic Ticket ist der perfekte Einstieg in LuckyDraw. Für nur 0.01 ETH erhalten Sie eine Chance in der wöchentlichen Verlosung mit einer einfachen und erschwinglichen Struktur.</p>
+                    <ul>
+                        <li>✅ Günstigster Einstieg in die Lotterie</li>
+                        <li>✅ Beste Option für Erstnutzer</li>
+                        <li>✅ Keine besonderen Anforderungen</li>
+                    </ul>
+                `,
+                spanish: `
+                    <p><strong>Boleto Clásico (0.01 ETH)</strong></p>
+                    <p>El boleto clásico es el punto de entrada perfecto para experimentar LuckyDraw. Por solo 0.01 ETH, obtienes una oportunidad en el sorteo semanal con una estructura simple y asequible.</p>
+                    <ul>
+                        <li>✅ Entrada más económica a la lotería</li>
+                        <li>✅ Mejor opción para usuarios primerizos</li>
+                        <li>✅ Sin requisitos especiales</li>
+                    </ul>
+                `,
+                russian: `
+                    <p><strong>Классический билет (0.01 ETH)</strong></p>
+                    <p>Классический билет - это идеальная отправная точка для знакомства с LuckyDraw. Всего за 0.01 ETH вы получаете шанс в еженедельном розыгрыше с простой и доступной структурой.</p>
+                    <ul>
+                        <li>✅ Самый дешевый вход в лотерею</li>
+                        <li>✅ Лучший вариант для новичков</li>
+                        <li>✅ Без особых требований</li>
+                    </ul>
+                `,
+                arabic: `
+                    <p><strong>تذكرة كلاسيكية (0.01 ETH)</strong></p>
+                    <p>التذكرة الكلاسيكية هي نقطة البداية المثالية لتجربة LuckyDraw. مقابل 0.01 ETH فقط، تحصل على فرصة في السحب الأسبوعي مع هيكل بسيط وبأسعار معقولة.</p>
+                    <ul>
+                        <li>✅ أدنى تكلفة لدخول اليانصيب</li>
+                        <li>✅ أفضل خيار للمستخدمين لأول مرة</li>
+                        <li>✅ لا توجد متطلبات خاصة</li>
+                    </ul>
+                `,
+                persian: `
+                    <p><strong>بلیط کلاسیک (0.01 ETH)</strong></p>
+                    <p>بلیط کلاسیک بهترین گزینه برای آشنایی با دنیای LuckyDraw است. با فقط 0.01 ETH، وارد قرعه‌کشی هفتگی می‌شوید و شانس خود را برای برد امتحان می‌کنید.</p>
+                    <ul>
+                        <li>✅ کم‌هزینه‌ترین روش ورود به قرعه‌کشی</li>
+                        <li>✅ بهترین گزینه برای تجربه اول</li>
+                        <li>✅ بدون نیاز به ثبت‌نام خاص یا شرایط ویژه</li>
+                    </ul>
+                `
+            },
+            premium: {
+                english: `
+                    <p><strong>Premium Ticket (0.05 ETH)</strong></p>
+                    <p>The Premium Ticket offers better odds and higher rewards. For 0.05 ETH, you get improved chances to win in the weekly draw.</p>
+                    <ul>
+                        <li>✅ Better odds than Classic</li>
+                        <li>✅ Higher potential rewards</li>
+                        <li>✅ Balanced cost-benefit ratio</li>
+                    </ul>
+                `,
+                french: `
+                    <p><strong>Ticket Premium (0.05 ETH)</strong></p>
+                    <p>Le ticket premium offre de meilleures chances et des récompenses plus élevées. Pour 0.05 ETH, vous augmentez vos chances de gagner.</p>
+                    <ul>
+                        <li>✅ Meilleures chances que le Classique</li>
+                        <li>✅ Récompenses potentielles plus élevées</li>
+                        <li>✅ Rapport coût-bénéfice équilibré</li>
+                    </ul>
+                `,
+                german: `
+                    <p><strong>Premium Ticket (0.05 ETH)</strong></p>
+                    <p>Das Premium Ticket bietet bessere Gewinnchancen und höhere Belohnungen. Für 0.05 ETH erhalten Sie verbesserte Gewinnchancen in der wöchentlichen Verlosung.</p>
+                    <ul>
+                        <li>✅ Bessere Chancen als Classic</li>
+                        <li>✅ Höhere potenzielle Gewinne</li>
+                        <li>✅ Ausgewogenes Kosten-Nutzen-Verhältnis</li>
+                    </ul>
+                `,
+                spanish: `
+                    <p><strong>Boleto Premium (0.05 ETH)</strong></p>
+                    <p>El boleto premium ofrece mejores probabilidades y mayores recompensas. Por 0.05 ETH, obtienes mejores posibilidades de ganar en el sorteo semanal.</p>
+                    <ul>
+                        <li>✅ Mejores probabilidades que el Clásico</li>
+                        <li>✅ Recompensas potenciales más altas</li>
+                        <li>✅ Relación costo-beneficio equilibrada</li>
+                    </ul>
+                `,
+                russian: `
+                    <p><strong>Премиум билет (0.05 ETH)</strong></p>
+                    <p>Премиум билет предлагает лучшие шансы и более высокие вознаграждения. За 0.05 ETH вы получаете улучшенные шансы на победу в еженедельном розыгрыше.</p>
+                    <ul>
+                        <li>✅ Лучшие шансы, чем у Классического</li>
+                        <li>✅ Более высокие потенциальные выигрыши</li>
+                        <li>✅ Сбалансированное соотношение цены и качества</li>
+                    </ul>
+                `,
+                arabic: `
+                    <p><strong>تذكرة متميزة (0.05 ETH)</strong></p>
+                    <p>تقدم التذكرة المتميزة احتمالات أفضل ومكافآت أعلى. مقابل 0.05 ETH، تحصل على فرص محسنة للفوز في السحب الأسبوعي.</p>
+                    <ul>
+                        <li>✅ احتمالات أفضل من الكلاسيكية</li>
+                        <li>✅ مكافآت محتملة أعلى</li>
+                        <li>✅ توازن جيد بين التكلفة والفوائد</li>
+                    </ul>
+                `,
+                persian: `
+                    <p><strong>بلیط پرمیوم (0.05 ETH)</strong></p>
+                    <p>بلیط پرمیوم شانس بیشتری برای برنده‌شدن در قرعه‌کشی‌های هفتگی می‌دهد. این پلن به‌گونه‌ای طراحی شده که تعادل کاملی بین هزینه و بازده ایجاد کند.</p>
+                    <ul>
+                        <li>✅ شانس برد بیشتر نسبت به بلیت کلاسیک</li>
+                        <li>✅ جکپات‌های ارزشمندتر</li>
+                        <li>✅ تجربه حرفه‌ای با بودجه متعادل</li>
+                    </ul>
+                `
+            },
+            vip: {
+                english: `
+                    <p><strong>VIP Ticket (0.1 ETH)</strong></p>
+                    <p>The VIP Ticket is designed for serious players. For 0.1 ETH, you get the best odds, premium rewards, and referral earning capabilities.</p>
+                    <ul>
+                        <li>✅ Highest odds among standard tickets</li>
+                        <li>✅ Access to premium rewards</li>
+                        <li>✅ Referral program activation</li>
+                        <li>✅ Priority in draws</li>
+                    </ul>
+                `,
+                french: `
+                    <p><strong>Ticket VIP (0.1 ETH)</strong></p>
+                    <p>Le ticket VIP est conçu pour les joueurs sérieux. Pour 0.1 ETH, vous obtenez les meilleures chances, des récompenses premium et la possibilité de gagner des commissions par parrainage.</p>
+                    <ul>
+                        <li>✅ Meilleures chances parmi les tickets standard</li>
+                        <li>✅ Accès à des récompenses premium</li>
+                        <li>✅ Activation du programme de parrainage</li>
+                        <li>✅ Priorité dans les tirages</li>
+                    </ul>
+                `,
+                german: `
+                    <p><strong>VIP Ticket (0.1 ETH)</strong></p>
+                    <p>Das VIP Ticket ist für ernsthafte Spieler konzipiert. Für 0.1 ETH erhalten Sie die besten Gewinnchancen, Premium-Belohnungen und die Möglichkeit, Empfehlungsprovisionen zu verdienen.</p>
+                    <ul>
+                        <li>✅ Beste Gewinnchancen unter den Standard-Tickets</li>
+                        <li>✅ Zugang zu Premium-Belohnungen</li>
+                        <li>✅ Aktivierung des Empfehlungsprogramms</li>
+                        <li>✅ Priorität bei den Ziehungen</li>
+                    </ul>
+                `,
+                spanish: `
+                    <p><strong>Boleto VIP (0.1 ETH)</strong></p>
+                    <p>El boleto VIP está diseñado para jugadores serios. Por 0.1 ETH, obtienes las mejores probabilidades, recompensas premium y capacidad para ganar comisiones por referidos.</p>
+                    <ul>
+                        <li>✅ Las mejores probabilidades entre los boletos estándar</li>
+                        <li>✅ Acceso a recompensas premium</li>
+                        <li>✅ Activación del programa de referidos</li>
+                        <li>✅ Prioridad en los sorteos</li>
+                    </ul>
+                `,
+                russian: `
+                    <p><strong>VIP билет (0.1 ETH)</strong></p>
+                    <p>VIP билет предназначен для серьезных игроков. За 0.1 ETH вы получаете лучшие шансы, премиальные вознаграждения и возможность зарабатывать на рефералах.</p>
+                    <ul>
+                        <li>✅ Лучшие шансы среди стандартных билетов</li>
+                        <li>✅ Доступ к премиальным вознаграждениям</li>
+                        <li>✅ Активация реферальной программы</li>
+                        <li>✅ Приоритет в розыгрышах</li>
+                    </ul>
+                `,
+                arabic: `
+                    <p><strong>تذكرة VIP (0.1 ETH)</strong></p>
+                    <p>تم تصميم تذكرة VIP للاعبين الجادين. مقابل 0.1 ETH، تحصل على أفضل الاحتمالات ومكافآت متميزة وقدرة على كسب العمولات من الإحالات.</p>
+                    <ul>
+                        <li>✅ أعلى الاحتمالات بين التذاكر القياسية</li>
+                        <li>✅ الوصول إلى مكافآت متميزة</li>
+                        <li>✅ تفعيل برنامج الإحالة</li>
+                        <li>✅ الأولوية في السحوبات</li>
+                    </ul>
+                `,
+                persian: `
+                    <p><strong>بلیط VIP (0.1 ETH)</strong></p>
+                    <p>بلیط VIP برای کسانی طراحی شده که به‌دنبال سطح بالاتری از بازی هستند. با 0.1 ETH، شما از شانس‌های بسیار بیشتر، جوایز ویژه و امکان کسب درآمد از طریق معرفی دوستان بهره‌مند می‌شوید.</p>
+                    <ul>
+                        <li>✅ شانس برد بسیار بالاتر</li>
+                        <li>✅ جوایز بزرگ‌تر با مزایای ویژه</li>
+                        <li>✅ فعال‌سازی قابلیت کسب درآمد از معرفی دوستان</li>
+                        <li>✅ اولویت در قرعه‌کشی‌ها</li>
+                    </ul>
+                `
+            },
+            referral: {
+                english: `
+                    <p><strong>Referral Program</strong></p>
+                    <p>Earn 10% commission from every ticket purchase made by friends you invite to LuckyDraw.</p>
+                    <ul>
+                        <li>✅ Generate your unique referral link</li>
+                        <li>✅ Earn passive income</li>
+                        <li>✅ Commissions paid instantly</li>
+                    </ul>
+                `,
+                french: `
+                    <p><strong>Programme de Parrainage</strong></p>
+                    <p>Gagnez 10% de commission sur chaque achat de billet effectué par vos amis que vous invitez sur LuckyDraw.</p>
+                    <ul>
+                        <li>✅ Générez votre lien de parrainage unique</li>
+                        <li>✅ Gagnez un revenu passif</li>
+                        <li>✅ Commissions payées instantanément</li>
+                    </ul>
+                `,
+                german: `
+                    <p><strong>Empfehlungsprogramm</strong></p>
+                    <p>Verdienen Sie 10% Provision von jedem Ticketkauf, den Freunde tätigen, die Sie zu LuckyDraw einladen.</p>
+                    <ul>
+                        <li>✅ Generieren Sie Ihren persönlichen Empfehlungslink</li>
+                        <li>✅ Verdienen Sie passives Einkommen</li>
+                        <li>✅ Provisionen werden sofort ausgezahlt</li>
+                    </ul>
+                `,
+                spanish: `
+                    <p><strong>Programa de Referidos</strong></p>
+                    <p>Gana un 10% de comisión por cada compra de boletos realizada por amigos que invites a LuckyDraw.</p>
+                    <ul>
+                        <li>✅ Genera tu enlace de referido único</li>
+                        <li>✅ Gana ingresos pasivos</li>
+                        <li>✅ Comisiones pagadas al instante</li>
+                    </ul>
+                `,
+                russian: `
+                    <p><strong>Реферальная программа</strong></p>
+                    <p>Зарабатывайте 10% комиссии с каждой покупки билетов, совершенной друзьями, которых вы пригласили в LuckyDraw.</p>
+                    <ul>
+                        <li>✅ Создайте свою уникальную реферальную ссылку</li>
+                        <li>✅ Зарабатывайте пассивный доход</li>
+                        <li>✅ Комиссии выплачиваются мгновенно</li>
+                    </ul>
+                `,
+                arabic: `
+                    <p><strong>برنامج الإحالة</strong></p>
+                    <p>اربح عمولة 10٪ من كل شراء تذكرة يقوم به الأصدقاء الذين تدعوهم إلى LuckyDraw.</p>
+                    <ul>
+                        <li>✅ أنشئ رابط الإحالة الفريد الخاص بك</li>
+                        <li>✅ اربح دخلًا سلبيًا</li>
+                        <li>✅ يتم دفع العمولات على الفور</li>
+                    </ul>
+                `,
+                persian: `
+                    <p><strong>برنامه معرفی دوستان</strong></p>
+                    <p>با معرفی دوستان به LuckyDraw، 10٪ از خرید بلیط‌های آن‌ها را به عنوان پورسانت دریافت کنید.</p>
+                    <ul>
+                        <li>✅ لینک معرفی منحصربه‌فرد خود را دریافت کنید</li>
+                        <li>✅ درآمد غیرفعال کسب کنید</li>
+                        <li>✅ پرداخت‌های سریع و آنی</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Show glass modal with ticket info
+        document.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                currentTicketType = this.getAttribute('data-ticket');
+                glassModal.style.display = 'flex';
+                updateTicketContent();
+            });
+        });
+
+        // Close glass modal
+        document.querySelector('.close-glass-modal').addEventListener('click', function() {
+            glassModal.style.display = 'none';
+        });
+
+        // Update ticket content when language changes
+        languageSelector.addEventListener('change', updateTicketContent);
+
+        function updateTicketContent() {
+            const selectedLanguage = languageSelector.value;
+            glassCardContent.innerHTML = ticketContents[currentTicketType][selectedLanguage];
+        }
+
         // Buy button click handlers
         document.querySelectorAll('.buy-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -829,17 +1246,17 @@
             ticketsList.appendChild(li);
         }
         
-        // ========== تایمر شمارش معکوس ==========
+        // ========== Countdown Timer ==========
         function updateCountdown() {
-            // تنظیم زمان قرعه‌کشی بعدی (شنبه ساعت ۸ شب)
+            // Set next draw time (Saturday at 8 PM)
             const now = new Date();
             const nextSaturday = new Date();
             
-            // پیدا کردن روز شنبه بعدی
+            // Find next Saturday
             nextSaturday.setDate(now.getDate() + (6 - now.getDay() + 7) % 7);
-            nextSaturday.setHours(20, 0, 0, 0); // ساعت ۸ شب
+            nextSaturday.setHours(20, 0, 0, 0); // 8 PM
             
-            // اگر امروز شنبه و قبل از ۸ شب است
+            // If today is Saturday and before 8 PM
             if (now.getDay() === 6 && now.getHours() < 20) {
                 nextSaturday.setDate(now.getDate());
             }
@@ -847,7 +1264,7 @@
             const diff = nextSaturday - now;
             
             if (diff <= 0) {
-                // اگر زمان قرعه‌کشی گذشته، برای شنبه بعدی تنظیم شود
+                // If draw time has passed, set for next Saturday
                 nextSaturday.setDate(nextSaturday.getDate() + 7);
                 const newDiff = nextSaturday - now;
                 updateTimerDisplay(newDiff);
@@ -867,18 +1284,18 @@
                 `${days}d ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
-        // آپدیت تایمر هر ثانیه
+        // Update timer every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // ========== انتخاب شبکه بلاکچین ==========
+        // ========== Blockchain Network Selection ==========
         const chainData = {
             '0x1': { name: 'Ethereum', symbol: 'ETH' },
             '0x38': { name: 'Binance', symbol: 'BNB' },
             '0x89': { name: 'Polygon', symbol: 'MATIC' }
         };
 
-        // تغییر شبکه در متامسک
+        // Switch network in MetaMask
         async function switchNetwork(chainId) {
             try {
                 await window.ethereum.request({
@@ -905,7 +1322,7 @@
         }
 
         function getNetworkParams(chainId) {
-            // پارامترهای شبکه‌های مختلف
+            // Parameters for different networks
             const networks = {
                 '0x1': {
                     chainName: 'Ethereum Mainnet',
@@ -933,7 +1350,7 @@
             return chainData[chainId]?.symbol || 'ETH';
         }
 
-        // تغییر شبکه هنگام انتخاب از لیست
+        // Change network when selected from list
         networkSelector.addEventListener('change', async function() {
             if (userAccount) {
                 const success = await switchNetwork(this.value);
@@ -947,7 +1364,7 @@
             }
         });
 
-        // ========== سیستم ارجاع ==========
+        // ========== Referral System ==========
         function generateReferralLink() {
             if (userAccount) {
                 const referralLink = `${window.location.origin}${window.location.pathname}?ref=${userAccount}`;
@@ -956,7 +1373,7 @@
             }
         }
 
-        // کپی لینک ارجاع
+        // Copy referral link
         document.getElementById('copyReferralBtn').addEventListener('click', function() {
             const referralInput = document.getElementById('referralLink');
             referralInput.select();
@@ -969,29 +1386,29 @@
             }, 2000);
         });
 
-        // پردازش ارجاع
+        // Process referral
         function processReferral(referrer, amount) {
             const referralAddress = localStorage.getItem('referralAddress');
             if (referralAddress && referralAddress !== referrer) {
-                // محاسبه پورسانت 10%
+                // Calculate 10% commission
                 const commission = amount * 0.1;
                 console.log(`Referral commission: ${commission} to ${referralAddress}`);
-                // در اینجا می‌توانید تراکنش پورسانت را انجام دهید
+                // Here you can process the commission transaction
             }
         }
 
-        // بررسی پارامتر ارجاع در URL
+        // Check referral parameter in URL
         function checkReferral() {
             const urlParams = new URLSearchParams(window.location.search);
             const refAddress = urlParams.get('ref');
             
             if (refAddress && /^0x[a-fA-F0-9]{40}$/.test(refAddress)) {
-                // ذخیره آدرس ارجاع در localStorage
+                // Store referral address in localStorage
                 localStorage.setItem('referralAddress', refAddress);
             }
         }
 
-        // اجرا هنگام بارگذاری صفحه
+        // Run on page load
         checkReferral();
     </script>
 </body>
