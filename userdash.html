@@ -1650,7 +1650,68 @@
   import { supabase } from './supabaseClient.js';
 
   console.log("🔗 Supabase connected:", supabase);
+
+
+
+const drawSelect = document.getElementById('drawSelect');
+const buyForm = document.getElementById('buy-ticket-form');
+
+async function loadDrawOptions() {
+  const { data, error } = await supabase.from('draws').select('*').eq('status', 'active');
+  if (data) {
+    drawSelect.innerHTML = '<option value="">انتخاب قرعه‌کشی</option>';
+    data.forEach(draw => {
+      const opt = document.createElement('option');
+      opt.value = draw.id;
+      opt.textContent = `${draw.title} (${new Date(draw.draw_date).toLocaleDateString()})`;
+      drawSelect.appendChild(opt);
+    });
+  }
+}
+loadDrawOptions();
+
+buyForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const draw_id = drawSelect.value;
+  const amount = parseInt(document.getElementById('ticketAmount').value);
+
+  if (!window.ethereum) {
+    alert("لطفاً MetaMask را نصب کنید.");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const user_address = accounts[0];
+
+  const { error } = await supabase.from('transactions').insert([{
+    user_address,
+    amount,
+    tx_hash: '',
+    status: 'pending',
+    type: 'ticket'
+  }]);
+
+  if (error) {
+    alert("❌ خطا در ثبت خرید: " + error.message);
+  } else {
+    alert("✅ خرید شما ثبت شد!");
+    buyForm.reset();
+    loadUserTickets();
+  }
+});
+
 </script>
 
 </body>
-</html>
+</html
+<form id="buy-ticket-form" class="space-y-4 bg-white shadow p-6 rounded-xl">
+  <h2 class="text-xl font-bold text-purple-700">🎟 خرید بلیت</h2>
+  <select id="drawSelect" class="form-select w-full p-2 rounded border">
+    <option value="">انتخاب قرعه‌کشی</option>
+  </select>
+  <input type="number" id="ticketAmount" class="form-input w-full p-2 rounded border" placeholder="تعداد بلیت (مثلاً 1 یا 2)" min="1" value="1" required>
+  <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">خرید</button>
+</form>
+
+
+>
