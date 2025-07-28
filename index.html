@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <!-- Manifest -->
@@ -217,6 +218,33 @@
         .info-icon:hover {
             background-color: rgba(255, 255, 255, 0.5);
             transform: scale(1.1);
+        }
+
+        .badge-discount {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
         /* New Modern Glass Card Modal Styles */
@@ -719,6 +747,196 @@
                 width: 100%;
             }
         }
+		/* Diagonal Discount Banner */
+/* Diagonal Discount Banner - Updated for left position */
+.discount-banner {
+  position: absolute;
+  top: 15px;
+  left: -35px; /* تغییر از right به left */
+  background: #FF4757;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 40px;
+  text-align: center;
+  transform: rotate(-45deg); /* تغییر جهت چرخش به -45 درجه */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  pointer-events: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.classic-ticket-banner {
+  background: linear-gradient(to right, #FF4757, #FF6B81);
+}
+
+/* For Classic Ticket specifically */
+.classic-ticket-banner {
+  background: linear-gradient(to right, #FF4757, #FF6B81);
+}
+
+       /* Discount badge styles */
+<div class="ticket-card" style="position: relative; overflow: visible;">
+    <div class="ticket-header" style="position: relative;"><div class="diagonal-banner">50% OFF</div>
+        <h3>Classic Ticket</h3>
+        <div class="info-icon" data-ticket="classic">?</div>
+        <div class="medal-ribbon">
+            <div class="medal">50% OFF</div>
+        </div>
+    </div>
+    <!-- بقیه محتوای کارت -->
+</div>
+
+.hanging-discount-badge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.hanging-discount-badge:hover {
+    transform: rotate(15deg) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+@keyframes swing {
+    0% { transform: rotate(12deg); }
+    50% { transform: rotate(18deg); }
+    100% { transform: rotate(12deg); }
+}
+@keyframes swing {
+    0% { transform: rotate(15deg); }
+    100% { transform: rotate(25deg); }
+}
+
+/* Price styles */
+.ticket-price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin: 0.8rem 0;
+}
+
+.original-price {
+    font-size: 1rem;
+    color: #aaa;
+    text-decoration: line-through;
+    font-weight: normal;
+}
+
+.discounted-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* مدال ورزشی آویزان */
+.medal-ribbon {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 40px;
+    height: 60px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.medal {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    animation: swing 3s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+.medal::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: #FF6347;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.medal::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 15px;
+    background: #888;
+}
+
+@keyframes swing {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+}
+
+/* Diagonal Banner with fixed positioning */
+/* Diagonal Banner with fixed positioning */
+.diagonal-banner {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: #ff1a1a;
+  color: white;
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 5px 40px;
+  transform: rotate(-45deg);
+  transform-origin: top left;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+
+
+/* New Stylish Ribbon */
+.ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  z-index: 10;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 10px 0;
+  background: linear-gradient(to bottom, #f9d423 0%, #ff4e50 100%);
+  color: white;
+  font: bold 12px sans-serif;
+  text-align: center;
+  transform: rotate(-45deg);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  top: 25px;
+  left: -45px;
+}
 </style>
 </head>
 <body>
@@ -741,23 +959,28 @@
 </div>
 <div class="ticket-grid">
 <!-- Classic Ticket -->
+<!-- Classic Ticket -->
+<!-- Classic Ticket -->
 <div class="ticket-card">
-<div class="ticket-header">
-<h3>Classic Ticket</h3>
-<div class="info-icon" data-ticket="classic">?</div>
+    <div class="ticket-header" style="position: relative; overflow: hidden;">
+        <div class="discount-banner classic-ticket-banner">50% OFF</div>
+        <h3>Classic Ticket</h3>
+        <div class="info-icon" data-ticket="classic">?</div>
+    </div>
+    <div class="ticket-body">
+        <div class="ticket-price">
+            <span class="original-price">0.01 ETH</span>
+            <span class="discounted-price">0.005 ETH</span>
+        </div>
+        <ul class="ticket-features">
+            <li>Entry to weekly draw</li>
+            <li>1 in 500 chance to win</li>
+            <li>Jackpot: Dynamic – grows with more Classic tickets sold</li>
+            <li>Instant results</li>
+        </ul>
+        <button class="btn buy-btn" data-price="0.005">Buy Ticket</button>
+    </div>
 </div>
-<div class="ticket-body">
-<div class="ticket-price">0.01 ETH</div>
-<ul class="ticket-features">
-<li>Entry to weekly draw</li>
-<li>1 in 500 chance to win</li>
-<li>Jackpot: Dynamic – grows with more Classic tickets sold</li>
-<li>Instant results</li>
-</ul>
-<button class="btn buy-btn" data-price="0.01">Buy Ticket</button>
-</div>
-</div>
-
 <!-- Premium Ticket -->
 <div class="ticket-card">
 <div class="ticket-header">
@@ -776,7 +999,6 @@
 <button class="btn buy-btn" data-price="0.05">Buy Ticket</button>
 </div>
 </div>
-
 <!-- VIP Ticket -->
 <div class="ticket-card">
 <div class="ticket-header">
@@ -796,7 +1018,6 @@
 <button class="btn buy-btn" data-price="0.1">Buy Ticket</button>
 </div>
 </div>
-
 <!-- Super VIP Ticket -->
 <div class="ticket-card">
 <div class="ticket-header">
@@ -818,18 +1039,16 @@
 </div>
 </div>
 </div>
-
 <div class="referral-section" id="referralSection">
 <div class="referral-title">Your Referral Link</div>
 <div class="referral-description">Share this link with friends and earn 10% from their ticket purchases</div>
 <div class="referral-input-group">
-<input type="text" class="referral-input" id="referralLink" readonly value="Connect your wallet to generate referral link"/>
+<input class="referral-input" id="referralLink" readonly="" type="text" value="Connect your wallet to generate referral link"/>
 <button class="copy-btn" id="copyReferralBtn">Copy</button>
 </div>
 <div class="copied-message" id="copiedMessage">Copied to clipboard!</div>
 </div>
 </div>
-
 <!-- Modern Glass Card Modal -->
 <div class="glass-modal" id="glassModal">
 <div class="glass-card">
@@ -855,7 +1074,6 @@
 </div>
 </div>
 </div>
-
 <div class="modal" id="paymentModal">
 <div class="modal-content">
 <span class="close-modal">×</span>
@@ -914,72 +1132,79 @@
         const ticketContents = {
             classic: {
                 english: `
-                    <h3><span>🎟️</span> Classic Ticket – 0.01 ETH</h3>
-                    <p>The Classic Ticket is the perfect entry point to experience LuckyDraw. For just 0.01 ETH, you get a chance in the weekly draw with a simple and affordable structure. This plan with its low cost and simple structure is suitable for users who want to enter the lottery with peace of mind and without financial pressure.</p>
+                    <h3><span>🎟️</span> Classic Ticket – 🔥 Now only 0.005 ETH!</h3>
+                    <p>Try your luck to win 🎁 big rewards – now at 🤑 half the price! The Classic Ticket is the perfect entry point to experience LuckyDraw. For just 0.005 ETH, you get a chance in the weekly draw with a simple and affordable structure.</p>
                     <ul>
                         <li>✅ Lowest-cost entry to the lottery</li>
                         <li>✅ Best option for first-time users</li>
                         <li>✅ No special requirements or conditions</li>
+                        <li>✅ Now at 50% discount for limited time!</li>
                     </ul>
                     <div class="tip">💡 For those looking for more chances, more advanced options are also available.</div>
                 `,
                 french: `
-                    <h3><span>🎟️</span> Ticket Classique – 0.01 ETH</h3>
-                    <p>Le ticket classique est l'option idéale pour découvrir LuckyDraw. Pour seulement 0.01 ETH, vous participez à la loterie hebdomadaire. Ce plan avec son faible coût et sa structure simple convient aux utilisateurs qui souhaitent participer à la loterie en toute tranquillité et sans pression financière.</p>
+                    <h3><span>🎟️</span> Ticket Classique – 🔥 Maintenant seulement 0,005 ETH !</h3>
+                    <p>Tente ta chance pour gagner 🎁 de grandes récompenses – à 🤑 moitié prix ! Le ticket classique est l'option idéale pour découvrir LuckyDraw. Pour seulement 0.005 ETH, vous participez à la loterie hebdomadaire.</p>
                     <ul>
                         <li>✅ Entrée la moins chère</li>
                         <li>✅ Parfait pour les débutants</li>
                         <li>✅ Aucune exigence particulière</li>
+                        <li>✅ Maintenant à 50% de réduction pour un temps limité !</li>
                     </ul>
                     <div class="tip">💡 Pour ceux qui cherchent plus de chances, des options plus avancées sont également disponibles.</div>
                 `,
                 german: `
-                    <h3><span>🎟️</span> Classic Ticket – 0.01 ETH</h3>
-                    <p>Das Classic Ticket ist der perfekte Einstieg in LuckyDraw. Für nur 0.01 ETH erhalten Sie eine Chance in der wöchentlichen Verlosung mit einer einfachen und erschwinglichen Struktur. Dieser Plan mit seinen niedrigen Kosten und einfachen Struktur ist für Benutzer geeignet, die mit Ruhe und ohne finanziellen Druck an der Lotterie teilnehmen möchten.</p>
+                    <h3><span>🎟️</span> Classic Ticket – 🔥 Jetzt nur 0.005 ETH!</h3>
+                    <p>Versuche dein Glück und gewinne 🎁 große Preise – zum 🤑 halben Preis! Das Classic Ticket ist der perfekte Einstieg in LuckyDraw. Für nur 0.005 ETH erhalten Sie eine Chance in der wöchentlichen Verlosung.</p>
                     <ul>
                         <li>✅ Günstigster Einstieg in die Lotterie</li>
                         <li>✅ Beste Option für Erstnutzer</li>
                         <li>✅ Keine besonderen Anforderungen</li>
+                        <li>✅ Jetzt 50% Rabatt für begrenzte Zeit!</li>
                     </ul>
                     <div class="tip">💡 Für diejenigen, die nach mehr Chancen suchen, stehen auch fortgeschrittenere Optionen zur Verfügung.</div>
                 `,
                 spanish: `
-                    <h3><span>🎟️</span> Boleto Clásico – 0.01 ETH</h3>
-                    <p>El boleto clásico es el punto de entrada perfecto para experimentar LuckyDraw. Por solo 0.01 ETH, obtienes una oportunidad en el sorteo semanal con una estructura simple y asequible. Este plan con su bajo costo y estructura simple es adecuado para usuarios que desean ingresar a la lotería con tranquilidad y sin presión financiera.</p>
+                    <h3><span>🎟️</span> Boleto Clásico – 🔥 ¡Ahora solo 0.005 ETH!</h3>
+                    <p>¡Prueba tu suerte y gana 🎁 grandes premios – por 🤑 la mitad del precio! El boleto clásico es el punto de entrada perfecto para experimentar LuckyDraw. Por solo 0.005 ETH, obtienes una oportunidad en el sorteo semanal.</p>
                     <ul>
                         <li>✅ Entrada más económica a la lotería</li>
                         <li>✅ Mejor opción para usuarios primerizos</li>
                         <li>✅ Sin requisitos especiales</li>
+                        <li>✅ ¡Ahora con 50% de descuento por tiempo limitado!</li>
                     </ul>
                     <div class="tip">💡 Para aquellos que buscan más posibilidades, también hay opciones más avanzadas disponibles.</div>
                 `,
                 russian: `
-                    <h3><span>🎟️</span> Классический билет – 0.01 ETH</h3>
-                    <p>Классический билет - это идеальная отправная точка для знакомства с LuckyDraw. Всего за 0.01 ETH вы получаете шанс в еженедельном розыгрыше с простой и доступной структурой. Этот план с его низкой стоимостью и простой структурой подходит для пользователей, которые хотят принять участие в лотерее спокойно и без финансового давления.</p>
+                    <h3><span>🎟️</span> Классический билет – 🔥 Сейчас всего 0.005 ETH!</h3>
+                    <p>Попробуй удачу и выиграй 🎁 большие призы – всего за 🤑 половину цены! Классический билет - это идеальная отправная точка для знакомства с LuckyDraw. Всего за 0.005 ETH вы получаете шанс в еженедельном розыгрыше.</p>
                     <ul>
                         <li>✅ Самый дешевый вход в лотерею</li>
                         <li>✅ Лучший вариант для новичков</li>
                         <li>✅ Без особых требований</li>
+                        <li>✅ Сейчас 50% скидка на ограниченное время!</li>
                     </ul>
                     <div class="tip">💡 Для тех, кто ищет больше шансов, также доступны более продвинутые варианты.</div>
                 `,
                 arabic: `
-                    <h3><span>🎟️</span> تذكرة كلاسيكية – 0.01 ETH</h3>
-                    <p class="rtl-text">التذكرة الكلاسيكية هي نقطة البداية المثالية لتجربة LuckyDraw. مقابل 0.01 ETH فقط، تحصل على فرصة في السحب الأسبوعي مع هيكل بسيط وبأسعار معقولة. هذه الخطة بتكلفتها المنخفضة وهيكلها البسيط مناسبة للمستخدمين الذين يرغبون في دخول اليانصيب براحة البال وبدون ضغوط مالية.</p>
+                    <h3><span>🎟️</span> تذكرة كلاسيكية – 🔥 الآن فقط 0.005 ETH!</h3>
+                    <p class="rtl-text">جرّب حظك للفوز بـ 🎁 جوائز ضخمة – بسعر 🤑 نصف القيمة! التذكرة الكلاسيكية هي نقطة البداية المثالية لتجربة LuckyDraw. مقابل 0.005 ETH فقط، تحصل على فرصة في السحب الأسبوعي.</p>
                     <ul class="rtl-text">
                         <li>✅ أدنى تكلفة لدخول اليانصيب</li>
                         <li>✅ أفضل خيار للمستخدمين لأول مرة</li>
                         <li>✅ لا توجد متطلبات خاصة</li>
+                        <li>✅ الآن بخصم 50٪ لفترة محدودة!</li>
                     </ul>
                     <div class="tip rtl-text">💡 بالنسبة لأولئك الذين يبحثون عن فرص أكثر، تتوفر أيضًا خيارات أكثر تقدمًا.</div>
                 `,
                 persian: `
-                    <h3><span>🎟️</span> بلیط کلاسیک – 0.01 ETH</h3>
-                    <p class="rtl-text">بلیط کلاسیک بهترین گزینه برای آشنایی با دنیای LuckyDraw است. با فقط ۰٫۰۱ ETH، وارد قرعه‌کشی هفتگی می‌شوید و شانس خود را برای برد امتحان می‌کنید. این پلن با هزینه پایین و ساختار ساده‌اش، مناسب کاربرانی‌ست که می‌خواهند با آرامش و بدون فشار مالی وارد قرعه‌کشی شوند.</p>
+                    <h3><span>🎟️</span> بلیط کلاسیک – 🔥 اکنون فقط با 0.005 ETH!</h3>
+                    <p class="rtl-text">با خرید بلیت کلاسیک، شانس خود را برای بردن 🎁 جوایز بزرگ امتحان کنید – آن هم با 🤑 نصف قیمت! بلیط کلاسیک بهترین گزینه برای آشنایی با دنیای LuckyDraw است. با فقط ۰٫۰۰۵ ETH، وارد قرعه‌کشی هفتگی می‌شوید.</p>
                     <ul class="rtl-text">
                         <li>✅ کم‌هزینه‌ترین روش ورود به قرعه‌کشی</li>
                         <li>✅ بهترین گزینه برای تجربه اول</li>
                         <li>✅ بدون نیاز به ثبت‌نام خاص یا شرایط ویژه</li>
+                        <li>✅ همین حالا با ۵۰٪ تخفیف برای مدت محدود!</li>
                     </ul>
                     <div class="tip rtl-text">💡 برای کسانی که به‌دنبال شانس بیشتر هستند، گزینه‌های پیشرفته‌تر هم در دسترس است.</div>
                 `
