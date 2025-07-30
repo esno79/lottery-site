@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- Manifest -->
+<link href="/manifest.json" rel="manifest"/>
+<meta content="#7c3aed" name="theme-color"/>
+<!-- Favicon -->
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<!-- SEO Meta -->
+<meta content="Join LuckyDraw and buy lottery tickets to win big prizes online!" name="description"/>
+<meta content="lottery, tickets, crypto draw, LuckyDraw, win" name="keywords"/>
+<meta content="LuckyDraw Team" name="author"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>LuckyDraw - Premium Lottery Tickets</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #d63031;
+            --gray: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+            position: relative;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-tagline {
+            flex: 1;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.3rem;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .auth-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            transition: all 0.4s ease;
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .signup-btn {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            border: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signup-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 30px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        .signup-btn:hover::before {
+            opacity: 1;
+        }
+
+        .auth-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .countdown-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .countdown-title {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .countdown-timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .ticket-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .ticket-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .ticket-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .info-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            cursor: help;
+            transition: all 0.3s ease;
+        }
+
+        .info-icon:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        .badge-discount {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* New Modern Glass Card Modal Styles */
+        .glass-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            padding: 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+            animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .glass-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .glass-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .close-glass-modal {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            line-height: 1;
+        }
+
+        .close-glass-modal:hover {
+            opacity: 1;
+        }
+
+        .glass-card-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .language-selector-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+            width: 200px;
+        }
+
+        .language-selector {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c5ce7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1rem;
+            padding-right: 2rem;
+        }
+
+        .language-selector:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        .language-selector option {
+            padding: 0.5rem;
+        }
+
+        .ticket-content {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .ticket-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ticket-content h3 span {
+            font-size: 1.5rem;
+        }
+
+        .ticket-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .ticket-content ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            padding: 0;
+        }
+
+        .ticket-content ul li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+        }
+
+        .ticket-content ul li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .ticket-content .tip {
+            background: rgba(108, 92, 231, 0.1);
+            border-left: 3px solid var(--primary);
+            padding: 0.8rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .rtl-text {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        .bold {
+            font-weight: bold;
+        }
+        
+        .ticket-body {
+            padding: 1rem;
+        }
+        
+        .ticket-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.8rem 0;
+            text-align: center;
+        }
+        
+        .ticket-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        
+        .ticket-features li {
+            padding: 0.4rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .ticket-features li:before {
+            content: "✓";
+            color: var(--success);
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        .network-selector {
+            margin: 1rem 0;
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            padding: 1.5rem;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            opacity: 1;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .payment-details {
+            margin-bottom: 1rem;
+        }
+        
+        .payment-amount {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .wallet-status {
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+        
+        .wallet-connected {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--success);
+        }
+        
+        .wallet-disconnected {
+            background: rgba(214, 48, 49, 0.1);
+            color: var(--danger);
+        }
+        
+        .user-tickets {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .referral-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .referral-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .referral-description {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .referral-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .referral-input {
+            flex: 1;
+            padding: 0.7rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary);
+        }
+
+        .copied-message {
+            margin-top: 0.5rem;
+            color: var(--success);
+            font-size: 0.85rem;
+            display: none;
+        }
+        
+        .ticket-list {
+            list-style: none;
+        }
+        
+        .ticket-item {
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .ticket-item:last-child {
+            border-bottom: none;
+        }
+        
+        .ticket-number {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray);
+            background: linear-gradient(135deg, #f5f6fa, #e6e9f0);
+            margin-top: auto;
+        }
+        
+        footer p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        footer p:last-child {
+            margin-bottom: 0;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .footer-links {
+            margin-top: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 1024px) {
+            .ticket-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .ticket-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.8rem;
+            }
+            
+            .auth-buttons {
+                gap: 0.5rem;
+            }
+            
+            .auth-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .referral-input-group {
+                flex-direction: column;
+            }
+            
+            .copy-btn {
+                padding: 0.7rem;
+                width: 100%;
+            }
+
+            .glass-card {
+                width: 95%;
+            }
+            
+            .glass-card-body {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card-body {
+                padding: 1rem;
+            }
+            
+            .language-selector-container {
+                width: 100%;
+            }
+        }
+		/* Diagonal Discount Banner */
+/* Diagonal Discount Banner - Updated for left position */
+.discount-banner {
+  position: absolute;
+  top: 15px;
+  left: -35px; /* تغییر از right به left */
+  background: #FF4757;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 40px;
+  text-align: center;
+  transform: rotate(-45deg); /* تغییر جهت چرخش به -45 درجه */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  pointer-events: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.classic-ticket-banner {
+  background: linear-gradient(to right, #FF4757, #FF6B81);
+}
+
+/* For Classic Ticket specifically */
+.classic-ticket-banner {
+  background: linear-gradient(to right, #FF4757, #FF6B81);
+}
+
+       /* Discount badge styles */
+<div class="ticket-card" style="position: relative; overflow: visible;">
+    <div class="ticket-header" style="position: relative;"><div class="diagonal-banner">50% OFF</div>
+        <h3>Classic Ticket</h3>
+        <div class="info-icon" data-ticket="classic">?</div>
+        <div class="medal-ribbon">
+            <div class="medal">50% OFF</div>
+        </div>
+    </div>
+    <!-- بقیه محتوای کارت -->
+</div>
+
+.hanging-discount-badge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.hanging-discount-badge:hover {
+    transform: rotate(15deg) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+@keyframes swing {
+    0% { transform: rotate(12deg); }
+    50% { transform: rotate(18deg); }
+    100% { transform: rotate(12deg); }
+}
+@keyframes swing {
+    0% { transform: rotate(15deg); }
+    100% { transform: rotate(25deg); }
+}
+
+/* Price styles */
+.ticket-price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin: 0.8rem 0;
+}
+
+.original-price {
+    font-size: 1rem;
+    color: #aaa;
+    text-decoration: line-through;
+    font-weight: normal;
+}
+
+.discounted-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* مدال ورزشی آویزان */
+.medal-ribbon {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 40px;
+    height: 60px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.medal {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    animation: swing 3s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+.medal::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: #FF6347;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.medal::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 15px;
+    background: #888;
+}
+
+@keyframes swing {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+}
+
+/* Diagonal Banner with fixed positioning */
+/* Diagonal Banner with fixed positioning */
+.diagonal-banner {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: #ff1a1a;
+  color: white;
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 5px 40px;
+  transform: rotate(-45deg);
+  transform-origin: top left;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+
+
+/* New Stylish Ribbon */
+.ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  z-index: 10;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 10px 0;
+  background: linear-gradient(to bottom, #f9d423 0%, #ff4e50 100%);
+  color: white;
+  font: bold 12px sans-serif;
+  text-align: center;
+  transform: rotate(-45deg);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  top: 25px;
+  left: -45px;
+}
+</style>
+</head>
+<body>
+<header>
+<div class="container header-container">
+<div class="logo-tagline">
+<div class="logo">LuckyDraw</div>
+<div class="tagline">Your chance to win big with blockchain lottery</div>
+</div>
+<div class="auth-buttons">
+<a class="auth-btn login-btn" href="/login">Log In</a>
+<a class="auth-btn signup-btn" href="/register.html">Sign Up</a>
+</div>
+</div>
+</header>
+<div class="container">
+<div class="countdown-container">
+<div class="countdown-title">Next Draw In:</div>
+<div class="countdown-timer" id="countdownTimer">00:00:00</div>
+</div>
+<div class="ticket-grid">
+<!-- Classic Ticket -->
+<!-- Classic Ticket -->
+<!-- Classic Ticket -->
+<div class="ticket-card">
+    <div class="ticket-header" style="position: relative; overflow: hidden;">
+        <div class="discount-banner classic-ticket-banner">50% OFF</div>
+        <h3>Classic Ticket</h3>
+        <div class="info-icon" data-ticket="classic">?</div>
+    </div>
+    <div class="ticket-body">
+        <div class="ticket-price">
+            <span class="original-price">0.01 ETH</span>
+            <span class="discounted-price">0.005 ETH</span>
+        </div>
+        <ul class="ticket-features">
+            <li>Entry to weekly draw</li>
+            <li>1 in 500 chance to win</li>
+            <li>Jackpot: Dynamic – grows with more Classic tickets sold</li>
+            <li>Instant results</li>
+        </ul>
+        <button class="btn buy-btn" data-price="0.005">Buy Ticket</button>
+    </div>
+</div>
+<!-- Premium Ticket -->
+<div class="ticket-card">
+<div class="ticket-header">
+<h3>Premium Ticket</h3>
+<div class="info-icon" data-ticket="premium">?</div>
+</div>
+<div class="ticket-body">
+<div class="ticket-price">0.05 ETH</div>
+<ul class="ticket-features">
+<li>Entry to weekly draw</li>
+<li>1 in 200 chance to win</li>
+<li>Jackpot: Dynamic – higher base per ticket</li>
+<li>Instant results</li>
+<li>Bonus entries</li>
+</ul>
+<button class="btn buy-btn" data-price="0.05">Buy Ticket</button>
+</div>
+</div>
+<!-- VIP Ticket -->
+<div class="ticket-card">
+<div class="ticket-header">
+<h3>VIP Ticket</h3>
+<div class="info-icon" data-ticket="vip">?</div>
+</div>
+<div class="ticket-body">
+<div class="ticket-price">0.1 ETH</div>
+<ul class="ticket-features">
+<li>Entry to weekly draw</li>
+<li>1 in 100 chance to win</li>
+<li>Jackpot: Dynamic – maximum contribution</li>
+<li>Instant results</li>
+<li>5 bonus entries</li>
+<li>VIP support</li>
+</ul>
+<button class="btn buy-btn" data-price="0.1">Buy Ticket</button>
+</div>
+</div>
+<!-- Super VIP Ticket -->
+<div class="ticket-card">
+<div class="ticket-header">
+<h3>Super VIP Ticket</h3>
+<div class="info-icon" data-ticket="supervip">?</div>
+</div>
+<div class="ticket-body">
+<div class="ticket-price">0.25 ETH</div>
+<ul class="ticket-features">
+<li>Entry to weekly draw</li>
+<li>1 in 50 chance to win</li>
+<li>Exclusive jackpots</li>
+<li>Instant results</li>
+<li>10 bonus entries</li>
+<li>Priority VIP support</li>
+<li>Highest referral commission</li>
+</ul>
+<button class="btn buy-btn" data-price="0.25">Buy Ticket</button>
+</div>
+</div>
+</div>
+<div class="referral-section" id="referralSection">
+<div class="referral-title">Your Referral Link</div>
+<div class="referral-description">Share this link with friends and earn 10% from their ticket purchases</div>
+<div class="referral-input-group">
+<input class="referral-input" id="referralLink" readonly="" type="text" value="Connect your wallet to generate referral link"/>
+<button class="copy-btn" id="copyReferralBtn">Copy</button>
+</div>
+<div class="copied-message" id="copiedMessage">Copied to clipboard!</div>
+</div>
+</div>
+<!-- Modern Glass Card Modal -->
+<div class="glass-modal" id="glassModal">
+<div class="glass-card">
+<div class="glass-card-header">
+<h3 class="glass-card-title" id="modalTicketTitle">Ticket Details</h3>
+<span class="close-glass-modal">×</span>
+</div>
+<div class="glass-card-body">
+<div class="language-selector-container">
+<select class="language-selector" id="languageSelector">
+<option value="english">English</option>
+<option value="french">Français</option>
+<option value="german">Deutsch</option>
+<option value="spanish">Español</option>
+<option value="russian">Русский</option>
+<option value="arabic">العربية</option>
+<option value="persian">فارسی</option>
+</select>
+</div>
+<div class="ticket-content" id="glassCardContent">
+<!-- Content will be dynamically inserted here -->
+</div>
+</div>
+</div>
+</div>
+<div class="modal" id="paymentModal">
+<div class="modal-content">
+<span class="close-modal">×</span>
+<h2 class="modal-title">Complete Your Purchase</h2>
+<div class="payment-details">
+<div class="payment-amount" id="paymentAmount">Amount: 0.01 ETH</div>
+<select class="network-selector" id="networkSelector">
+<option value="0x1">Ethereum Mainnet</option>
+<option value="0x38">Binance Smart Chain</option>
+<option value="0x89">Polygon</option>
+</select>
+<p>You'll be redirected to MetaMask to complete your payment</p>
+</div>
+<div class="wallet-status" id="walletStatus">
+                Wallet not connected
+            </div>
+<button class="btn" id="connectWallet">Connect MetaMask</button>
+<button class="btn" id="confirmPayment" style="display: none; margin-top: 1rem;">Confirm Payment</button>
+<div id="paymentStatus" style="margin-top: 1rem;"></div>
+</div>
+</div>
+<footer>
+<div class="container">
+<div class="footer-content">
+<p>© 2023 LuckyDraw. All rights reserved.</p>
+<p>Powered by Ethereum blockchain technology</p>
+<div class="footer-links">
+<a href="#">Terms of Service</a> | 
+                    <a href="#">Privacy Policy</a> | 
+                    <a href="#">Contact Us</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Global variables
+        let currentPrice = 0;
+        let userAccount = null;
+        let currentTicketType = '';
+        
+        // DOM elements
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentAmount = document.getElementById('paymentAmount');
+        const walletStatus = document.getElementById('walletStatus');
+        const connectWalletBtn = document.getElementById('connectWallet');
+        const confirmPaymentBtn = document.getElementById('confirmPayment');
+        const paymentStatus = document.getElementById('paymentStatus');
+        const ticketsList = document.getElementById('ticketsList');
+        const networkSelector = document.getElementById('networkSelector');
+        const glassModal = document.getElementById('glassModal');
+        const glassCardContent = document.getElementById('glassCardContent');
+        const languageSelector = document.getElementById('languageSelector');
+        const modalTicketTitle = document.getElementById('modalTicketTitle');
+        
+        // Ticket content in different languages
+        const ticketContents = {
+            classic: {
+                english: `
+                    <h3><span>🎟️</span> Classic Ticket – 🔥 Now only 0.005 ETH!</h3>
+                    <p>Try your luck to win 🎁 big rewards – now at 🤑 half the price! The Classic Ticket is the perfect entry point to experience LuckyDraw. For just 0.005 ETH, you get a chance in the weekly draw with a simple and affordable structure.</p>
+                    <ul>
+                        <li>✅ Lowest-cost entry to the lottery</li>
+                        <li>✅ Best option for first-time users</li>
+                        <li>✅ No special requirements or conditions</li>
+                        <li>✅ Now at 50% discount for limited time!</li>
+                    </ul>
+                    <div class="tip">💡 For those looking for more chances, more advanced options are also available.</div>
+                `,
+                french: `
+                    <h3><span>🎟️</span> Ticket Classique – 🔥 Maintenant seulement 0,005 ETH !</h3>
+                    <p>Tente ta chance pour gagner 🎁 de grandes récompenses – à 🤑 moitié prix ! Le ticket classique est l'option idéale pour découvrir LuckyDraw. Pour seulement 0.005 ETH, vous participez à la loterie hebdomadaire.</p>
+                    <ul>
+                        <li>✅ Entrée la moins chère</li>
+                        <li>✅ Parfait pour les débutants</li>
+                        <li>✅ Aucune exigence particulière</li>
+                        <li>✅ Maintenant à 50% de réduction pour un temps limité !</li>
+                    </ul>
+                    <div class="tip">💡 Pour ceux qui cherchent plus de chances, des options plus avancées sont également disponibles.</div>
+                `,
+                german: `
+                    <h3><span>🎟️</span> Classic Ticket – 🔥 Jetzt nur 0.005 ETH!</h3>
+                    <p>Versuche dein Glück und gewinne 🎁 große Preise – zum 🤑 halben Preis! Das Classic Ticket ist der perfekte Einstieg in LuckyDraw. Für nur 0.005 ETH erhalten Sie eine Chance in der wöchentlichen Verlosung.</p>
+                    <ul>
+                        <li>✅ Günstigster Einstieg in die Lotterie</li>
+                        <li>✅ Beste Option für Erstnutzer</li>
+                        <li>✅ Keine besonderen Anforderungen</li>
+                        <li>✅ Jetzt 50% Rabatt für begrenzte Zeit!</li>
+                    </ul>
+                    <div class="tip">💡 Für diejenigen, die nach mehr Chancen suchen, stehen auch fortgeschrittenere Optionen zur Verfügung.</div>
+                `,
+                spanish: `
+                    <h3><span>🎟️</span> Boleto Clásico – 🔥 ¡Ahora solo 0.005 ETH!</h3>
+                    <p>¡Prueba tu suerte y gana 🎁 grandes premios – por 🤑 la mitad del precio! El boleto clásico es el punto de entrada perfecto para experimentar LuckyDraw. Por solo 0.005 ETH, obtienes una oportunidad en el sorteo semanal.</p>
+                    <ul>
+                        <li>✅ Entrada más económica a la lotería</li>
+                        <li>✅ Mejor opción para usuarios primerizos</li>
+                        <li>✅ Sin requisitos especiales</li>
+                        <li>✅ ¡Ahora con 50% de descuento por tiempo limitado!</li>
+                    </ul>
+                    <div class="tip">💡 Para aquellos que buscan más posibilidades, también hay opciones más avanzadas disponibles.</div>
+                `,
+                russian: `
+                    <h3><span>🎟️</span> Классический билет – 🔥 Сейчас всего 0.005 ETH!</h3>
+                    <p>Попробуй удачу и выиграй 🎁 большие призы – всего за 🤑 половину цены! Классический билет - это идеальная отправная точка для знакомства с LuckyDraw. Всего за 0.005 ETH вы получаете шанс в еженедельном розыгрыше.</p>
+                    <ul>
+                        <li>✅ Самый дешевый вход в лотерею</li>
+                        <li>✅ Лучший вариант для новичков</li>
+                        <li>✅ Без особых требований</li>
+                        <li>✅ Сейчас 50% скидка на ограниченное время!</li>
+                    </ul>
+                    <div class="tip">💡 Для тех, кто ищет больше шансов, также доступны более продвинутые варианты.</div>
+                `,
+                arabic: `
+                    <h3><span>🎟️</span> تذكرة كلاسيكية – 🔥 الآن فقط 0.005 ETH!</h3>
+                    <p class="rtl-text">جرّب حظك للفوز بـ 🎁 جوائز ضخمة – بسعر 🤑 نصف القيمة! التذكرة الكلاسيكية هي نقطة البداية المثالية لتجربة LuckyDraw. مقابل 0.005 ETH فقط، تحصل على فرصة في السحب الأسبوعي.</p>
+                    <ul class="rtl-text">
+                        <li>✅ أدنى تكلفة لدخول اليانصيب</li>
+                        <li>✅ أفضل خيار للمستخدمين لأول مرة</li>
+                        <li>✅ لا توجد متطلبات خاصة</li>
+                        <li>✅ الآن بخصم 50٪ لفترة محدودة!</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 بالنسبة لأولئك الذين يبحثون عن فرص أكثر، تتوفر أيضًا خيارات أكثر تقدمًا.</div>
+                `,
+                persian: `
+                    <h3><span>🎟️</span> بلیط کلاسیک – 🔥 اکنون فقط با 0.005 ETH!</h3>
+                    <p class="rtl-text">با خرید بلیت کلاسیک، شانس خود را برای بردن 🎁 جوایز بزرگ امتحان کنید – آن هم با 🤑 نصف قیمت! بلیط کلاسیک بهترین گزینه برای آشنایی با دنیای LuckyDraw است. با فقط ۰٫۰۰۵ ETH، وارد قرعه‌کشی هفتگی می‌شوید.</p>
+                    <ul class="rtl-text">
+                        <li>✅ کم‌هزینه‌ترین روش ورود به قرعه‌کشی</li>
+                        <li>✅ بهترین گزینه برای تجربه اول</li>
+                        <li>✅ بدون نیاز به ثبت‌نام خاص یا شرایط ویژه</li>
+                        <li>✅ همین حالا با ۵۰٪ تخفیف برای مدت محدود!</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 برای کسانی که به‌دنبال شانس بیشتر هستند، گزینه‌های پیشرفته‌تر هم در دسترس است.</div>
+                `
+            },
+            premium: {
+                english: `
+                    <h3><span>💎</span> Premium Ticket – 0.05 ETH</h3>
+                    <p>For 0.05 ETH, the Premium Ticket gives you a better chance of winning in the weekly draws. This plan is designed to create a perfect balance between cost and return. If you're looking for a more professional experience than the Classic plan, Premium is definitely an excellent choice.</p>
+                    <ul>
+                        <li>✅ Better chance to win than Classic Ticket</li>
+                        <li>✅ More valuable jackpots</li>
+                        <li>✅ Professional experience with balanced budget</li>
+                    </ul>
+                    <div class="tip">💡 For those who want to receive additional rewards, the VIP or Super VIP plans are also available.</div>
+                `,
+                french: `
+                    <h3><span>💎</span> Ticket Premium – 0.05 ETH</h3>
+                    <p>Pour 0.05 ETH, le ticket Premium vous donne une meilleure chance de gagner aux tirages hebdomadaires. Ce plan est conçu pour créer un équilibre parfait entre coût et retour. Si vous recherchez une expérience plus professionnelle que le plan Classique, Premium est définitivement un excellent choix.</p>
+                    <ul>
+                        <li>✅ Meilleure chance de gagner que le ticket Classique</li>
+                        <li>✅ Jackpots plus précieux</li>
+                        <li>✅ Expérience professionnelle avec budget équilibré</li>
+                    </ul>
+                    <div class="tip">💡 Pour ceux qui souhaitent recevoir des récompenses supplémentaires, les plans VIP ou Super VIP sont également disponibles.</div>
+                `,
+                german: `
+                    <h3><span>💎</span> Premium Ticket – 0.05 ETH</h3>
+                    <p>Für 0.05 ETH gibt Ihnen das Premium Ticket eine bessere Gewinnchance bei den wöchentlichen Ziehungen. Dieser Plan ist so konzipiert, dass er ein perfektes Gleichgewicht zwischen Kosten und Rendite schafft. Wenn Sie nach einer professionelleren Erfahrung als dem Classic-Plan suchen, ist Premium definitiv eine ausgezeichnete Wahl.</p>
+                    <ul>
+                        <li>✅ Bessere Gewinnchance als das Classic Ticket</li>
+                        <li>✅ Wertvollere Jackpots</li>
+                        <li>✅ Professionelle Erfahrung mit ausgewogenem Budget</li>
+                    </ul>
+                    <div class="tip">💡 Für diejenigen, die zusätzliche Belohnungen erhalten möchten, stehen auch die VIP- oder Super VIP-Pläne zur Verfügung.</div>
+                `,
+                spanish: `
+                    <h3><span>💎</span> Boleto Premium – 0.05 ETH</h3>
+                    <p>Por 0.05 ETH, el boleto Premium te brinda una mejor oportunidad de ganar en los sorteos semanales. Este plan está diseñado para crear un equilibrio perfecto entre costo y retorno. Si buscas una experiencia más profesional que el plan Clásico, Premium es definitivamente una excelente opción.</p>
+                    <ul>
+                        <li>✅ Mejor oportunidad de ganar que el Boleto Clásico</li>
+                        <li>✅ Jackpots más valiosos</li>
+                        <li>✅ Experiencia profesional con presupuesto equilibrado</li>
+                    </ul>
+                    <div class="tip">💡 Para aquellos que desean recibir recompensas adicionales, también están disponibles los planes VIP o Super VIP.</div>
+                `,
+                russian: `
+                    <h3><span>💎</span> Премиум билет – 0.05 ETH</h3>
+                    <p>За 0.05 ETH премиум-билет дает вам больше шансов на победу в еженедельных розыгрышах. Этот план разработан для создания идеального баланса между стоимостью и отдачей. Если вы ищете более профессиональный опыт, чем классический план, Premium — определенно отличный выбор.</p>
+                    <ul>
+                        <li>✅ Лучшие шансы на победу, чем у классического билета</li>
+                        <li>✅ Более ценные джекпоты</li>
+                        <li>✅ Профессиональный опыт при сбалансированном бюджете</li>
+                    </ul>
+                    <div class="tip">💡 Для тех, кто хочет получать дополнительные вознаграждения, также доступны тарифные планы VIP или Super VIP.</div>
+                `,
+                arabic: `
+                    <h3><span>💎</span> تذكرة متميزة – 0.05 ETH</h3>
+                    <p class="rtl-text">مقابل 0.05 ETH، تمنحك التذكرة المتميزة فرصة أفضل للفوز في السحوبات الأسبوعية. تم تصميم هذه الخطة لخلق توازن مثالي بين التكلفة والعائد. إذا كنت تبحث عن تجربة أكثر احترافية من الخطة الكلاسيكية، فإن المتميزة هي بالتأكيد خيار ممتاز.</p>
+                    <ul class="rtl-text">
+                        <li>✅ فرصة أفضل للفوز من التذكرة الكلاسيكية</li>
+                        <li>✅ جوائز أكبر قيمة</li>
+                        <li>✅ تجربة احترافية بميزانية متوازنة</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 بالنسبة لأولئك الذين يرغبون في الحصول على مكافآت إضافية، تتوفر أيضًا خطط VIP أو Super VIP.</div>
+                `,
+                persian: `
+                    <h3><span>💎</span> بلیط پرمیوم – 0.05 ETH</h3>
+                    <p class="rtl-text">با پرداخت ۰٫۰۵ ETH، بلیت پرمیوم به شما شانس بیشتری برای برنده‌شدن در قرعه‌کشی‌های هفتگی می‌دهد. این پلن به‌گونه‌ای طراحی شده که تعادل کاملی بین هزینه و بازده ایجاد کند. اگر به دنبال تجربه‌ای حرفه‌ای‌تر نسبت به پلن کلاسیک هستید، بدون شک Premium انتخاب عالی شماست.</p>
+                    <ul class="rtl-text">
+                        <li>✅ شانس برد بیشتر نسبت به بلیت کلاسیک</li>
+                        <li>✅ جکپات‌های ارزشمندتر</li>
+                        <li>✅ تجربه حرفه‌ای با بودجه متعادل</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 برای کسانی که می‌خواهند پاداش‌های جانبی هم دریافت کنند، پلن VIP یا Super VIP هم در دسترس است.</div>
+                `
+            },
+            vip: {
+                english: `
+                    <h3><span>👑</span> VIP Ticket – 0.1 ETH</h3>
+                    <p>The VIP Ticket is designed for those looking for a higher level of play. With 0.1 ETH, you benefit from much better chances, access to special jackpots, and the ability to earn income by referring friends. This plan also upgrades your position in the lottery queue and creates a different experience.</p>
+                    <ul>
+                        <li>✅ Much higher chance of winning</li>
+                        <li>✅ Bigger prizes with special benefits</li>
+                        <li>✅ Activation of Referral feature (earning income by inviting friends)</li>
+                        <li>✅ Priority in draws</li>
+                    </ul>
+                    <div class="tip">💡 If you're looking for maximum return and benefits, the Super VIP plan is your ideal option.</div>
+                `,
+                french: `
+                    <h3><span>👑</span> Ticket VIP – 0.1 ETH</h3>
+                    <p>Le ticket VIP est conçu pour ceux qui recherchent un niveau de jeu supérieur. Avec 0.1 ETH, vous bénéficiez de bien meilleures chances, d'un accès à des jackpots spéciaux et de la possibilité de gagner un revenu en parrainant des amis. Ce plan améliore également votre position dans la file d'attente de la loterie et crée une expérience différente.</p>
+                    <ul>
+                        <li>✅ Chance de gagner beaucoup plus élevée</li>
+                        <li>✅ Prix plus importants avec avantages spéciaux</li>
+                        <li>✅ Activation de la fonctionnalité de parrainage (gagner un revenu en invitant des amis)</li>
+                        <li>✅ Priorité dans les tirages</li>
+                    </ul>
+                    <div class="tip">💡 Si vous recherchez un rendement et des avantages maximum, le plan Super VIP est votre option idéale.</div>
+                `,
+                german: `
+                    <h3><span>👑</span> VIP Ticket – 0.1 ETH</h3>
+                    <p>Das VIP-Ticket ist für diejenigen konzipiert, die nach einem höheren Spielniveau suchen. Mit 0.1 ETH profitieren Sie von viel besseren Gewinnchancen, Zugang zu speziellen Jackpots und der Möglichkeit, durch die Empfehlung von Freunden Einkommen zu erzielen. Dieser Plan verbessert auch Ihre Position in der Lotteriewarteschlange und schafft ein besonderes Erlebnis.</p>
+                    <ul>
+                        <li>✅ Viel höhere Gewinnchance</li>
+                        <li>✅ Größere Preise mit besonderen Vorteilen</li>
+                        <li>✅ Aktivierung der Empfehlungsfunktion (Einkommen durch Einladung von Freunden)</li>
+                        <li>✅ Priorität bei den Ziehungen</li>
+                    </ul>
+                    <div class="tip">💡 Wenn Sie nach maximaler Rendite und Vorteilen suchen, ist der Super VIP-Plan Ihre ideale Option.</div>
+                `,
+                spanish: `
+                    <h3><span>👑</span> Boleto VIP – 0.1 ETH</h3>
+                    <p>El boleto VIP está diseñado para aquellos que buscan un nivel de juego superior. Con 0.1 ETH, te beneficias de muchas más posibilidades, acceso a premios especiales y la capacidad de generar ingresos al recomendar amigos. Este plan también mejora tu posición en la cola de la lotería y crea una experiencia diferente.</p>
+                    <ul>
+                        <li>✅ Mucha más probabilidad de ganar</li>
+                        <li>✅ Premios más grandes con beneficios especiales</li>
+                        <li>✅ Activación de la función de Referidos (ganar ingresos invitando amigos)</li>
+                        <li>✅ Prioridad en los sorteos</li>
+                    </ul>
+                    <div class="tip">💡 Si buscas el máximo retorno y beneficios, el plan Super VIP es tu opción ideal.</div>
+                `,
+                russian: `
+                    <h3><span>👑</span> VIP билет – 0.1 ETH</h3>
+                    <p>VIP-билет предназначен для тех, кто ищет более высокий уровень игры. За 0.1 ETH вы получаете гораздо больше шансов, доступ к специальным джекпотам и возможность зарабатывать доход, приглашая друзей. Этот план также улучшает вашу позицию в лотерейной очереди и создает другой опыт.</p>
+                    <ul>
+                        <li>✅ Намного больше шансов на победу</li>
+                        <li>✅ Более крупные призы с особыми преимуществами</li>
+                        <li>✅ Активация функции рефералов (заработок за приглашение друзей)</li>
+                        <li>✅ Приоритет в розыгрышах</li>
+                    </ul>
+                    <div class="tip">💡 Если вы ищете максимальную отдачу и преимущества, план Super VIP — ваш идеальный вариант.</div>
+                `,
+                arabic: `
+                    <h3><span>👑</span> تذكرة VIP – 0.1 ETH</h3>
+                    <p class="rtl-text">تم تصميم تذكرة VIP لأولئك الذين يبحثون عن مستوى أعلى من اللعب. مع 0.1 ETH، تستفيد من فرص أفضل بكثير، والوصول إلى جوائز خاصة، والقدرة على كسب الدخل من خلال إحالة الأصدقاء. تقوم هذه الخطة أيضًا بترقية موقعك في قائمة انتظار اليانصيب وتخلق تجربة مختلفة.</p>
+                    <ul class="rtl-text">
+                        <li>✅ فرصة أكبر بكثير للفوز</li>
+                        <li>✅ جوائز أكبر مع مزايا خاصة</li>
+                        <li>✅ تفعيل ميزة الإحالة (كسب الدخل عن طريق دعوة الأصدقاء)</li>
+                        <li>✅ الأولوية في السحوبات</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 إذا كنت تبحث عن أقصى عائد وفوائد، فإن خطة Super VIP هي خيارك المثالي.</div>
+                `,
+                persian: `
+                    <h3><span>👑</span> بلیط VIP – 0.1 ETH</h3>
+                    <p class="rtl-text">بلیط VIP برای کسانی طراحی شده که به‌دنبال سطح بالاتری از بازی هستند. با ۰٫۱ ETH، شما از شانس‌های بسیار بیشتر، دسترسی به جکپات‌های ویژه، و امکان کسب درآمد از طریق معرفی دوستان بهره‌مند می‌شوید. این پلن همچنین جایگاه شما را در صف قرعه‌کشی ارتقا می‌دهد و تجربه‌ای متفاوت را رقم می‌زند.</p>
+                    <ul class="rtl-text">
+                        <li>✅ شانس برد بسیار بالاتر</li>
+                        <li>✅ جوایز بزرگ‌تر با مزایای ویژه</li>
+                        <li>✅ فعال‌سازی قابلیت Referral (کسب درآمد از دعوت دوستان)</li>
+                        <li>✅ اولویت در قرعه‌کشی‌ها</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 اگر به‌دنبال بیشترین بازده و مزایا هستید، پلن Super VIP گزینه ایده‌آل شماست.</div>
+                `
+            },
+            supervip: {
+                english: `
+                    <h3><span>🦾</span> Super VIP Ticket – 0.25 ETH</h3>
+                    <p>The Super VIP Ticket provides a unique and professional experience for special users. With 0.25 ETH, you not only get the highest chance of winning, but also access to bigger prizes, exclusive jackpots, and the maximum referral reward percentage. This plan offers the most luxurious level of play.</p>
+                    <ul>
+                        <li>✅ Highest chance of winning in the lottery</li>
+                        <li>✅ Access to the biggest jackpots</li>
+                        <li>✅ Maximum income from referring friends</li>
+                        <li>✅ Access to special and limited draws</li>
+                    </ul>
+                    <div class="tip">💡 Designed for professional and purposeful users to have a different experience of online lottery.</div>
+                `,
+                french: `
+                    <h3><span>🦾</span> Ticket Super VIP – 0.25 ETH</h3>
+                    <p>Le ticket Super VIP offre une expérience unique et professionnelle pour les utilisateurs spéciaux. Avec 0.25 ETH, vous obtenez non seulement la plus grande chance de gagner, mais également un accès à des prix plus importants, des jackpots exclusifs et le pourcentage maximum de récompense de parrainage. Ce plan offre le niveau de jeu le plus luxueux.</p>
+                    <ul>
+                        <li>✅ Plus grande chance de gagner à la loterie</li>
+                        <li>✅ Accès aux plus gros jackpots</li>
+                        <li>✅ Revenu maximum provenant du parrainage d'amis</li>
+                        <li>✅ Accès à des tirages spéciaux et limités</li>
+                    </ul>
+                    <div class="tip">💡 Conçu pour les utilisateurs professionnels et déterminés afin de vivre une expérience différente de la loterie en ligne.</div>
+                `,
+                german: `
+                    <h3><span>🦾</span> Super VIP Ticket – 0.25 ETH</h3>
+                    <p>Das Super VIP-Ticket bietet ein einzigartiges und professionelles Erlebnis für besondere Benutzer. Mit 0.25 ETH erhalten Sie nicht nur die höchste Gewinnchance, sondern auch Zugang zu größeren Preisen, exklusiven Jackpots und dem maximalen Empfehlungsbelohnungsprozentsatz. Dieser Plan bietet das luxuriöseste Spielniveau.</p>
+                    <ul>
+                        <li>✅ Höchste Gewinnchance in der Lotterie</li>
+                        <li>✅ Zugang zu den größten Jackpots</li>
+                        <li>✅ Maximale Einnahmen durch die Empfehlung von Freunden</li>
+                        <li>✅ Zugang zu besonderen und limitierten Ziehungen</li>
+                    </ul>
+                    <div class="tip">💡 Entwickelt für professionelle und zielstrebige Benutzer, um ein besonderes Online-Lotterieerlebnis zu haben.</div>
+                `,
+                spanish: `
+                    <h3><span>🦾</span> Boleto Super VIP – 0.25 ETH</h3>
+                    <p>El boleto Super VIP ofrece una experiencia única y profesional para usuarios especiales. Con 0.25 ETH, no solo obtienes la mayor probabilidad de ganar, sino también acceso a premios más grandes, premios exclusivos y el porcentaje máximo de recompensa por referidos. Este plan ofrece el nivel de juego más lujoso.</p>
+                    <ul>
+                        <li>✅ Mayor probabilidad de ganar en la lotería</li>
+                        <li>✅ Acceso a los premios más grandes</li>
+                        <li>✅ Ingresos máximos por recomendar amigos</li>
+                        <li>✅ Acceso a sorteos especiales y limitados</li>
+                    </ul>
+                    <div class="tip">💡 Diseñado para usuarios profesionales y con propósito para tener una experiencia diferente de lotería en línea.</div>
+                `,
+                russian: `
+                    <h3><span>🦾</span> Супер VIP билет – 0.25 ETH</h3>
+                    <p>Билет Super VIP предоставляет уникальный и профессиональный опыт для особых пользователей. За 0.25 ETH вы получаете не только наивысшие шансы на победу, но и доступ к более крупным призам, эксклюзивным джекпотам и максимальному проценту вознаграждения за приглашение друзей. Этот план предлагает самый роскошный уровень игры.</p>
+                    <ul>
+                        <li>✅ Наивысшие шансы на победу в лотерее</li>
+                        <li>✅ Доступ к самым большим джекпотам</li>
+                        <li>✅ Максимальный доход от приглашения друзей</li>
+                        <li>✅ Доступ к специальным и ограниченным розыгрышам</li>
+                    </ul>
+                    <div class="tip">💡 Разработан для профессиональных и целеустремленных пользователей, чтобы получить другой опыт онлайн-лотереи.</div>
+                `,
+                arabic: `
+                    <h3><span>🦾</span> تذكرة سوبر VIP – 0.25 ETH</h3>
+                    <p class="rtl-text">توفر تذكرة Super VIP تجربة فريدة ومهنية للمستخدمين الخاصين. مع 0.25 ETH، لا تحصل فقط على أعلى فرصة للفوز، ولكن أيضًا الوصول إلى جوائز أكبر، وجوائز حصرية، وأقصى نسبة مكافأة إحالة. تقدم هذه الخطة أرقى مستوى من اللعب.</p>
+                    <ul class="rtl-text">
+                        <li>✅ أعلى فرصة للفوز في اليانصيب</li>
+                        <li>✅ الوصول إلى أكبر الجوائز</li>
+                        <li>✅ أقصى قدر من الدخل من إحالة الأصدقاء</li>
+                        <li>✅ الوصول إلى سحوبات خاصة ومحدودة</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 مصمم للمستخدمين المحترفين والهادفين للحصول على تجربة مختلفة لليانصيب عبر الإنترنت.</div>
+                `,
+                persian: `
+                    <h3><span>🦾</span> بلیط سوپر VIP – 0.25 ETH</h3>
+                    <p class="rtl-text">بلیت Super VIP یک تجربه منحصربه‌فرد و حرفه‌ای برای کاربران خاص فراهم می‌کند. با ۰٫۲۵ ETH، نه‌تنها بالاترین شانس برنده‌شدن را دریافت می‌کنید، بلکه به جوایز بزرگ‌تر، جکپات‌های اختصاصی، و حداکثر درصد پاداش ارجاع دسترسی خواهید داشت. این پلن، لوکس‌ترین سطح بازی را ارائه می‌دهد.</p>
+                    <ul class="rtl-text">
+                        <li>✅ بیشترین شانس برنده‌شدن در قرعه‌کشی</li>
+                        <li>✅ دسترسی به بزرگ‌ترین جکپات‌ها</li>
+                        <li>✅ بیشترین میزان درآمد از معرفی دوستان</li>
+                        <li>✅ دسترسی به قرعه‌کشی‌های ویژه و محدود</li>
+                    </ul>
+                    <div class="tip rtl-text">💡 برای کاربران حرفه‌ای و هدفمند طراحی شده تا تجربه‌ای متفاوت از قرعه‌کشی آنلاین داشته باشند.</div>
+                `
+            }
+        };
+
+        // Show glass modal with ticket info
+        document.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                currentTicketType = this.getAttribute('data-ticket');
+                glassModal.style.display = 'flex';
+                
+                // Set modal title based on ticket type
+                const ticketTitles = {
+                    classic: "Classic Ticket Details",
+                    premium: "Premium Ticket Details",
+                    vip: "VIP Ticket Details",
+                    supervip: "Super VIP Ticket Details"
+                };
+                modalTicketTitle.textContent = ticketTitles[currentTicketType];
+                
+                updateTicketContent();
+            });
+        });
+
+        // Close glass modal
+        document.querySelector('.close-glass-modal').addEventListener('click', function() {
+            glassModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        glassModal.addEventListener('click', function(e) {
+            if (e.target === glassModal) {
+                glassModal.style.display = 'none';
+            }
+        });
+
+        // Update ticket content when language changes
+        languageSelector.addEventListener('change', updateTicketContent);
+
+        function updateTicketContent() {
+            const selectedLanguage = languageSelector.value;
+            glassCardContent.innerHTML = ticketContents[currentTicketType][selectedLanguage];
+        }
+
+        // Buy button click handlers
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentPrice = parseFloat(this.getAttribute('data-price'));
+                paymentAmount.textContent = `Amount: ${currentPrice} ETH`;
+                paymentModal.style.display = 'flex';
+                
+                // Check if wallet is already connected
+                if (userAccount) {
+                    walletStatus.textContent = `Connected: ${userAccount.substring(0, 6)}...${userAccount.substring(38)}`;
+                    walletStatus.className = 'wallet-status wallet-connected';
+                    connectWalletBtn.style.display = 'none';
+                    confirmPaymentBtn.style.display = 'block';
+                } else {
+                    walletStatus.textContent = 'Wallet not connected';
+                    walletStatus.className = 'wallet-status wallet-disconnected';
+                    connectWalletBtn.style.display = 'block';
+                    confirmPaymentBtn.style.display = 'none';
+                }
+            });
+        });
+        
+        // Close modal
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            paymentModal.style.display = 'none';
+        });
+        
+        // Connect MetaMask wallet
+        connectWalletBtn.addEventListener('click', async function() {
+            try {
+                // Check if MetaMask is installed
+                if (typeof window.ethereum === 'undefined') {
+                    throw new Error('MetaMask is not installed!');
+                }
+                
+                // Request account access
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAccount = accounts[0];
+                
+                // Update UI
+                walletStatus.textContent = `Connected: ${userAccount.substring(0, 6)}...${userAccount.substring(38)}`;
+                walletStatus.className = 'wallet-status wallet-connected';
+                connectWalletBtn.style.display = 'none';
+                confirmPaymentBtn.style.display = 'block';
+                
+                // Generate referral link
+                generateReferralLink();
+                
+                // Listen for account changes
+                window.ethereum.on('accountsChanged', (accounts) => {
+                    if (accounts.length === 0) {
+                        // Wallet disconnected
+                        userAccount = null;
+                        walletStatus.textContent = 'Wallet not connected';
+                        walletStatus.className = 'wallet-status wallet-disconnected';
+                        connectWalletBtn.style.display = 'block';
+                        confirmPaymentBtn.style.display = 'none';
+                        document.getElementById('referralSection').style.display = 'none';
+                    } else {
+                        // Account changed
+                        userAccount = accounts[0];
+                        walletStatus.textContent = `Connected: ${userAccount.substring(0, 6)}...${userAccount.substring(38)}`;
+                        generateReferralLink();
+                    }
+                });
+                
+            } catch (error) {
+                paymentStatus.innerHTML = `<span style="color: var(--danger)">Error: ${error.message}</span>`;
+            }
+        });
+        
+        // Confirm payment
+        confirmPaymentBtn.addEventListener('click', async function() {
+            paymentStatus.innerHTML = '<span style="color: blue">Processing transaction...</span>';
+            
+            try {
+                // Switch to selected network first
+                const chainId = networkSelector.value;
+                const networkSwitched = await switchNetwork(chainId);
+                
+                if (!networkSwitched) {
+                    throw new Error('Failed to switch network');
+                }
+                
+                // Get current network symbol
+                const symbol = getNetworkSymbol(chainId);
+                
+                // Update amount display with current network symbol
+                paymentAmount.textContent = `Amount: ${currentPrice} ${symbol}`;
+                
+                // Transaction parameters
+                const transactionParameters = {
+                    to: '0xYourWalletAddressHere', // Replace with your wallet address
+                    from: userAccount,
+                    value: '0x' + (currentPrice * 1e18).toString(16), // Convert to wei
+                    gasPrice: '0x' + (25000000000).toString(16), // 25 Gwei
+                    gas: '0x' + (21000).toString(16), // Standard gas limit
+                };
+                
+                // Send transaction
+                const txHash = await window.ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [transactionParameters],
+                });
+                
+                // Check for referral and process if exists
+                processReferral(userAccount, currentPrice);
+                
+                // Success message
+                paymentStatus.innerHTML = `<span style="color: var(--success)">Payment successful! Transaction hash: ${txHash.substring(0, 10)}...</span>`;
+                
+                // Add ticket to user's list
+                addTicketToUserList(currentPrice, txHash);
+                
+                // Close modal after 3 seconds
+                setTimeout(() => {
+                    paymentModal.style.display = 'none';
+                    paymentStatus.innerHTML = '';
+                }, 3000);
+                
+            } catch (error) {
+                paymentStatus.innerHTML = `<span style="color: var(--danger)">Error: ${error.message}</span>`;
+            }
+        });
+        
+        // Add ticket to user's list
+        function addTicketToUserList(price, txHash) {
+            // Remove "no tickets" message if it exists
+            if (ticketsList.children.length === 1 && ticketsList.children[0].textContent.includes('No tickets')) {
+                ticketsList.innerHTML = '';
+            }
+            
+            // Create new ticket item
+            const li = document.createElement('li');
+            li.className = 'ticket-item';
+            
+            const ticketId = 'T-' + Math.random().toString(36).substring(2, 9).toUpperCase();
+            const date = new Date().toLocaleDateString();
+            
+            li.innerHTML = `
+                <div>
+                    <span class="ticket-number">${ticketId}</span>
+                    <span> - ${date}</span>
+                </div>
+                <div>${price} ${getNetworkSymbol(networkSelector.value)}</div>
+            `;
+            
+            ticketsList.appendChild(li);
+        }
+        
+        // ========== Countdown Timer ==========
+        function updateCountdown() {
+            // Set next draw time (Saturday at 8 PM)
+            const now = new Date();
+            const nextSaturday = new Date();
+            
+            // Find next Saturday
+            nextSaturday.setDate(now.getDate() + (6 - now.getDay() + 7) % 7);
+            nextSaturday.setHours(20, 0, 0, 0); // 8 PM
+            
+            // If today is Saturday and before 8 PM
+            if (now.getDay() === 6 && now.getHours() < 20) {
+                nextSaturday.setDate(now.getDate());
+            }
+            
+            const diff = nextSaturday - now;
+            
+            if (diff <= 0) {
+                // If draw time has passed, set for next Saturday
+                nextSaturday.setDate(nextSaturday.getDate() + 7);
+                const newDiff = nextSaturday - now;
+                updateTimerDisplay(newDiff);
+                return;
+            }
+            
+            updateTimerDisplay(diff);
+        }
+
+        function updateTimerDisplay(diff) {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdownTimer').textContent = 
+                `${days}d ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Update timer every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // ========== Blockchain Network Selection ==========
+        const chainData = {
+            '0x1': { name: 'Ethereum', symbol: 'ETH' },
+            '0x38': { name: 'Binance', symbol: 'BNB' },
+            '0x89': { name: 'Polygon', symbol: 'MATIC' }
+        };
+
+        // Switch network in MetaMask
+        async function switchNetwork(chainId) {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId }],
+                });
+                return true;
+            } catch (error) {
+                if (error.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [getNetworkParams(chainId)],
+                        });
+                        return true;
+                    } catch (addError) {
+                        console.error('Error adding network:', addError);
+                        return false;
+                    }
+                }
+                console.error('Error switching network:', error);
+                return false;
+            }
+        }
+
+        function getNetworkParams(chainId) {
+            // Parameters for different networks
+            const networks = {
+                '0x1': {
+                    chainName: 'Ethereum Mainnet',
+                    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+                    rpcUrls: ['https://mainnet.infura.io/v3/'],
+                    blockExplorerUrls: ['https://etherscan.io']
+                },
+                '0x38': {
+                    chainName: 'Binance Smart Chain',
+                    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+                    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                    blockExplorerUrls: ['https://bscscan.com']
+                },
+                '0x89': {
+                    chainName: 'Polygon Mainnet',
+                    nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+                    rpcUrls: ['https://polygon-rpc.com/'],
+                    blockExplorerUrls: ['https://polygonscan.com']
+                }
+            };
+            return { chainId, ...networks[chainId] };
+        }
+
+        function getNetworkSymbol(chainId) {
+            return chainData[chainId]?.symbol || 'ETH';
+        }
+
+        // Change network when selected from list
+        networkSelector.addEventListener('change', async function() {
+            if (userAccount) {
+                const success = await switchNetwork(this.value);
+                if (success) {
+                    paymentStatus.innerHTML = `<span style="color: var(--success)">Switched to ${chainData[this.value].name} network</span>`;
+                    // Update price display with new symbol
+                    paymentAmount.textContent = `Amount: ${currentPrice} ${chainData[this.value].symbol}`;
+                } else {
+                    paymentStatus.innerHTML = `<span style="color: var(--danger)">Failed to switch network</span>`;
+                }
+            }
+        });
+
+        // ========== Referral System ==========
+        function generateReferralLink() {
+            if (userAccount) {
+                const referralLink = `${window.location.origin}${window.location.pathname}?ref=${userAccount}`;
+                document.getElementById('referralLink').value = referralLink;
+                document.getElementById('referralSection').style.display = 'block';
+            }
+        }
+
+        // Copy referral link
+        document.getElementById('copyReferralBtn').addEventListener('click', function() {
+            const referralInput = document.getElementById('referralLink');
+            referralInput.select();
+            document.execCommand('copy');
+            
+            const copiedMessage = document.getElementById('copiedMessage');
+            copiedMessage.style.display = 'block';
+            setTimeout(() => {
+                copiedMessage.style.display = 'none';
+            }, 2000);
+        });
+
+        // Process referral
+        function processReferral(referrer, amount) {
+            const referralAddress = localStorage.getItem('referralAddress');
+            if (referralAddress && referralAddress !== referrer) {
+                // Calculate 10% commission
+                const commission = amount * 0.1;
+                console.log(`Referral commission: ${commission} to ${referralAddress}`);
+                // Here you can process the commission transaction
+            }
+        }
+
+        // Check referral parameter in URL
+        function checkReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refAddress = urlParams.get('ref');
+            
+            if (refAddress && /^0x[a-fA-F0-9]{40}$/.test(refAddress)) {
+                // Store referral address in localStorage
+                localStorage.setItem('referralAddress', refAddress);
+            }
+        }
+
+        // Run on page load
+        checkReferral();
+    </script>
+</body>
+</html>
