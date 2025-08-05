@@ -1,28 +1,26 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#7c3aed" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-  <!-- SEO Meta -->
-  <meta name="description" content="Join LuckyDraw and buy lottery tickets to win big prizes online!" />
-  <meta name="keywords" content="lottery, tickets, crypto draw, LuckyDraw, win" />
-  <meta name="author" content="LuckyDraw Team" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Dashboard | LuckyDraw</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://unpkg.com/@supabase/supabase-js"></script>
-  <style>
+<link href="/manifest.json" rel="manifest"/>
+<meta content="#7c3aed" name="theme-color"/>
+<!-- Favicon -->
+<link href="/favicon.ico" rel="icon" type="image/x-icon">
+<!-- SEO Meta -->
+<meta content="Join LuckyDraw and buy lottery tickets to win big prizes online!" name="description"/>
+<meta content="lottery, tickets, crypto draw, LuckyDraw, win" name="keywords"/>
+<meta content="LuckyDraw Team" name="author"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard | LuckyDraw</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<style>
     :root {
       --primary: #5B21B6;
       --primary-light: #7C3AED;
@@ -159,240 +157,224 @@
       animation: fadeIn 0.4s ease-out forwards;
     }
   </style>
-</head>
+</meta></link></head>
 <body class="min-h-screen flex bg-gray-50">
-
-  <!-- Sidebar -->
-  <aside class="w-64 sidebar flex flex-col text-white">
-    <div class="text-xl font-bold text-center py-5 border-b border-white border-opacity-10">
+<!-- Sidebar -->
+<aside class="w-64 sidebar flex flex-col text-white">
+<div class="text-xl font-bold text-center py-5 border-b border-white border-opacity-10">
       LuckyDraw Admin
     </div>
-    <nav class="flex-1 p-4 space-y-1">
-      <button onclick="showSection('overview')" class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-        </svg>
-        <span>Dashboard</span>
-      </button>
-      <button onclick="showSection('users')" class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <span>Users</span>
-      </button>
-      <button onclick="showSection('tickets')" class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-        </svg>
-        <span>Tickets</span>
-      </button>
-      <button onclick="showSection('draws')" class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        <span>Draws</span>
-      </button>
-      <button onclick="showSection('analytics')" class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        <span>Analytics</span>
-      </button>
-      <button onclick="logout()" class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3 mt-8 text-red-200 hover:text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg>
-        <span>Logout</span>
-      </button>
-    </nav>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="flex-1 p-8 overflow-auto">
-    <!-- Overview Section -->
-    <section id="overview" class="animate-fade-in">
-      <h1 class="text-2xl font-bold text-gray-800 mb-6">Dashboard Overview</h1>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="card p-6">
-          <div class="flex items-center space-x-4">
-            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-sm font-medium text-gray-500">Total Users</h2>
-              <p class="text-2xl font-bold text-gray-800" id="countUsers">0</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card p-6">
-          <div class="flex items-center space-x-4">
-            <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-sm font-medium text-gray-500">Draws</h2>
-              <p class="text-2xl font-bold text-gray-800" id="countDraws">0</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card p-6">
-          <div class="flex items-center space-x-4">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-sm font-medium text-gray-500">Tickets</h2>
-              <p class="text-2xl font-bold text-gray-800" id="countTickets">0</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card p-6">
-          <div class="flex items-center space-x-4">
-            <div class="p-3 rounded-full bg-green-100 text-green-600">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-sm font-medium text-gray-500">Revenue</h2>
-              <p class="text-2xl font-bold text-gray-800" id="totalRevenue">0 ETH</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="card p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Draws</h2>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw Time</th>
-                </tr>
-              </thead>
-              <tbody id="recentDrawsTable" class="bg-white divide-y divide-gray-200">
-                <!-- Filled by JavaScript -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        <div class="card p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Transactions</h2>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                </tr>
-              </thead>
-              <tbody id="recentTransactionsTable" class="bg-white divide-y divide-gray-200">
-                <!-- Filled by JavaScript -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Users Section -->
-    <section id="users" class="hidden animate-fade-in">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">User Management</h2>
-        <div class="relative w-64">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <input type="text" id="userSearch" placeholder="Search users..." class="form-input block w-full pl-10 pr-3 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
-        </div>
-      </div>
-      
-      <div class="card overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
-              </tr>
-            </thead>
-            <tbody id="userList" class="bg-white divide-y divide-gray-200">
-              <!-- Filled by JavaScript -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tickets Section -->
-    <section id="tickets" class="hidden animate-fade-in">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Ticket Transactions</h2>
-        <div class="flex space-x-3">
-          <select id="ticketDrawFilter" class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
-            <option value="">All Draws</option>
-          </select>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-            <input type="text" id="ticketUserFilter" placeholder="Filter by user..." class="form-input pl-10 pr-3 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
-          </div>
-        </div>
-      </div>
-      
-      <div class="card overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-              </tr>
-            </thead>
-            <tbody id="ticketList" class="bg-white divide-y divide-gray-200">
-              <!-- Filled by JavaScript -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    <!-- Ticket Filters HTML -->
-
-<select id="ticketStatusFilter" class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
-  <option value="">All Statuses</option>
-  <option value="pending">Pending</option>
-  <option value="success">Success</option>
-  <option value="failed">Failed</option>
+<nav class="flex-1 p-4 space-y-1">
+<button class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3" onclick="showSection('overview')">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Dashboard</span>
+</button>
+<button class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3" onclick="showSection('users')">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Users</span>
+</button>
+<button class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3" onclick="showSection('tickets')">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Tickets</span>
+</button>
+<button class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3" onclick="showSection('draws')">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Draws</span>
+</button>
+<button class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3" onclick="showSection('analytics')">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Analytics</span>
+</button>
+<button class="sidebar-button w-full text-left px-4 py-3 rounded-lg font-medium flex items-center space-x-3 mt-8 text-red-200 hover:text-white" onclick="logout()">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Logout</span>
+</button>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8 overflow-auto">
+<!-- Overview Section -->
+<section class="animate-fade-in" id="overview">
+<h1 class="text-2xl font-bold text-gray-800 mb-6">Dashboard Overview</h1>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="card p-6">
+<div class="flex items-center space-x-4">
+<div class="p-3 rounded-full bg-purple-100 text-purple-600">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h2 class="text-sm font-medium text-gray-500">Total Users</h2>
+<p class="text-2xl font-bold text-gray-800" id="countUsers">0</p>
+</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex items-center space-x-4">
+<div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h2 class="text-sm font-medium text-gray-500">Draws</h2>
+<p class="text-2xl font-bold text-gray-800" id="countDraws">0</p>
+</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex items-center space-x-4">
+<div class="p-3 rounded-full bg-blue-100 text-blue-600">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h2 class="text-sm font-medium text-gray-500">Tickets</h2>
+<p class="text-2xl font-bold text-gray-800" id="countTickets">0</p>
+</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex items-center space-x-4">
+<div class="p-3 rounded-full bg-green-100 text-green-600">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h2 class="text-sm font-medium text-gray-500">Revenue</h2>
+<p class="text-2xl font-bold text-gray-800" id="totalRevenue">0 ETH</p>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="card p-6">
+<h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Draws</h2>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw Time</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="recentDrawsTable">
+<!-- Filled by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+<div class="card p-6">
+<h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Transactions</h2>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="recentTransactionsTable">
+<!-- Filled by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- Users Section -->
+<section class="hidden animate-fade-in" id="users">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold text-gray-800">User Management</h2>
+<div class="relative w-64">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="form-input block w-full pl-10 pr-3 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" id="userSearch" placeholder="Search users..." type="text"/>
+</div>
+</div>
+<div class="card overflow-hidden">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="userList">
+<!-- Filled by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Tickets Section -->
+<section class="hidden animate-fade-in" id="tickets">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold text-gray-800">Ticket Transactions</h2>
+<div class="flex space-x-3">
+<select class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" id="ticketDrawFilter">
+<option value="">All Draws</option>
 </select>
-
-<input type="date" id="ticketStartDate" class="form-input px-4 py-2 rounded-lg border-gray-300" placeholder="Start Date">
-<input type="date" id="ticketEndDate" class="form-input px-4 py-2 rounded-lg border-gray-300" placeholder="End Date">
-
-
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="form-input pl-10 pr-3 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" id="ticketUserFilter" placeholder="Filter by user..." type="text"/>
+</div>
+</div>
+</div>
+<div class="card overflow-hidden">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="ticketList">
+<!-- Filled by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+<!-- Ticket Filters HTML -->
+<select class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" id="ticketStatusFilter">
+<option value="">All Statuses</option>
+<option value="pending">Pending</option>
+<option value="success">Success</option>
+<option value="failed">Failed</option>
+</select>
+<input class="form-input px-4 py-2 rounded-lg border-gray-300" id="ticketStartDate" placeholder="Start Date" type="date"/>
+<input class="form-input px-4 py-2 rounded-lg border-gray-300" id="ticketEndDate" placeholder="End Date" type="date"/>
 <!-- Ticket Filters JS -->
 <script>
 
@@ -429,184 +411,158 @@ function filterTickets() {
 
 </script>
 </section>
-
-    <!-- Draws Section -->
-    <section id="draws" class="hidden animate-fade-in">
-      <div class="card mb-6 p-6">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">Create New Draw</h2>
-        <form id="draw-form" class="space-y-4">
-          <div>
-            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-            <input type="text" id="title" required 
-                   class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" 
-                   placeholder="Draw Title">
-          </div>
-          <div>
-            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <textarea id="description" rows="3" required
-                      class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                      placeholder="Description"></textarea>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="draw_date" class="block text-sm font-medium text-gray-700 mb-1">Draw Date</label>
-              <input type="date" id="draw_date" required
-                     class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
-            </div>
-            <div>
-              <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-              <select id="status" 
-                      class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
-                <option value="open">Open</option>
-                <option value="closed">Closed</option>
-              </select>
-            </div>
-          </div>
-          <div class="pt-2">
-            <button type="submit" class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
+<!-- Draws Section -->
+<section class="hidden animate-fade-in" id="draws">
+<div class="card mb-6 p-6">
+<h2 class="text-xl font-semibold text-gray-800 mb-4">Create New Draw</h2>
+<form class="space-y-4" id="draw-form">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="title">Title</label>
+<input class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="title" placeholder="Draw Title" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="description">Description</label>
+<textarea class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="description" placeholder="Description" required="" rows="3"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="draw_date">Draw Date</label>
+<input class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="draw_date" required="" type="date"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="status">Status</label>
+<select class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="status">
+<option value="open">Open</option>
+<option value="closed">Closed</option>
+</select>
+</div>
+</div>
+<div class="pt-2">
+<button class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white" type="submit">
+<svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
               Create Draw
             </button>
-          </div>
-        </form>
-        <p id="draw-message" class="mt-3 text-sm"></p>
-      </div>
-      
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Draw Management</h2>
-        <button onclick="showDrawForm()" class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
+</div>
+</form>
+<p class="mt-3 text-sm" id="draw-message"></p>
+</div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold text-gray-800">Draw Management</h2>
+<button class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white" onclick="showDrawForm()">
+<svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
           Add New Draw
         </button>
-      </div>
-      
-      <div class="flex flex-wrap gap-3 mb-6">
-        <select id="drawStatusFilter" class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
-          <option value="">All Statuses</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-        <input type="date" id="drawDateFilter" class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
-        <button onclick="filterDraws()" class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white">
+</div>
+<div class="flex flex-wrap gap-3 mb-6">
+<select class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" id="drawStatusFilter">
+<option value="">All Statuses</option>
+<option value="active">Active</option>
+<option value="inactive">Inactive</option>
+</select>
+<input class="form-input px-4 py-2 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" id="drawDateFilter" type="date"/>
+<button class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white" onclick="filterDraws()">
           Filter
         </button>
-        <button onclick="resetDrawFilters()" class="btn-secondary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-700">
+<button class="btn-secondary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-700" onclick="resetDrawFilters()">
           Reset
         </button>
-      </div>
-      
-      <div class="card overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw Time</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets Sold</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="drawList" class="bg-white divide-y divide-gray-200">
-              <!-- Filled by JavaScript -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-      
-      <!-- Draw Form Modal -->
-      <div id="drawFormModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md transform transition-all">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold text-gray-800" id="drawFormTitle">Add New Draw</h3>
-            <button onclick="hideDrawForm()" class="text-gray-500 hover:text-gray-700">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          <form id="drawForm" class="space-y-4">
-            <input type="hidden" id="drawId">
-            <div>
-              <label for="drawTitle" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-              <input type="text" id="drawTitle" required 
-                     class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
-            </div>
-            <div>
-              <label for="drawDescription" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-              <textarea id="drawDescription" rows="3" 
-                        class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500"></textarea>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label for="drawTime" class="block text-sm font-medium text-gray-700 mb-1">Draw Time</label>
-                <input type="datetime-local" id="drawTime" required 
-                       class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
-              </div>
-              <div>
-                <label for="drawStatus" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select id="drawStatus" 
-                        class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-            </div>
-            <div class="flex justify-end space-x-3 pt-2">
-              <button type="button" onclick="hideDrawForm()" 
-                      class="btn-secondary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-700">
+</div>
+<div class="card overflow-hidden">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draw Time</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets Sold</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="drawList">
+<!-- Filled by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+<!-- Draw Form Modal -->
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50" id="drawFormModal">
+<div class="bg-white rounded-lg p-6 w-full max-w-md transform transition-all">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-semibold text-gray-800" id="drawFormTitle">Add New Draw</h3>
+<button class="text-gray-500 hover:text-gray-700" onclick="hideDrawForm()">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<form class="space-y-4" id="drawForm">
+<input id="drawId" type="hidden"/>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="drawTitle">Title</label>
+<input class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="drawTitle" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="drawDescription">Description</label>
+<textarea class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="drawDescription" rows="3"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="drawTime">Draw Time</label>
+<input class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="drawTime" required="" type="datetime-local"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1" for="drawStatus">Status</label>
+<select class="form-input block w-full px-3 py-2 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" id="drawStatus">
+<option value="active">Active</option>
+<option value="inactive">Inactive</option>
+</select>
+</div>
+</div>
+<div class="flex justify-end space-x-3 pt-2">
+<button class="btn-secondary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-700" onclick="hideDrawForm()" type="button">
                 Cancel
               </button>
-              <button type="submit" 
-                      class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white">
+<button class="btn-primary inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white" type="submit">
                 Save
               </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Analytics Section -->
-    <section id="analytics" class="hidden animate-fade-in">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">Analytics</h2>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="card p-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-4">Platform Statistics</h3>
-          <canvas id="chartStats" height="250"></canvas>
-        </div>
-        
-        <div class="card p-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-4">Revenue by Draw</h3>
-          <canvas id="chartRevenue" height="250"></canvas>
-        </div>
-      </div>
-      
-      <div class="card p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">User Activity</h3>
-        <canvas id="chartActivity" height="300"></canvas>
-      </div>
-    </section>
-  
-<section id="winners" class="hidden mt-8">
-  <h2 class="text-xl font-bold mb-4">🏆 Draw Winners</h2>
-  <ul id="winnerList" class="space-y-2"></ul>
+</div>
+</form>
+</div>
+</div>
 </section>
-
+<!-- Analytics Section -->
+<section class="hidden animate-fade-in" id="analytics">
+<h2 class="text-2xl font-bold text-gray-800 mb-6">Analytics</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+<div class="card p-6">
+<h3 class="text-lg font-semibold text-gray-800 mb-4">Platform Statistics</h3>
+<canvas height="250" id="chartStats"></canvas>
+</div>
+<div class="card p-6">
+<h3 class="text-lg font-semibold text-gray-800 mb-4">Revenue by Draw</h3>
+<canvas height="250" id="chartRevenue"></canvas>
+</div>
+</div>
+<div class="card p-6">
+<h3 class="text-lg font-semibold text-gray-800 mb-4">User Activity</h3>
+<canvas height="300" id="chartActivity"></canvas>
+</div>
+</section>
+<section class="hidden mt-8" id="winners">
+<h2 class="text-xl font-bold mb-4">🏆 Draw Winners</h2>
+<ul class="space-y-2" id="winnerList"></ul>
+</section>
 </main>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg hidden z-50 transform transition-all duration-300"></div>
-
-  <script type="module">
+<!-- Toast Notification -->
+<div class="fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg hidden z-50 transform transition-all duration-300" id="toast"></div>
+<script type="module">
     import { supabase } from './supabaseClient.js';
     
     // Check authentication state
@@ -1274,8 +1230,47 @@ function filterTickets() {
         renderTicketList(filteredTickets);
       });
     }
-  </script>
+  
+async function runSimulatedDraw(drawId) {
+  const { data: tickets, error } = await supabase
+    .from('transactions')
+    .select('user_address')
+    .eq('draw_id', drawId)
+    .eq('status', 'success');
 
+  if (error || !tickets || tickets.length === 0) {
+    showToast("❌ شرکت‌کننده‌ای برای این قرعه‌کشی یافت نشد.", 'error');
+    return;
+  }
+
+  const winnerIndex = Math.floor(Math.random() * tickets.length);
+  const winner = tickets[winnerIndex].user_address;
+
+  const { error: insertError } = await supabase.from('winners').insert([{
+    draw_id: drawId,
+    user_address: winner,
+    reward_sent: false
+  }]);
+
+  if (insertError) {
+    showToast("❌ خطا در ذخیره برنده: " + insertError.message, 'error');
+    return;
+  }
+
+  const { error: updateError } = await supabase
+    .from('draws')
+    .update({ status: 'completed' })
+    .eq('id', drawId);
+
+  if (updateError) {
+    showToast("⚠️ برنده ثبت شد اما وضعیت قرعه‌کشی به روز نشد.", 'error');
+  }
+
+  showToast(`🎉 برنده انتخاب شد: ${winner}`, 'success');
+  await loadData();
+  await loadWinners();
+}
+</script>
 <script>
 // حذف قرعه‌کشی
 document.querySelector('#draw-list').addEventListener('click', async (e) => {
@@ -1329,8 +1324,6 @@ document.getElementById('edit-draw-form').addEventListener('submit', async (e) =
   }
 });
 </script>
-
-
 <script type="module">
 // اجرای قرعه‌کشی
 document.querySelector('#draw-list').addEventListener('click', async (e) => {
@@ -1388,6 +1381,5 @@ async function loadWinners() {
 
 document.addEventListener('DOMContentLoaded', loadWinners);
 </script>
-
 </body>
 </html>
