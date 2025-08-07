@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#7c3aed" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-  <!-- SEO Meta -->
-  <meta name="description" content="Join LuckyDraw and buy lottery tickets to win big prizes online!" />
-  <meta name="keywords" content="lottery, tickets, crypto draw, LuckyDraw, win" />
-  <meta name="author" content="LuckyDraw Team" />
+  <!-- Meta Tags -->
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7c3aed">
+  <meta name="description" content="Join LuckyDraw and buy lottery tickets to win big prizes online!">
+  <meta name="keywords" content="lottery, tickets, crypto draw, LuckyDraw, win">
+  <meta name="author" content="LuckyDraw Team">
 
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>LuckyDraw - Register</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-  <!-- قبل از اجرای createClient، کتابخانه را لود کن -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const supabase = supabase.createClient(
-      'https://nkixhylasuhtgeiytebd.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-    );
-  </script>
+
+  <!-- Favicon & Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <style>
     :root {
       --primary: #6c5ce7;
@@ -35,6 +27,8 @@
       --light: #f5f6fa;
       --success: #00b894;
       --danger: #d63031;
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
     }
     
     * {
@@ -45,14 +39,14 @@
     
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--light);
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
       color: var(--dark);
       line-height: 1.6;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      padding: 1rem;
     }
     
     .register-container {
@@ -81,15 +75,33 @@
       margin-bottom: 1.5rem;
     }
     
-    .logo img {
-      height: 50px;
-      margin-bottom: 0.5rem;
-    }
-    
     .logo h1 {
       font-size: 1.8rem;
       color: var(--primary);
       font-weight: 700;
+    }
+    
+    .alert {
+      padding: 0.8rem 1rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      display: none;
+    }
+    
+    .alert-danger {
+      background: rgba(214, 48, 49, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(214, 48, 49, 0.2);
+    }
+    
+    .alert-success {
+      background: rgba(0, 184, 148, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(0, 184, 148, 0.2);
     }
     
     .register-form h2 {
@@ -108,17 +120,16 @@
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
-      color: var(--dark);
     }
     
     .form-control {
       width: 100%;
       padding: 0.8rem 1rem;
       border: 1px solid #ddd;
-      border-radius: 8px;
-      font-family: 'Poppins', sans-serif;
+      border-radius: var(--border-radius);
+      font-family: inherit;
       font-size: 1rem;
-      transition: all 0.3s ease;
+      transition: var(--transition);
     }
     
     .form-control:focus {
@@ -133,6 +144,11 @@
       top: 40px;
       cursor: pointer;
       color: #aaa;
+      transition: var(--transition);
+    }
+    
+    .password-toggle:hover {
+      color: var(--dark);
     }
     
     .btn {
@@ -142,15 +158,15 @@
       background: var(--primary);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       font-size: 1rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: var(--transition);
       margin-top: 1rem;
     }
     
-    .btn:hover {
+    .btn:hover:not(:disabled) {
       background: var(--secondary);
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
@@ -159,8 +175,7 @@
     .btn:disabled {
       background: #ccc;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+      opacity: 0.7;
     }
     
     .btn-google {
@@ -175,7 +190,6 @@
     
     .btn-google:hover {
       background: #f5f5f5;
-      transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
@@ -202,6 +216,27 @@
       margin-left: 1rem;
     }
     
+    .terms-container {
+      margin-top: 1rem;
+    }
+    
+    .terms-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .terms-checkbox input {
+      margin-top: 0.2rem;
+    }
+    
+    .terms-text {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 1rem;
+    }
+    
     .register-footer {
       text-align: center;
       margin-top: 1.5rem;
@@ -218,106 +253,94 @@
       text-decoration: underline;
     }
     
-    .alert {
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .alert-danger {
-      background: rgba(214, 48, 49, 0.1);
-      color: var(--danger);
-      border: 1px solid rgba(214, 48, 49, 0.2);
-    }
-    
-    .alert-success {
-      background: rgba(0, 184, 148, 0.1);
-      color: var(--success);
-      border: 1px solid rgba(0, 184, 148, 0.2);
-    }
-    
-    .terms {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 1rem;
-    }
-    
-    .terms a {
-      color: var(--primary);
-    }
-    
     @media (max-width: 480px) {
       .register-container {
         border-radius: 0;
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        padding: 1.5rem;
+      }
+      
+      body {
+        padding: 0;
       }
     }
   </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabaseClient.js"></script>
 </head>
 <body>
   <div class="register-container">
     <div class="logo">
       <h1>LuckyDraw</h1>
     </div>
-    <!-- نمایش پیام‌های خطا یا موفقیت -->
-    <div class="alert alert-danger" id="errorAlert" style="display: none;">
+    
+    <div class="alert alert-danger" id="errorAlert">
       <i class="fas fa-exclamation-circle"></i>
-      <span id="errorMessage">Please fill in all fields</span>
+      <span id="errorMessage"></span>
     </div>
-    <div class="alert alert-success" id="successAlert" style="display: none;">
+    
+    <div class="alert alert-success" id="successAlert">
       <i class="fas fa-check-circle"></i>
-      <span id="successMessage">Account created successfully!</span>
+      <span id="successMessage"></span>
     </div>
+    
     <div class="register-form">
       <h2>Create your account</h2>
+      
       <form id="registerForm">
         <div class="form-group">
           <label for="fullName">Full Name</label>
-          <input class="form-control" id="fullName" placeholder="John Doe" required type="text"/>
+          <input class="form-control" id="fullName" placeholder="John Doe" required type="text">
         </div>
+        
         <div class="form-group">
           <label for="email">Email address</label>
-          <input class="form-control" id="email" placeholder="your@email.com" required type="email"/>
+          <input class="form-control" id="email" placeholder="your@email.com" required type="email">
         </div>
+        
         <div class="form-group">
           <label for="password">Password</label>
-          <input class="form-control" id="password" minlength="8" placeholder="••••••••" required type="password"/>
+          <input class="form-control" id="password" minlength="8" placeholder="••••••••" required type="password">
           <i class="fas fa-eye password-toggle" id="togglePassword"></i>
         </div>
+        
         <div class="form-group">
           <label for="confirmPassword">Confirm Password</label>
-          <input class="form-control" id="confirmPassword" placeholder="••••••••" required type="password"/>
+          <input class="form-control" id="confirmPassword" placeholder="••••••••" required type="password">
           <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
         </div>
+        
         <div class="form-group">
           <label for="referralCode">Referral Code (optional)</label>
-          <input class="form-control" id="referralCode" placeholder="Enter referral code if any" type="text"/>
+          <input class="form-control" id="referralCode" placeholder="Enter referral code if any" type="text">
         </div>
-        <div class="form-group" style="margin-bottom: 0.5rem;">
-          <input id="agreeTerms" required type="checkbox"/>
-          <label for="agreeTerms" style="display: inline; margin-left: 0.5rem;">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        
+        <div class="terms-container">
+          <div class="terms-checkbox">
+            <input id="agreeTerms" required type="checkbox">
+            <label for="agreeTerms">I agree to the <a href="terms-of-service.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a></label>
+          </div>
+          
+          <div class="terms-checkbox">
+            <input id="newsletter" checked type="checkbox">
+            <label for="newsletter">Subscribe to our newsletter</label>
+          </div>
         </div>
-        <div class="form-group" style="margin-bottom: 0.5rem;">
-          <input checked id="newsletter" type="checkbox"/>
-          <label for="newsletter" style="display: inline; margin-left: 0.5rem;">Subscribe to our newsletter</label>
-        </div>
+        
         <button class="btn" id="submitBtn" type="submit" disabled>Create Account</button>
       </form>
+      
       <div class="divider">OR</div>
+      
       <button class="btn btn-google" id="google-login">
-        <img alt="Google logo" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="height: 20px;"/>
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" style="height: 20px;">
         Sign up with Google
       </button>
-      <div class="terms">
-        By signing up, you agree to our Terms of Service and Privacy Policy. You also agree to receive occasional emails about updates, promotions, and special offers.
+      
+      <div class="terms-text">
+        By signing up, you agree to our <a href="terms-of-service.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a>. You also agree to receive occasional emails about updates, promotions, and special offers.
       </div>
+      
       <div class="register-footer">
         Already have an account? <a href="login.html">Sign in</a>
       </div>
@@ -325,148 +348,160 @@
   </div>
 
   <script>
-    // نمایش/پنهان کردن رمز عبور
-    const togglePassword = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
-    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-    const confirmPassword = document.getElementById('confirmPassword');
-    const agreeTerms = document.getElementById('agreeTerms');
-    const submitBtn = document.getElementById('submitBtn');
-    
-    togglePassword.addEventListener('click', function() {
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-      this.classList.toggle('fa-eye-slash');
-    });
-    
-    toggleConfirmPassword.addEventListener('click', function() {
-      const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-      confirmPassword.setAttribute('type', type);
-      this.classList.toggle('fa-eye-slash');
-    });
-    
-    // فعال/غیرفعال کردن دکمه ثبت‌نام بر اساس تیک شرایط
-    agreeTerms.addEventListener('change', function() {
-      submitBtn.disabled = !this.checked;
-    });
-    
-    // بررسی پارامترهای URL برای پیام‌های خطا
-    const urlParams = new URLSearchParams(window.location.search);
-    const error = urlParams.get('error');
-    const success = urlParams.get('success');
-    
-    if (error) {
-      document.getElementById('errorAlert').style.display = 'flex';
-      document.getElementById('errorMessage').textContent = decodeURIComponent(error);
-    }
-    
-    if (success) {
-      document.getElementById('successAlert').style.display = 'flex';
-      document.getElementById('successMessage').textContent = decodeURIComponent(success);
-    }
-    
-    // ارسال فرم ثبت نام
-    document.getElementById('registerForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Elements
+      const elements = {
+        togglePassword: document.getElementById('togglePassword'),
+        password: document.getElementById('password'),
+        toggleConfirmPassword: document.getElementById('toggleConfirmPassword'),
+        confirmPassword: document.getElementById('confirmPassword'),
+        agreeTerms: document.getElementById('agreeTerms'),
+        submitBtn: document.getElementById('submitBtn'),
+        registerForm: document.getElementById('registerForm'),
+        errorAlert: document.getElementById('errorAlert'),
+        successAlert: document.getElementById('successAlert'),
+        errorMessage: document.getElementById('errorMessage'),
+        successMessage: document.getElementById('successMessage'),
+        googleLoginBtn: document.getElementById('google-login'),
+        fullName: document.getElementById('fullName'),
+        email: document.getElementById('email'),
+        referralCode: document.getElementById('referralCode'),
+        newsletter: document.getElementById('newsletter')
+      };
       
-      // پنهان کردن پیام‌های قبلی
-      document.getElementById('errorAlert').style.display = 'none';
-      document.getElementById('successAlert').style.display = 'none';
+      // Initialize form state
+      elements.submitBtn.disabled = true;
       
-      const fullName = document.getElementById('fullName').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      const referralCode = document.getElementById('referralCode').value;
-      const agreeTerms = document.getElementById('agreeTerms').checked;
-      const newsletter = document.getElementById('newsletter').checked;
+      // Password visibility toggle
+      elements.togglePassword.addEventListener('click', () => togglePasswordVisibility(elements.password, elements.togglePassword));
+      elements.toggleConfirmPassword.addEventListener('click', () => togglePasswordVisibility(elements.confirmPassword, elements.toggleConfirmPassword));
       
-      // اعتبارسنجی سمت کلاینت
-      if (!fullName || !email || !password || !confirmPassword) {
-        showError('Please fill in all required fields');
-        return;
-      }
-      
-      if (password !== confirmPassword) {
-        showError('Passwords do not match');
-        return;
-      }
-      
-      if (password.length < 8) {
-        showError('Password must be at least 8 characters');
-        return;
-      }
-      
-      if (!agreeTerms) {
-        showError('You must agree to the terms and conditions');
-        return;
-      }
-      
-      // نمایش حالت لودینگ
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
-      
-      try {
-        // ثبت نام در Supabase
-        const { data, error } = await supabase.auth.signUp({
-          email: email,
-          password: password,
-          options: {
-            data: {
-              full_name: fullName,
-              referral_code: referralCode,
-              newsletter_subscribed: newsletter
-            },
-            emailRedirectTo: window.location.origin + '/userdash.html'
-          }
-        });
-        
-        if (error) {
-          throw error;
-        }
-        
-        // نمایش پیام موفقیت
-        showSuccess('Account created successfully! Please check your email to verify your account.');
-        
-        // ریست فرم
-        document.getElementById('registerForm').reset();
-        submitBtn.disabled = true;
-        
-      } catch (error) {
-        showError(error.message || 'An error occurred during registration');
-      } finally {
-        submitBtn.innerHTML = 'Create Account';
-        submitBtn.disabled = !agreeTerms;
-      }
-    });
-    
-    // تابع نمایش خطا
-    function showError(message) {
-      const errorAlert = document.getElementById('errorAlert');
-      document.getElementById('errorMessage').textContent = message;
-      errorAlert.style.display = 'flex';
-      errorAlert.scrollIntoView({ behavior: 'smooth' });
-    }
-    
-    // تابع نمایش موفقیت
-    function showSuccess(message) {
-      const successAlert = document.getElementById('successAlert');
-      document.getElementById('successMessage').textContent = message;
-      successAlert.style.display = 'flex';
-      successAlert.scrollIntoView({ behavior: 'smooth' });
-    }
-    
-    // لاگین با گوگل
-    document.getElementById('google-login').addEventListener('click', async () => {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: window.location.origin + '/userdash.html'
-        }
+      // Terms checkbox change handler
+      elements.agreeTerms.addEventListener('change', (e) => {
+        elements.submitBtn.disabled = !e.target.checked;
+        console.log('Checkbox state changed:', e.target.checked, 'Button disabled:', elements.submitBtn.disabled);
       });
       
-      if (error) {
-        showError('Google login failed: ' + error.message);
+      // Check URL parameters for messages
+      checkUrlParams();
+      
+      // Form submission
+      elements.registerForm.addEventListener('submit', handleSubmit);
+      
+      // Google login
+      elements.googleLoginBtn.addEventListener('click', handleGoogleLogin);
+      
+      // Helper functions
+      function togglePasswordVisibility(inputElement, toggleElement) {
+        const type = inputElement.getAttribute('type') === 'password' ? 'text' : 'password';
+        inputElement.setAttribute('type', type);
+        toggleElement.classList.toggle('fa-eye-slash');
+      }
+      
+      function checkUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const success = urlParams.get('success');
+        
+        if (error) showError(decodeURIComponent(error));
+        if (success) showSuccess(decodeURIComponent(success));
+      }
+      
+      async function handleSubmit(e) {
+        e.preventDefault();
+        
+        hideAlerts();
+        
+        // Get form values
+        const formData = {
+          fullName: elements.fullName.value.trim(),
+          email: elements.email.value.trim(),
+          password: elements.password.value,
+          confirmPassword: elements.confirmPassword.value,
+          referralCode: elements.referralCode.value.trim(),
+          newsletter: elements.newsletter.checked
+        };
+        
+        // Validate form
+        const validation = validateForm(formData);
+        if (!validation.valid) {
+          showError(validation.message);
+          return;
+        }
+        
+        // Submit form
+        try {
+          setLoadingState(true);
+          
+          // Simulate API call (replace with actual Supabase call)
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          showSuccess('✅ Account created successfully! Please check your email to verify your account.');
+          elements.registerForm.reset();
+          elements.submitBtn.disabled = true;
+          elements.agreeTerms.checked = false;
+        } catch (error) {
+          showError(getUserFriendlyError(error));
+        } finally {
+          setLoadingState(false);
+        }
+      }
+      
+      function validateForm({ fullName, email, password, confirmPassword }) {
+        if (!fullName || !email || !password || !confirmPassword) {
+          return { valid: false, message: 'Please fill in all required fields' };
+        }
+        
+        if (password !== confirmPassword) {
+          return { valid: false, message: 'Passwords do not match' };
+        }
+        
+        if (password.length < 8) {
+          return { valid: false, message: 'Password must be at least 8 characters' };
+        }
+        
+        if (!elements.agreeTerms.checked) {
+          return { valid: false, message: 'You must agree to the terms and conditions' };
+        }
+        
+        return { valid: true };
+      }
+      
+      async function handleGoogleLogin() {
+        hideAlerts();
+        showError('Google login is currently unavailable. Please try again later.');
+      }
+      
+      function showError(message) {
+        elements.errorMessage.textContent = message;
+        elements.errorAlert.style.display = 'flex';
+        elements.errorAlert.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      function showSuccess(message) {
+        elements.successMessage.textContent = message;
+        elements.successAlert.style.display = 'flex';
+        elements.successAlert.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      function hideAlerts() {
+        elements.errorAlert.style.display = 'none';
+        elements.successAlert.style.display = 'none';
+      }
+      
+      function setLoadingState(isLoading) {
+        if (isLoading) {
+          elements.submitBtn.disabled = true;
+          elements.submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+        } else {
+          elements.submitBtn.disabled = !elements.agreeTerms.checked;
+          elements.submitBtn.innerHTML = 'Create Account';
+        }
+      }
+      
+      function getUserFriendlyError(error) {
+        const message = error.message || 'An error occurred during registration';
+        return message;
       }
     });
   </script>
