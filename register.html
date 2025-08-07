@@ -1,430 +1,86 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#7c3aed" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-  <!-- SEO Meta -->
-  <meta name="description" content="Join LuckyDraw and buy lottery tickets to win big prizes online!" />
-  <meta name="keywords" content="lottery, tickets, crypto draw, LuckyDraw, win" />
-  <meta name="author" content="LuckyDraw Team" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LuckyDraw - Register</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-<!-- قبل از اجرای createClient، کتابخانه را لود کن -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const supabase = supabase.createClient(
-    'https://nkixhylasuhtgeiytebd.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-  );
-document.getElementById('google-login').addEventListener('click', async () => {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: window.location.origin + '/userdash.html'
-    }
-  });
-  if (error) {
-    console.error('Google login error:', error.message);
-    alert('ورود با گوگل با خطا مواجه شد.');
-  }
-});
-</script>
-<style>
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --dark: #2d3436;
-            --light: #f5f6fa;
-            --success: #00b894;
-            --danger: #d63031;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-        }
-        
-        .register-container {
-            width: 100%;
-            max-width: 450px;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .register-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-        
-        .logo {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .logo img {
-            height: 50px;
-            margin-bottom: 0.5rem;
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            font-weight: 700;
-        }
-        
-        .register-form h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
-            outline: none;
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 10px;
-            top: 40px;
-            cursor: pointer;
-            color: #aaa;
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-        
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-        }
-        
-        .btn-google {
-            background: white;
-            color: var(--dark);
-            border: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        
-        .btn-google:hover {
-            background: #f5f5f5;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 1.5rem 0;
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .divider::before {
-            margin-right: 1rem;
-        }
-        
-        .divider::after {
-            margin-left: 1rem;
-        }
-        
-        .register-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .register-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .register-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .alert {
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .alert-danger {
-            background: rgba(214, 48, 49, 0.1);
-            color: var(--danger);
-            border: 1px solid rgba(214, 48, 49, 0.2);
-        }
-        
-        .alert-success {
-            background: rgba(0, 184, 148, 0.1);
-            color: var(--success);
-            border: 1px solid rgba(0, 184, 148, 0.2);
-        }
-        
-        .terms {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 1rem;
-        }
-        
-        .terms a {
-            color: var(--primary);
-        }
-        
-        @media (max-width: 480px) {
-            .register-container {
-                border-radius: 0;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | LuckyDraw</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script type="module" src="supabaseClient.js"></script>
 </head>
-<body>
-<div class="register-container">
-<div class="logo">
-<h1>LuckyDraw</h1>
-</div>
-<!-- نمایش پیام‌های خطا یا موفقیت -->
-<div class="alert alert-danger" id="errorAlert" style="display: none;">
-<i class="fas fa-exclamation-circle"></i>
-<span id="errorMessage">Please fill in all fields</span>
-</div>
-<div class="register-form">
-<h2>Create your account</h2>
-<form id="registerForm">
-<div class="form-group">
-<label for="fullName">Full Name</label>
-<input class="form-control" id="fullName" placeholder="John Doe" required="" type="text"/>
-</div>
-<div class="form-group">
-<label for="email">Email address</label>
-<input class="form-control" id="email" placeholder="your@email.com" required="" type="email"/>
-</div>
-<div class="form-group">
-<label for="password">Password</label>
-<input class="form-control" id="password" minlength="8" placeholder="••••••••" required="" type="password"/>
-<i class="fas fa-eye password-toggle" id="togglePassword"></i>
-</div>
-<div class="form-group">
-<label for="confirmPassword">Confirm Password</label>
-<input class="form-control" id="confirmPassword" placeholder="••••••••" required="" type="password"/>
-<i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
-</div>
-<div class="form-group">
-<label for="referralCode">Referral Code (optional)</label>
-<input class="form-control" id="referralCode" placeholder="Enter referral code if any" type="text"/>
-</div>
-<div class="form-group" style="margin-bottom: 0.5rem;">
-<input id="agreeTerms" required="" type="checkbox"/>
-<label for="agreeTerms" style="display: inline; margin-left: 0.5rem;">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-</div>
-<div class="form-group" style="margin-bottom: 0.5rem;">
-<input checked="" id="newsletter" type="checkbox"/>
-<label for="newsletter" style="display: inline; margin-left: 0.5rem;">Subscribe to our newsletter</label>
-</div>
-<button class="btn" type="submit">Create Account</button>
-</form>
-<div class="divider">OR</div>
-<button class="btn btn-google" id="google-login">
-<img alt="Google logo" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="height: 20px;"/>
-                Sign up with Google
-            </button>
-<div class="terms">
-                By signing up, you agree to our Terms of Service and Privacy Policy. You also agree to receive occasional emails about updates, promotions, and special offers.
+<body class="bg-light">
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow">
+          <div class="card-body">
+            <h3 class="text-center mb-4">Create an Account</h3>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" id="email" class="form-control" required />
             </div>
-<div class="register-footer">
-                Already have an account? <a href="login.html">Sign in</a>
-</div>
-</div>
-</div>
-<script>
-        // نمایش/پنهان کردن رمز عبور
-        const togglePassword = document.getElementById('togglePassword');
-        const password = document.getElementById('password');
-        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-        const confirmPassword = document.getElementById('confirmPassword');
-        
-        togglePassword.addEventListener('click', function() {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
-        
-        toggleConfirmPassword.addEventListener('click', function() {
-            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            confirmPassword.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
-        
-        // بررسی پارامترهای URL برای پیام‌های خطا
-        const urlParams = new URLSearchParams(window.location.search);
-        const error = urlParams.get('error');
-        
-        if (error) {
-            document.getElementById('errorAlert').style.display = 'flex';
-            document.getElementById('errorMessage').textContent = decodeURIComponent(error);
-        }
-        
-        // ارسال فرم ثبت نام
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const agreeTerms = document.getElementById('agreeTerms').checked;
-            
-            // اعتبارسنجی سمت کلاینت
-            if (!fullName || !email || !password || !confirmPassword) {
-                document.getElementById('errorAlert').style.display = 'flex';
-                document.getElementById('errorMessage').textContent = 'Please fill in all required fields';
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                document.getElementById('errorAlert').style.display = 'flex';
-                document.getElementById('errorMessage').textContent = 'Passwords do not match';
-                return;
-            }
-            
-            if (password.length < 8) {
-                document.getElementById('errorAlert').style.display = 'flex';
-                document.getElementById('errorMessage').textContent = 'Password must be at least 8 characters';
-                return;
-            }
-            
-            if (!agreeTerms) {
-                document.getElementById('errorAlert').style.display = 'flex';
-                document.getElementById('errorMessage').textContent = 'You must agree to the terms and conditions';
-                return;
-            }
-            
-            // در اینجا باید درخواست AJAX به سرور ارسال شود
-            // برای نمونه، ما فقط یک پیام موفقیت نشان می‌دهیم
-            
-            // شبیه‌سازی ثبت نام موفق
-            const { data, error } = await supabase.auth.signUp({
-  email: email,
-  password: password
-});
 
-if (error) {
-  document.getElementById('errorAlert').style.display = 'flex';
-  document.getElementById('errorMessage').textContent = error.message;
-  return;
-} else {
-  window.location.href = 'login.html?success=' + encodeURIComponent('Registration successful!');
-}
-        });
-    </script>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" class="form-control" required />
+            </div>
 
-<script>
-  document.querySelector('.btn-google')?.addEventListener('click', async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google'
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="" id="termsCheckbox">
+              <label class="form-check-label" for="termsCheckbox">
+                I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>
+              </label>
+            </div>
+
+            <div class="d-grid">
+              <button id="registerBtn" class="btn btn-primary" disabled>Create Account</button>
+            </div>
+
+            <div class="mt-3 text-center">
+              <small>Already have an account? <a href="login.html">Log in</a></small>
+            </div>
+
+            <div id="registerMessage" class="mt-3 text-center text-danger"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- اسکریپت ثبت‌نام -->
+  <script type="module">
+    import { supabase } from './supabaseClient.js';
+
+    const registerBtn = document.getElementById("registerBtn");
+    const termsCheckbox = document.getElementById("termsCheckbox");
+    const messageDiv = document.getElementById("registerMessage");
+
+    // فعال‌سازی دکمه فقط در صورت تیک زدن
+    termsCheckbox.addEventListener("change", () => {
+      registerBtn.disabled = !termsCheckbox.checked;
     });
 
-    if (error) {
-      console.error('OAuth error:', error.message);
-      alert(error.message);
-    }
-  });
-</script>
+    registerBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-<script type="module">
-  import { supabase } from './supabaseClient.js';
+      if (!email || !password) {
+        messageDiv.textContent = "Please enter both email and password.";
+        return;
+      }
 
-  console.log("🔗 Supabase connected:", supabase);
-</script>
+      const { data, error } = await supabase.auth.signUp({ email, password });
+
+      if (error) {
+        messageDiv.textContent = error.message;
+      } else {
+        messageDiv.classList.remove("text-danger");
+        messageDiv.classList.add("text-success");
+        messageDiv.textContent = "✅ Registration successful. Check your email to confirm.";
+      }
+    });
+  </script>
 
 </body>
 </html>
