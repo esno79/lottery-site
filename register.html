@@ -265,8 +265,10 @@
       }
     }
   </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/js/supabaseClient.js"></script>
+  <!-- Removed conflicting scripts to avoid double-loading Supabase:
+       <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+       <script src="/js/supabaseClient.js"></script>
+  -->
 </head>
 <body>
   <div class="register-container">
@@ -347,7 +349,22 @@
     </div>
   </div>
 
+  <!-- Minimal non-module helper to ensure the checkbox always enables the button -->
   <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const agree = document.getElementById('agreeTerms');
+    const submit = document.getElementById('submitBtn');
+    if (!agree || !submit) return;
+    const sync = () => { submit.disabled = !agree.checked; };
+    agree.addEventListener('change', sync);
+    sync();
+  });
+  </script>
+
+  <!-- Switched to ESM; all logic preserved, now using real Supabase sign-up -->
+  <script type="module">
+    import { supabase } from './js/supabaseClient.js';
+
     document.addEventListener('DOMContentLoaded', () => {
       // DOM Elements
       const elements = {
@@ -369,17 +386,22 @@
         newsletter: document.getElementById('newsletter')
       };
       
-      // Initialize form state
-      elements.submitBtn.disabled = true;
+      // If already logged in, go to dashboard
+      (async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) window.location.href = 'userdash.html';
+      })();
+
+      // Initialize form state (kept, but non-module script already syncs state too)
+      elements.submitBtn.disabled = !elements.agreeTerms.checked;
       
       // Password visibility toggle
       elements.togglePassword.addEventListener('click', () => togglePasswordVisibility(elements.password, elements.togglePassword));
       elements.toggleConfirmPassword.addEventListener('click', () => togglePasswordVisibility(elements.confirmPassword, elements.toggleConfirmPassword));
       
-      // Terms checkbox change handler
+      // Terms checkbox change handler (redundant but harmless; keeps behavior in module too)
       elements.agreeTerms.addEventListener('change', (e) => {
         elements.submitBtn.disabled = !e.target.checked;
-        console.log('Checkbox state changed:', e.target.checked, 'Button disabled:', elements.submitBtn.disabled);
       });
       
       // Check URL parameters for messages
@@ -409,7 +431,6 @@
       
       async function handleSubmit(e) {
         e.preventDefault();
-        
         hideAlerts();
         
         // Get form values
@@ -429,13 +450,25 @@
           return;
         }
         
-        // Submit form
         try {
           setLoadingState(true);
-          
-          // Simulate API call (replace with actual Supabase call)
-          await new Promise(resolve => setTimeout(resolve, 1500));
-          
+
+          // Real Supabase sign-up with email verification redirect
+          const { error } = await supabase.auth.signUp({
+            email: formData.email,
+            password: formData.password,
+            options: {
+              emailRedirectTo: `${window.location.origin}/login.html`,
+              data: {
+                full_name: formData.fullName,
+                referral_code: formData.referralCode || null,
+                newsletter_opt_in: formData.newsletter
+              }
+            }
+          });
+
+          if (error) throw error;
+
           showSuccess('✅ Account created successfully! Please check your email to verify your account.');
           elements.registerForm.reset();
           elements.submitBtn.disabled = true;
@@ -451,25 +484,32 @@
         if (!fullName || !email || !password || !confirmPassword) {
           return { valid: false, message: 'Please fill in all required fields' };
         }
-        
         if (password !== confirmPassword) {
           return { valid: false, message: 'Passwords do not match' };
         }
-        
         if (password.length < 8) {
           return { valid: false, message: 'Password must be at least 8 characters' };
         }
-        
         if (!elements.agreeTerms.checked) {
           return { valid: false, message: 'You must agree to the terms and conditions' };
         }
-        
         return { valid: true };
       }
       
       async function handleGoogleLogin() {
         hideAlerts();
-        showError('Google login is currently unavailable. Please try again later.');
+        try {
+          const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+              redirectTo: `${window.location.origin}/userdash.html`
+            }
+          });
+          if (error) throw error;
+        } catch (e) {
+          // If provider not configured, show friendly message
+          showError('Google sign-in is not available right now. Please try email sign-up instead.');
+        }
       }
       
       function showError(message) {
@@ -500,8 +540,7 @@
       }
       
       function getUserFriendlyError(error) {
-        const message = error.message || 'An error occurred during registration';
-        return message;
+        return error?.message || 'An error occurred during registration';
       }
     });
   </script>
