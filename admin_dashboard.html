@@ -6,16 +6,16 @@
 <link href="/manifest.json" rel="manifest"/>
 <meta content="#7c3aed" name="theme-color"/>
 <!-- Favicon -->
-<link href="/favicon.ico" rel="icon" type="image/x-icon">
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
 <!-- SEO Meta -->
 <meta content="Join LuckyDraw and buy lottery tickets to win big prizes online!" name="description"/>
 <meta content="lottery, tickets, crypto draw, LuckyDraw, win" name="keywords"/>
 <meta content="LuckyDraw Team" name="author"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Admin Dashboard | LuckyDraw</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -156,8 +156,74 @@
       animation: fadeIn 0.4s ease-out forwards;
     }
   </style>
-</meta></link></head>
+</link></meta></head>
 <body class="min-h-screen flex bg-gray-50">
+
+<script type="module">
+  const overlay = document.getElementById('authGate');
+  const msgEl = document.getElementById('authGateMsg');
+  const setMsg = (t)=>{ if(msgEl) msgEl.textContent = t; };
+  const done = ()=>{ try{ overlay?.remove(); }catch(e){} };
+
+  // For production we expect http(s). If not, just remove overlay so it won't look blank in local file preview.
+  if (!location.protocol.startsWith('http')) {
+    setMsg('Local file preview: guard disabled');
+    done();
+  } else {
+    (async () => {
+      try {
+        setMsg('Loading auth client…');
+        const { supabase } = await import('./js/supabaseClient.js');
+
+        setMsg('Checking session…');
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          location.replace('login.html?error=' + encodeURIComponent('Please login first'));
+          return;
+        }
+
+        setMsg('Verifying admin role…');
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        if (error || !profile || profile.role !== 'admin') {
+          location.replace('userdash.html?error=' + encodeURIComponent('access_denied'));
+          return;
+        }
+
+        // Expose logout helper
+        window.logout = async () => {
+          try { await supabase.auth.signOut(); } catch(e){ console.error(e); }
+          location.replace('login.html');
+        };
+
+      } catch (e) {
+        console.error('Admin guard error:', e);
+        location.replace('login.html');
+        return;
+      } finally {
+        done();
+      }
+    })();
+  }
+
+  // Safety: never leave overlay forever (network issues). After 8s, remove overlay to avoid hard-blocking UI.
+  setTimeout(() => { try { document.getElementById('authGate')?.remove(); } catch(e){} }, 8000);
+</script>
+<div id="authGate" style="position:fixed;inset:0;background:rgba(249,250,251,0.85);backdrop-filter:saturate(140%) blur(2px);display:flex;align-items:center;justify-content:center;z-index:9999;font-family:system-ui,Segoe UI,Roboto,Arial">
+<div style="text-align:center;">
+<div style="width:42px;height:42px;border-radius:9999px;border:4px solid #e5e7eb;border-top-color:#7c3aed;animation:spin 0.9s linear infinite;margin:0 auto 12px"></div>
+<div style="color:#111827;font-weight:600">Checking admin access…</div>
+<div id="authGateMsg" style="color:#6b7280;font-size:12px;margin-top:4px">Please wait</div>
+</div>
+</div>
+<style>
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
 <!-- Sidebar -->
 <aside class="w-64 sidebar flex flex-col text-white">
 <div class="text-xl font-bold text-center py-5 border-b border-white border-opacity-10">
@@ -374,26 +440,21 @@
 </select>
 <input class="form-input px-4 py-2 rounded-lg border-gray-300" id="ticketStartDate" placeholder="Start Date" type="date"/>
 <input class="form-input px-4 py-2 rounded-lg border-gray-300" id="ticketEndDate" placeholder="End Date" type="date"/>
-
 <!-- Analytics Section -->
 <section class="hidden animate-fade-in" id="analytics">
-  <h2 class="text-2xl font-bold text-gray-800 mb-6">Analytics</h2>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <div class="card p-6">
-      <h3 class="text-lg font-semibold mb-4">Revenue Over Time</h3>
-      <canvas id="revenueChart" height="200"></canvas>
-    </div>
-    <div class="card p-6">
-      <h3 class="text-lg font-semibold mb-4">Tickets Sold</h3>
-      <canvas id="ticketsChart" height="200"></canvas>
-    </div>
-  </div>
+<h2 class="text-2xl font-bold text-gray-800 mb-6">Analytics</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="card p-6">
+<h3 class="text-lg font-semibold mb-4">Revenue Over Time</h3>
+<canvas height="200" id="revenueChart"></canvas>
+</div>
+<div class="card p-6">
+<h3 class="text-lg font-semibold mb-4">Tickets Sold</h3>
+<canvas height="200" id="ticketsChart"></canvas>
+</div>
+</div>
 </section>
-
 <!-- Ticket Filters JS -->
-
-
-
 <script type="module">
   // Expose a global to work with inline onclick handlers
   window.showSection = (id) => {
@@ -422,6 +483,5 @@
     window.showSection('overview');
   });
 </script>
-
-</body>
+</section></main></body>
 </html>
